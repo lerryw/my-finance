@@ -15,10 +15,9 @@
   --yellow: #F4C95D;
   --blue: #8FAFC0;
   --rose: #E98278;
-  --green: #83B7A6;
-  --border: #EEECE7;
-  --shadow: 0 8px 28px rgba(41,43,47,.055);
-  --radius: 22px;
+  --border: #ECEAE5;
+  --shadow: 0 8px 30px rgba(40, 40, 40, 0.06);
+  --radius: 20px;
 }
 
 * {
@@ -33,14 +32,17 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     "Helvetica Neue",
+    "Hiragino Sans",
+    "Yu Gothic",
+    "Noto Sans JP",
     Arial,
-    "Noto Sans SC",
     sans-serif;
 }
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -58,11 +60,10 @@ button {
 ========================= */
 
 .sidebar {
-  width: 292px;
-  min-height: 100vh;
-  background: rgba(255,255,255,.55);
+  width: 220px;
+  padding: 30px 20px;
   border-right: 1px solid var(--border);
-  padding: 28px 24px;
+  background: rgba(255,255,255,0.65);
   position: fixed;
   left: 0;
   top: 0;
@@ -70,16 +71,20 @@ button {
 }
 
 .brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 25px;
-  font-weight: 600;
-  margin-bottom: 34px;
+  padding: 0 10px;
+  margin-bottom: 42px;
 }
 
-.brand-icon {
-  font-size: 27px;
+.brand-title {
+  font-size: 22px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.brand-sub {
+  margin-top: 5px;
+  color: var(--sub);
+  font-size: 12px;
 }
 
 .nav {
@@ -91,78 +96,21 @@ button {
 .nav button {
   border: none;
   background: transparent;
-  color: var(--text);
+  color: var(--sub);
   text-align: left;
-  padding: 14px 16px;
-  border-radius: 15px;
-  font-size: 16px;
-  transition: .2s;
+  padding: 13px 14px;
+  border-radius: 13px;
+  font-size: 14px;
 }
 
 .nav button:hover {
-  background: #F7F3EC;
+  background: #F3F1ED;
 }
 
 .nav button.active {
-  background: #FFF6E9;
-  color: #5F5347;
-  font-weight: 600;
-}
-
-.nav-icon {
-  width: 25px;
-  display: inline-block;
-  font-size: 18px;
-}
-
-.quick-title {
-  margin-top: 38px;
-  margin-bottom: 14px;
-  color: var(--sub);
-  font-size: 13px;
-}
-
-.quick-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.quick-btn {
-  border: none;
-  border-radius: 17px;
-  padding: 14px 16px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-weight: 500;
-}
-
-.quick-btn.voice {
-  background: #FFF0E8;
-  color: #D9774A;
-}
-
-.quick-btn.photo {
-  background: #FFF7DE;
-  color: #75622D;
-}
-
-.quick-btn.manual {
-  background: #EDF6FA;
-  color: #547B8D;
-}
-
-.quick-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,.65);
-  font-size: 19px;
+  background: #FFF1E8;
+  color: #C96838;
+  font-weight: 650;
 }
 
 /* =========================
@@ -170,718 +118,390 @@ button {
 ========================= */
 
 .main {
-  margin-left: 292px;
-  width: calc(100% - 292px);
-  padding: 30px;
+  margin-left: 220px;
+  width: calc(100% - 220px);
+  padding: 28px 36px 60px;
 }
 
 .topbar {
-  height: 46px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 10px;
-}
-
-.search-box {
-  width: 300px;
-  height: 40px;
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 22px;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  color: var(--sub);
-  font-size: 13px;
-}
-
-.search-box span {
-  margin-right: 9px;
-  font-size: 17px;
+  justify-content: space-between;
+  margin-bottom: 28px;
 }
 
 .page-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  font-size: 27px;
+  font-weight: 760;
+  letter-spacing: -0.7px;
 }
 
-.page-title h1 {
-  margin: 0;
-  font-size: 30px;
-  letter-spacing: -.5px;
-}
-
-.year-select {
-  border: none;
-  background: transparent;
-  font-size: 16px;
+.page-subtitle {
   color: var(--sub);
-  padding: 6px 10px;
+  font-size: 13px;
+  margin-top: 5px;
 }
 
-/* =========================
-   Buttons
-========================= */
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
-.primary-btn {
+.year-select,
+.filter-select,
+.search-input {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  border-radius: 11px;
+  height: 40px;
+  padding: 0 13px;
+  outline: none;
+}
+
+.search-input {
+  width: 210px;
+}
+
+.add-btn {
   border: none;
+  height: 40px;
+  padding: 0 17px;
+  border-radius: 11px;
   background: var(--orange);
   color: white;
-  border-radius: 14px;
-  padding: 11px 17px;
-  font-weight: 600;
-  box-shadow: 0 5px 15px rgba(233,139,92,.18);
+  font-weight: 650;
+  box-shadow: 0 5px 15px rgba(233,139,92,.22);
 }
 
-.primary-btn:hover {
-  opacity: .92;
-}
-
-.secondary-btn {
-  border: 1px solid var(--border);
-  background: white;
-  color: var(--text);
-  border-radius: 12px;
-  padding: 9px 14px;
-}
-
-.danger-btn {
-  border: none;
-  background: #FFF0EE;
-  color: #D76E65;
-  border-radius: 12px;
-  padding: 9px 14px;
+.add-btn:hover {
+  opacity: .9;
 }
 
 /* =========================
-   Cards
+   Common Cards
 ========================= */
 
 .card {
   background: var(--card);
-  border: 1px solid rgba(238,236,231,.8);
+  border: 1px solid rgba(236,234,229,.8);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 
-.card-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 17px;
 }
 
-.card-title h2 {
-  margin: 0;
-  font-size: 19px;
-}
-
-.card-title small {
+.muted {
   color: var(--sub);
 }
 
 /* =========================
-   Hero
+   Overview Hero
 ========================= */
 
-.hero-grid {
+.overview-top {
   display: grid;
-  grid-template-columns: 1.55fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
+  grid-template-columns: 0.85fr 1.35fr;
+  gap: 18px;
+  margin-bottom: 18px;
 }
 
-.hero {
-  min-height: 270px;
-  padding: 28px 34px;
-  position: relative;
-  overflow: hidden;
-  background:
-    radial-gradient(circle at 85% 100%, #FFD087 0, #FFD087 14%, transparent 14.5%),
-    radial-gradient(circle at 65% 25%, rgba(255,255,255,.72) 0, rgba(255,255,255,.72) 12%, transparent 12.5%),
-    linear-gradient(120deg, #FFF7ED, #FFF2E5 55%, #FFE1B2);
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  width: 330px;
-  height: 180px;
-  right: -100px;
-  bottom: -110px;
-  border-radius: 50%;
-  background: rgba(244,201,93,.65);
-}
-
-.hero-year {
-  font-size: 17px;
-  margin-bottom: 15px;
-}
-
-.hero-total {
-  font-size: 54px;
-  font-weight: 650;
-  letter-spacing: -2px;
-  margin-bottom: 3px;
+.hero-card {
+  min-height: 190px;
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-label {
   color: var(--sub);
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.hero-change {
-  margin-top: 23px;
-  font-size: 17px;
-  color: #3E9B78;
+.hero-total {
+  font-size: 37px;
+  font-weight: 760;
+  letter-spacing: -1px;
+  margin-top: 7px;
+}
+
+.hero-yen {
+  font-size: 18px;
+  margin-left: 3px;
   font-weight: 600;
 }
 
-.hero-change span {
+.hero-meta {
+  display: flex;
+  gap: 22px;
+  margin-top: 15px;
+}
+
+.hero-meta-item {
+  font-size: 12px;
   color: var(--sub);
-  font-weight: 400;
-  font-size: 14px;
-  margin-left: 8px;
 }
 
-.hero-decoration {
-  position: absolute;
-  right: 80px;
-  top: 75px;
-  font-size: 20px;
-  transform: rotate(-8deg);
-  color: #51453C;
-  z-index: 2;
-  line-height: 1.8;
+.hero-meta-item strong {
+  display: block;
+  color: var(--text);
+  font-size: 16px;
+  margin-bottom: 2px;
 }
 
-/* =========================
-   AI Summary
-========================= */
+/* AI */
 
 .ai-card {
-  padding: 25px 28px;
-  min-height: 270px;
+  min-height: 190px;
+  padding: 23px 26px;
 }
 
 .ai-heading {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  justify-content: space-between;
+  margin-bottom: 12px;
 }
 
-.ai-heading h2 {
-  margin: 0;
-  font-size: 19px;
+.ai-title {
+  font-weight: 720;
+  font-size: 16px;
 }
 
 .ai-badge {
-  font-size: 12px;
-  color: #8A6B38;
-  background: #FFF6DD;
+  background: #FFF3E8;
+  color: #C96838;
   border-radius: 20px;
   padding: 5px 9px;
+  font-size: 11px;
 }
 
-.ai-summary {
+.ai-content {
   color: #55585D;
-  font-size: 14px;
   line-height: 1.75;
-  margin-bottom: 18px;
-}
-
-.ai-insights {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 9px;
-}
-
-.ai-insight {
-  border-radius: 14px;
-  padding: 12px 11px;
-  min-height: 70px;
-}
-
-.ai-insight.orange {
-  background: #FFF3EC;
-}
-
-.ai-insight.blue {
-  background: #EFF7F9;
-}
-
-.ai-insight.yellow {
-  background: #FFF8E6;
-}
-
-.ai-insight-title {
-  font-size: 12px;
-  color: var(--sub);
-  margin-bottom: 5px;
-}
-
-.ai-insight-value {
-  font-size: 15px;
-  font-weight: 650;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.ai-advice {
-  margin-top: 13px;
-  padding-top: 12px;
-  border-top: 1px solid var(--border);
   font-size: 13px;
-  color: #64676B;
 }
 
 /* =========================
-   Dashboard
+   Overview Grid
 ========================= */
 
-.dashboard-grid {
+.overview-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 18px;
 }
 
-.structure-card,
-.trend-card {
-  padding: 25px 28px;
-  min-height: 350px;
+.overview-card {
+  padding: 23px 25px;
+  min-height: 320px;
+}
+
+.chart-wrap {
+  position: relative;
+  width: 100%;
+  height: 250px;
+}
+
+canvas {
+  max-width: 100%;
 }
 
 /* =========================
-   Donut
+   Category Structure
 ========================= */
 
-.structure-content {
-  display: flex;
+.structure-layout {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 20px;
   align-items: center;
-  gap: 30px;
 }
 
 .donut-wrap {
-  width: 220px;
-  height: 220px;
+  width: 165px;
+  height: 165px;
   position: relative;
-  flex: 0 0 220px;
-}
-
-.donut {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #E5E5E5;
-  position: relative;
-}
-
-.donut::after {
-  content: "";
-  position: absolute;
-  inset: 43px;
-  border-radius: 50%;
-  background: white;
+  margin: auto;
 }
 
 .donut-center {
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 2;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 
-.donut-center strong {
-  font-size: 17px;
+.donut-center-number {
+  font-size: 19px;
+  font-weight: 730;
 }
 
-.donut-center span {
-  font-size: 12px;
+.donut-center-label {
   color: var(--sub);
-  margin-top: 4px;
+  font-size: 10px;
+  margin-top: 2px;
 }
 
-.legend {
-  flex: 1;
+.category-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 11px;
 }
 
-.legend-item {
+.category-row {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 10px 1fr auto;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
 }
 
-.legend-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0;
-}
-
-.legend-dot {
-  width: 10px;
-  height: 10px;
+.category-dot {
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  flex: 0 0 10px;
 }
 
-.legend-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.category-name {
+  color: #505359;
 }
 
-.legend-value {
+.category-value {
   text-align: right;
-  white-space: nowrap;
-  color: #5E6165;
+  font-weight: 650;
 }
 
-.legend-percent {
+.category-percent {
+  color: var(--sub);
   margin-left: 5px;
-  color: var(--sub);
 }
 
 /* =========================
-   Trend
-========================= */
-
-.trend-card {
-  overflow: hidden;
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.chart-legend {
-  display: flex;
-  gap: 16px;
-  color: var(--sub);
-  font-size: 12px;
-}
-
-.chart-legend-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.chart-line {
-  width: 18px;
-  height: 3px;
-  border-radius: 3px;
-}
-
-.chart-area {
-  position: relative;
-  width: 100%;
-  height: 260px;
-  margin-top: 5px;
-}
-
-.chart-svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.chart-grid-line {
-  stroke: #EEEDE9;
-  stroke-width: 1;
-}
-
-.chart-axis-text {
-  fill: #888B90;
-  font-size: 11px;
-}
-
-.current-line {
-  fill: none;
-  stroke: var(--orange);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.previous-line {
-  fill: none;
-  stroke: var(--blue);
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.current-dot {
-  fill: white;
-  stroke: var(--orange);
-  stroke-width: 3;
-}
-
-.previous-dot {
-  fill: white;
-  stroke: var(--blue);
-  stroke-width: 3;
-}
-
-.chart-tooltip {
-  position: absolute;
-  pointer-events: none;
-  background: rgba(41,43,47,.94);
-  color: white;
-  padding: 8px 11px;
-  border-radius: 9px;
-  font-size: 12px;
-  line-height: 1.6;
-  display: none;
-  z-index: 10;
-  white-space: nowrap;
-}
-
-/* =========================
-   Bottom
-========================= */
-
-.bottom-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.store-card,
-.ai-detail-card {
-  padding: 25px 28px;
-  min-height: 300px;
-}
-
-/* =========================
-   Stores
+   Frequent Stores
 ========================= */
 
 .store-list {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 13px;
 }
 
 .store-row {
   display: grid;
-  grid-template-columns: 36px 1fr auto;
+  grid-template-columns: minmax(0,1fr) 72px 100px;
   align-items: center;
   gap: 12px;
-  padding: 11px 8px;
-  border-radius: 13px;
+  padding: 10px 0;
+  border-bottom: 1px solid #F1EFEA;
 }
 
-.store-row:hover {
-  background: #FAF9F6;
-}
-
-.store-rank {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: #F7F3EC;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--sub);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.store-info {
-  min-width: 0;
-}
-
-.store-main {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.store-row:last-child {
+  border-bottom: none;
 }
 
 .store-name {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 650;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.store-frequency {
-  color: var(--orange);
-  font-size: 15px;
-  font-weight: 650;
+.store-count {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 720;
   white-space: nowrap;
 }
 
-.store-amount {
-  text-align: right;
-  font-size: 15px;
-  font-weight: 650;
-}
-
-/* =========================
-   AI Detail
-========================= */
-
-.ai-detail-section {
-  margin-bottom: 15px;
-}
-
-.ai-detail-section:last-child {
-  margin-bottom: 0;
-}
-
-.ai-detail-label {
-  font-size: 13px;
-  font-weight: 650;
-  margin-bottom: 6px;
-}
-
-.ai-detail-text {
-  font-size: 13px;
-  color: #62656A;
-  line-height: 1.7;
-}
-
-.ai-focus {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.ai-focus-item {
-  flex: 1;
-  padding: 12px;
-  border-radius: 14px;
-  background: #FAF9F6;
-}
-
-.ai-focus-item strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.ai-focus-item span {
-  font-size: 12px;
+.store-count span {
   color: var(--sub);
+  font-size: 11px;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.store-total {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 /* =========================
    Details
 ========================= */
 
-.details-page {
-  display: none;
-}
-
 .details-summary {
   display: flex;
   gap: 14px;
-  margin-bottom: 18px;
+  margin-bottom: 17px;
 }
 
 .summary-box {
-  flex: 1;
-  background: white;
+  background: #fff;
   border: 1px solid var(--border);
-  border-radius: 17px;
-  padding: 17px 19px;
+  border-radius: 15px;
+  padding: 14px 18px;
+  min-width: 145px;
 }
 
 .summary-label {
+  font-size: 11px;
   color: var(--sub);
-  font-size: 12px;
 }
 
 .summary-value {
-  margin-top: 6px;
-  font-size: 22px;
-  font-weight: 650;
+  margin-top: 5px;
+  font-size: 19px;
+  font-weight: 720;
 }
 
 .filters {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 15px;
-  display: flex;
-  gap: 10px;
+  padding: 15px 17px;
   margin-bottom: 18px;
+  display: flex;
+  gap: 9px;
   flex-wrap: wrap;
 }
 
-.filter-input,
-.filter-select {
-  height: 39px;
-  border: 1px solid var(--border);
-  background: #FAF9F6;
-  border-radius: 11px;
-  padding: 0 12px;
-  color: var(--text);
-}
-
-.filter-search {
-  min-width: 230px;
-}
-
 .expense-group {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-.expense-date-title {
-  font-size: 14px;
-  font-weight: 650;
-  color: var(--sub);
-  margin: 0 0 9px 5px;
-}
-
-.expense-list {
-  background: white;
-  border-radius: 18px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-
-.expense-row {
-  display: grid;
-  grid-template-columns: 90px 1fr 150px 100px 70px;
-  align-items: center;
-  padding: 15px 18px;
-  border-bottom: 1px solid #F2F0EC;
-  gap: 12px;
-}
-
-.expense-row:last-child {
-  border-bottom: none;
-}
-
-.expense-time {
-  color: var(--sub);
+.expense-date {
   font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #5C5F64;
+}
+
+.expense-item {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 15px 17px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 8px;
+}
+
+.expense-main {
+  min-width: 0;
 }
 
 .expense-store {
-  font-weight: 600;
+  font-weight: 680;
   font-size: 14px;
 }
 
@@ -889,55 +509,70 @@ button {
   color: var(--sub);
   font-size: 12px;
   margin-top: 4px;
-}
-
-.expense-amount {
-  font-weight: 650;
-  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .expense-category {
-  text-align: center;
-  font-size: 12px;
   color: var(--sub);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.expense-amount {
+  font-size: 15px;
+  font-weight: 720;
+  white-space: nowrap;
 }
 
 .edit-btn {
-  border: none;
-  background: #F5F3EE;
-  color: #62656A;
+  border: 1px solid var(--border);
+  background: #fff;
   border-radius: 9px;
-  padding: 7px 8px;
-  font-size: 12px;
+  padding: 7px 10px;
+  font-size: 11px;
+  color: #5B5E63;
+}
+
+.edit-btn:hover {
+  background: #F8F7F4;
+}
+
+.empty {
+  padding: 70px 20px;
+  text-align: center;
+  color: var(--sub);
+  font-size: 13px;
 }
 
 /* =========================
    Modal
 ========================= */
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(41,43,47,.28);
-  backdrop-filter: blur(4px);
+.modal-backdrop {
   display: none;
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  background: rgba(30,30,30,.32);
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  padding: 20px;
 }
 
-.modal-overlay.show {
+.modal-backdrop.show {
   display: flex;
 }
 
 .modal {
-  width: min(600px, calc(100vw - 30px));
-  max-height: calc(100vh - 40px);
+  width: min(560px, 100%);
+  max-height: 90vh;
   overflow-y: auto;
-  background: white;
-  border-radius: 24px;
-  padding: 28px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.16);
+  background: #fff;
+  border-radius: 23px;
+  padding: 25px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.18);
 }
 
 .modal-header {
@@ -947,18 +582,18 @@ button {
   margin-bottom: 22px;
 }
 
-.modal-header h2 {
-  margin: 0;
-  font-size: 21px;
+.modal-title {
+  font-size: 19px;
+  font-weight: 740;
 }
 
 .close-btn {
   border: none;
-  background: #F5F3EE;
+  background: #F4F2EE;
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  font-size: 18px;
+  color: #666;
 }
 
 .form-grid {
@@ -970,54 +605,84 @@ button {
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: 6px;
 }
 
 .form-group.full {
   grid-column: 1 / -1;
 }
 
-.form-group label {
-  font-size: 12px;
+.form-label {
+  font-size: 11px;
   color: var(--sub);
 }
 
-.form-group input,
-.form-group select {
-  height: 43px;
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0 12px;
-  background: #FCFBF9;
-  color: var(--text);
+  background: #fff;
+  border-radius: 11px;
+  padding: 10px 11px;
   outline: none;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
   border-color: var(--orange);
 }
 
-.modal-footer {
+.form-textarea {
+  min-height: 72px;
+  resize: vertical;
+}
+
+.modal-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 23px;
 }
 
-.footer-right {
+.modal-actions-right {
   display: flex;
   gap: 9px;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--rose);
+  font-size: 12px;
+}
+
+.cancel-btn {
+  border: 1px solid var(--border);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 15px;
+}
+
+.save-btn {
+  border: none;
+  background: var(--orange);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 17px;
+  font-weight: 650;
 }
 
 /* =========================
    Loading
 ========================= */
 
-.loading-card {
-  padding: 50px;
+.loading {
+  padding: 70px;
   text-align: center;
   color: var(--sub);
+  font-size: 13px;
 }
 
 /* =========================
@@ -1028,30 +693,7 @@ button {
   display: none;
 }
 
-@media (max-width: 1050px) {
-
-  .sidebar {
-    width: 220px;
-  }
-
-  .main {
-    margin-left: 220px;
-    width: calc(100% - 220px);
-  }
-
-  .hero-grid,
-  .dashboard-grid,
-  .bottom-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .hero-decoration {
-    right: 50px;
-  }
-}
-
-@media (max-width: 720px) {
-
+@media (max-width: 900px) {
   .sidebar {
     display: none;
   }
@@ -1059,69 +701,106 @@ button {
   .main {
     margin-left: 0;
     width: 100%;
-    padding: 16px;
-    padding-bottom: 85px;
+    padding: 20px 16px 90px;
   }
 
-  .topbar {
-    display: none;
-  }
-
-  .page-title {
-    margin-top: 5px;
-  }
-
-  .page-title h1 {
-    font-size: 24px;
-  }
-
-  .hero {
-    min-height: 230px;
-    padding: 23px;
-  }
-
-  .hero-total {
-    font-size: 40px;
-  }
-
-  .hero-decoration {
-    display: none;
-  }
-
-  .ai-insights {
+  .overview-top,
+  .overview-grid {
     grid-template-columns: 1fr;
   }
 
-  .structure-content {
-    flex-direction: column;
+  .topbar {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .top-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .overview-top {
+    gap: 12px;
+  }
+
+  .hero-card {
+    min-height: 165px;
+  }
+
+  .ai-card {
+    min-height: 200px;
+  }
+
+  .mobile-nav {
+    position: fixed;
+    z-index: 90;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background: rgba(255,255,255,.94);
+    border: 1px solid var(--border);
+    box-shadow: 0 10px 35px rgba(0,0,0,.1);
+    border-radius: 18px;
+    padding: 7px;
+  }
+
+  .mobile-nav button {
+    border: none;
+    background: transparent;
+    padding: 10px 4px;
+    border-radius: 12px;
+    color: var(--sub);
+    font-size: 11px;
+  }
+
+  .mobile-nav button.active {
+    background: #FFF1E8;
+    color: #C96838;
+    font-weight: 650;
+  }
+
+  .expense-item {
+    grid-template-columns: 1fr auto;
+  }
+
+  .expense-category {
+    display: none;
+  }
+
+  .structure-layout {
+    grid-template-columns: 145px 1fr;
+    gap: 8px;
   }
 
   .donut-wrap {
-    width: 190px;
-    height: 190px;
-    flex-basis: 190px;
+    width: 135px;
+    height: 135px;
   }
 
-  .dashboard-grid,
-  .bottom-grid {
-    gap: 14px;
+  .store-row {
+    grid-template-columns: minmax(0,1fr) 62px 90px;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 600px) {
+  .page-title {
+    font-size: 23px;
   }
 
-  .details-summary {
-    flex-wrap: wrap;
+  .topbar {
+    display: block;
   }
 
-  .summary-box {
-    min-width: calc(50% - 7px);
+  .top-actions {
+    margin-top: 15px;
+    justify-content: flex-start;
   }
 
-  .expense-row {
-    grid-template-columns: 60px 1fr auto;
-  }
-
-  .expense-category,
-  .edit-btn {
-    display: none;
+  .top-actions .add-btn {
+    flex: 1;
   }
 
   .form-grid {
@@ -1132,42 +811,12 @@ button {
     grid-column: auto;
   }
 
-  .mobile-nav {
-    position: fixed;
-    display: flex;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 67px;
-    background: rgba(255,255,255,.96);
-    border-top: 1px solid var(--border);
-    z-index: 90;
-    justify-content: space-around;
-    align-items: center;
+  .structure-layout {
+    grid-template-columns: 1fr;
   }
 
-  .mobile-nav button {
-    border: none;
-    background: none;
-    color: var(--sub);
-    font-size: 11px;
-  }
-
-  .mobile-nav button.active {
-    color: var(--orange);
-    font-weight: 600;
-  }
-
-  .mobile-add {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    border: none;
-    background: var(--orange);
-    color: white;
-    font-size: 23px;
-    margin-top: -23px;
-    box-shadow: 0 6px 18px rgba(233,139,92,.25);
+  .donut-wrap {
+    margin-bottom: 8px;
   }
 }
 </style>
@@ -1177,105 +826,49 @@ button {
 
 <div class="app">
 
-  <!-- =========================
-       Sidebar
-  ========================== -->
-
   <aside class="sidebar">
-
     <div class="brand">
-      <span class="brand-icon">☀️</span>
-      <span>My Finance</span>
+      <div class="brand-title">My Finance</div>
+      <div class="brand-sub">Personal Finance Workbench</div>
     </div>
 
     <nav class="nav">
-
-      <button
-        id="navOverview"
-        class="active"
-        type="button"
-        onclick="showPage('overview')">
-
-        <span class="nav-icon">⌂</span>
+      <button id="navOverview" class="active" onclick="showPage('overview')">
         全年纵览
-
       </button>
 
-      <button
-        id="navDetails"
-        type="button"
-        onclick="showPage('details')">
-
-        <span class="nav-icon">☷</span>
+      <button id="navDetails" onclick="showPage('details')">
         花销明细
-
       </button>
-
     </nav>
-
-
-    <div class="quick-title">
-      快捷入口
-    </div>
-
-
-    <div class="quick-actions">
-
-      <button
-        type="button"
-        class="quick-btn voice"
-        onclick="openAddModal()">
-
-        <span class="quick-icon">🎙</span>
-        <span>语音记账</span>
-
-      </button>
-
-
-      <button
-        type="button"
-        class="quick-btn photo"
-        onclick="openAddModal()">
-
-        <span class="quick-icon">📷</span>
-        <span>拍小票</span>
-
-      </button>
-
-
-      <button
-        type="button"
-        class="quick-btn manual"
-        onclick="openAddModal()">
-
-        <span class="quick-icon">✎</span>
-        <span>手动输入</span>
-
-      </button>
-
-    </div>
-
   </aside>
-
-
-  <!-- =========================
-       Main
-  ========================== -->
 
   <main class="main">
 
     <div class="topbar">
 
-      <div class="search-box">
-        <span>⌕</span>
-        搜索店铺、内容、分类...
+      <div>
+        <div class="page-title" id="pageTitle">全年纵览</div>
+        <div class="page-subtitle" id="pageSubtitle">
+          看见你的钱都花在哪里
+        </div>
       </div>
 
-      <div style="font-size:20px;">♧</div>
-      <div style="font-size:21px;">👤</div>
+      <div class="top-actions">
+
+        <select
+          id="overviewYear"
+          class="year-select"
+          onchange="changeOverviewYear()">
+        </select>
+
+        <button class="add-btn" onclick="openAddModal()">
+          ＋ 添加花销
+        </button>
+
+      </div>
 
     </div>
-
 
     <!-- =========================
          Overview
@@ -1283,387 +876,115 @@ button {
 
     <section id="overviewPage">
 
-      <div class="page-title">
+      <div class="overview-top">
 
-        <h1>全年纵览</h1>
+        <div class="card hero-card">
 
-        <div
-          style="
-            display:flex;
-            align-items:center;
-            gap:12px;
-          ">
+          <div class="hero-label">年度总支出</div>
 
-          <select
-            id="yearSelect"
-            class="year-select">
-          </select>
-
-
-          <button
-            type="button"
-            class="primary-btn"
-            onclick="openAddModal()">
-
-            ＋ 添加花销
-
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <!-- Hero + AI -->
-
-      <div class="hero-grid">
-
-        <div class="card hero">
-
-          <div
-            class="hero-year"
-            id="heroYear">
-            2026
+          <div class="hero-total">
+            <span id="annualTotal">¥0</span>
           </div>
 
-          <div
-            class="hero-total"
-            id="annualTotal">
-            ¥0
-          </div>
+          <div class="hero-meta">
 
-          <div class="hero-label">
-            今年累计支出
-          </div>
+            <div class="hero-meta-item">
+              <strong id="monthlyAverage">¥0</strong>
+              月均支出
+            </div>
 
-          <div
-            class="hero-change"
-            id="annualChange">
-            —
-          </div>
+            <div class="hero-meta-item">
+              <strong id="activeMonths">0</strong>
+              有消费月份
+            </div>
 
-          <div class="hero-decoration">
-            每一笔花销<br>
-            都是生活的注脚
+            <div class="hero-meta-item">
+              <strong id="annualCount">0</strong>
+              笔消费
+            </div>
+
           </div>
 
         </div>
-
 
         <div class="card ai-card">
 
           <div class="ai-heading">
-
-            <h2>
-              ✦ AI 年度总结
-            </h2>
-
-            <span class="ai-badge">
-              自动分析
-            </span>
-
+            <div class="ai-title">AI 年度总结</div>
+            <div class="ai-badge">AI Insight</div>
           </div>
 
-
-          <div
-            class="ai-summary"
-            id="aiSummary">
-            正在分析你的年度消费数据……
-          </div>
-
-
-          <div class="ai-insights">
-
-            <div class="ai-insight orange">
-
-              <div class="ai-insight-title">
-                最大支出类别
-              </div>
-
-              <div
-                class="ai-insight-value"
-                id="aiTopCategory">
-                —
-              </div>
-
-            </div>
-
-
-            <div class="ai-insight blue">
-
-              <div class="ai-insight-title">
-                消费最多月份
-              </div>
-
-              <div
-                class="ai-insight-value"
-                id="aiTopMonth">
-                —
-              </div>
-
-            </div>
-
-
-            <div class="ai-insight yellow">
-
-              <div class="ai-insight-title">
-                最常去店铺
-              </div>
-
-              <div
-                class="ai-insight-value"
-                id="aiTopStore">
-                —
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div
-            class="ai-advice"
-            id="aiAdvice">
-            💡 正在生成年度消费建议……
+          <div id="aiSummary" class="ai-content">
+            正在整理你的年度消费情况……
           </div>
 
         </div>
 
       </div>
 
+      <div class="overview-grid">
 
-      <!-- Structure + Trend -->
+        <!-- 支出结构 -->
+        <div class="card overview-card">
 
-      <div class="dashboard-grid">
-
-        <div class="card structure-card">
-
-          <div class="card-title">
-
-            <h2>
-              消费结构
-            </h2>
-
-            <small>
-              全年
-            </small>
-
+          <div class="section-title">
+            支出结构
           </div>
 
-
-          <div class="structure-content">
+          <div class="structure-layout">
 
             <div class="donut-wrap">
-
-              <div
-                class="donut"
-                id="donutChart">
-              </div>
+              <canvas id="donutChart" width="165" height="165"></canvas>
 
               <div class="donut-center">
-
-                <strong id="donutTotal">
+                <div class="donut-center-number" id="donutTotal">
                   ¥0
-                </strong>
-
-                <span>
-                  总支出
-                </span>
-
+                </div>
+                <div class="donut-center-label">
+                  年度支出
+                </div>
               </div>
-
             </div>
 
-
-            <div
-              class="legend"
-              id="categoryLegend">
-            </div>
+            <div id="categoryList" class="category-list"></div>
 
           </div>
 
         </div>
 
+        <!-- 月度趋势 -->
+        <div class="card overview-card">
 
-        <div class="card trend-card">
-
-          <div class="chart-header">
-
-            <div class="card-title"
-                 style="margin-bottom:0;">
-
-              <h2>
-                月度支出趋势
-              </h2>
-
-            </div>
-
-
-            <div class="chart-legend">
-
-              <div class="chart-legend-item">
-
-                <span
-                  class="chart-line"
-                  style="background:var(--orange);">
-                </span>
-
-                今年
-
-              </div>
-
-
-              <div class="chart-legend-item">
-
-                <span
-                  class="chart-line"
-                  style="background:var(--blue);">
-                </span>
-
-                去年
-
-              </div>
-
-            </div>
-
+          <div class="section-title">
+            月度支出趋势
           </div>
 
-
-          <div class="chart-area">
-
-            <svg
-              id="trendSvg"
-              class="chart-svg"
-              viewBox="0 0 700 250"
-              preserveAspectRatio="none">
-            </svg>
-
-            <div
-              id="chartTooltip"
-              class="chart-tooltip">
-            </div>
-
+          <div class="chart-wrap">
+            <canvas id="trendChart"></canvas>
           </div>
 
         </div>
 
-      </div>
+        <!-- 常去的店铺 -->
+        <div class="card overview-card">
 
-
-      <!-- Stores + AI Detail -->
-
-      <div class="bottom-grid">
-
-        <div class="card store-card">
-
-          <div class="card-title">
-
-            <h2>
-              常去的店铺
-            </h2>
-
-            <small>
-              按消费次数
-            </small>
-
+          <div class="section-title">
+            常去的店铺
           </div>
 
-
-          <div
-            id="storeList"
-            class="store-list">
-          </div>
+          <div id="storeList" class="store-list"></div>
 
         </div>
 
+        <!-- 空间给未来扩展 / 年度摘要 -->
+        <div class="card overview-card">
 
-        <div class="card ai-detail-card">
-
-          <div class="card-title">
-
-            <h2>
-              今年值得关注的消费
-            </h2>
-
-            <small>
-              AI 分析
-            </small>
-
+          <div class="section-title">
+            年度概览
           </div>
 
-
-          <div class="ai-detail-section">
-
-            <div class="ai-detail-label">
-              📊 消费特点
-            </div>
-
-            <div
-              class="ai-detail-text"
-              id="aiDetail1">
-              —
-            </div>
-
-          </div>
-
-
-          <div class="ai-detail-section">
-
-            <div class="ai-detail-label">
-              🔎 值得关注
-            </div>
-
-            <div
-              class="ai-detail-text"
-              id="aiDetail2">
-              —
-            </div>
-
-          </div>
-
-
-          <div class="ai-detail-section">
-
-            <div class="ai-detail-label">
-              💡 建议
-            </div>
-
-            <div
-              class="ai-detail-text"
-              id="aiDetail3">
-              —
-            </div>
-
-          </div>
-
-
-          <div class="ai-focus">
-
-            <div class="ai-focus-item">
-
-              <strong id="focusCategory">
-                —
-              </strong>
-
-              <span>
-                最大支出类别
-              </span>
-
-            </div>
-
-
-            <div class="ai-focus-item">
-
-              <strong id="focusStore">
-                —
-              </strong>
-
-              <span>
-                最高频店铺
-              </span>
-
-            </div>
-
+          <div id="annualOverviewText"
+               style="color:#74777C;font-size:13px;line-height:1.8;">
           </div>
 
         </div>
@@ -1672,77 +993,38 @@ button {
 
     </section>
 
-
     <!-- =========================
          Details
     ========================== -->
 
-    <section
-      id="detailsPage"
-      class="details-page">
-
-      <div class="page-title">
-
-        <h1>
-          花销明细
-        </h1>
-
-        <button
-          type="button"
-          class="primary-btn"
-          onclick="openAddModal()">
-
-          ＋ 添加花销
-
-        </button>
-
-      </div>
-
+    <section id="detailsPage" style="display:none;">
 
       <div class="details-summary">
 
         <div class="summary-box">
-
-          <div class="summary-label">
-            当前筛选支出
-          </div>
-
-          <div
-            class="summary-value"
-            id="filteredTotal">
-            ¥0
-          </div>
-
+          <div class="summary-label">筛选后支出</div>
+          <div class="summary-value" id="detailsTotal">¥0</div>
         </div>
 
-
         <div class="summary-box">
-
-          <div class="summary-label">
-            记录笔数
-          </div>
-
-          <div
-            class="summary-value"
-            id="filteredCount">
-            0
-          </div>
-
+          <div class="summary-label">记录数</div>
+          <div class="summary-value" id="detailsCount">0</div>
         </div>
 
       </div>
 
+      <div class="card filters">
 
-      <div class="filters">
+        <!-- 花销明细自己的年份 Filter -->
+        <select id="detailsYear"
+                class="filter-select"
+                onchange="renderDetails()">
+        </select>
 
-        <select
-          id="filterMonth"
-          class="filter-select">
-
-          <option value="">
-            全部月份
-          </option>
-
+        <select id="detailsMonth"
+                class="filter-select"
+                onchange="renderDetails()">
+          <option value="all">全部月份</option>
           <option value="1">1月</option>
           <option value="2">2月</option>
           <option value="3">3月</option>
@@ -1755,245 +1037,166 @@ button {
           <option value="10">10月</option>
           <option value="11">11月</option>
           <option value="12">12月</option>
-
         </select>
 
-
-        <select
-          id="filterCategory"
-          class="filter-select">
-
-          <option value="">
-            全部大项目
-          </option>
-
+        <select id="detailsCategory"
+                class="filter-select"
+                onchange="renderDetails()">
+          <option value="all">全部大项目</option>
         </select>
-
 
         <input
-          id="filterSearch"
-          class="filter-input filter-search"
-          placeholder="搜索店铺 / 内容..."
-          type="search">
+          id="detailsSearch"
+          class="search-input"
+          placeholder="搜索店铺 / 内容"
+          oninput="renderDetails()"
+        >
 
       </div>
 
-
-      <div id="expenseContainer"></div>
+      <div id="detailsList"></div>
 
     </section>
 
   </main>
-
 </div>
 
-
-<!-- =========================
-     Mobile Nav
-========================= -->
+<!-- Mobile Navigation -->
 
 <div class="mobile-nav">
 
-  <button
-    id="mobileOverview"
-    class="active"
-    type="button"
-    onclick="showPage('overview')">
-
-    ⌂<br>
+  <button id="mobileOverview"
+          class="active"
+          onclick="showPage('overview')">
     全年纵览
-
   </button>
 
-
-  <button
-    type="button"
-    onclick="openAddModal()"
-    class="mobile-add">
-
-    ＋
-
-  </button>
-
-
-  <button
-    id="mobileDetails"
-    type="button"
-    onclick="showPage('details')">
-
-    ☷<br>
+  <button id="mobileDetails"
+          onclick="showPage('details')">
     花销明细
+  </button>
 
+  <button onclick="openAddModal()">
+    ＋ 添加
   </button>
 
 </div>
 
 
 <!-- =========================
-     Modal
-========================= -->
+     Add / Edit Modal
+========================== -->
 
-<div
-  id="modalOverlay"
-  class="modal-overlay">
+<div id="modalBackdrop" class="modal-backdrop">
 
   <div class="modal">
 
     <div class="modal-header">
 
-      <h2 id="modalTitle">
+      <div class="modal-title" id="modalTitle">
         添加花销
-      </h2>
+      </div>
 
-      <button
-        type="button"
-        class="close-btn"
-        onclick="closeModal()">
-
+      <button class="close-btn" onclick="closeModal()">
         ×
-
       </button>
 
     </div>
 
-
     <div class="form-grid">
 
       <div class="form-group">
-
-        <label>
-          日期
-        </label>
-
+        <label class="form-label">日期</label>
         <input
           id="formDate"
+          class="form-input"
           type="datetime-local">
-
       </div>
 
-
       <div class="form-group">
-
-        <label>
-          店舗
-        </label>
-
+        <label class="form-label">店铺</label>
         <input
           id="formStore"
-          type="text"
-          placeholder="例如：無印良品">
-
+          class="form-input"
+          type="text">
       </div>
 
-
       <div class="form-group">
-
-        <label>
-          金额
-        </label>
-
+        <label class="form-label">金额</label>
         <input
           id="formAmount"
+          class="form-input"
           type="number"
-          step="0.01"
-          min="0"
-          placeholder="0">
-
+          step="0.01">
       </div>
 
-
       <div class="form-group">
-
-        <label>
-          支払方法
-        </label>
+        <label class="form-label">支付方法</label>
 
         <select
-          id="formPayment">
+          id="formPayment"
+          class="form-select">
+          <option value="">请选择</option>
         </select>
 
       </div>
 
-
       <div class="form-group">
-
-        <label>
-          大項目
-        </label>
+        <label class="form-label">大项目</label>
 
         <select
-          id="formLarge">
+          id="formLarge"
+          class="form-select">
+          <option value="">请选择</option>
         </select>
 
       </div>
 
-
       <div class="form-group">
-
-        <label>
-          中項目
-        </label>
+        <label class="form-label">中项目</label>
 
         <select
-          id="formMiddle">
+          id="formMiddle"
+          class="form-select">
+          <option value="">请选择</option>
         </select>
 
       </div>
-
 
       <div class="form-group full">
+        <label class="form-label">内容</label>
 
-        <label>
-          内容
-        </label>
-
-        <input
+        <textarea
           id="formContent"
-          type="text"
-          placeholder="例如：沐浴球、午餐、猫粮等">
+          class="form-textarea">
+        </textarea>
 
       </div>
 
     </div>
 
+    <div class="modal-actions">
 
-    <div class="modal-footer">
+      <button
+        id="deleteButton"
+        class="delete-btn"
+        onclick="deleteCurrentExpense()"
+        style="display:none;">
+        删除这笔记录
+      </button>
 
-      <div>
-
-        <button
-          id="deleteBtn"
-          type="button"
-          class="danger-btn"
-          style="display:none;"
-          onclick="deleteCurrentExpense()">
-
-          删除
-
-        </button>
-
-      </div>
-
-
-      <div class="footer-right">
+      <div class="modal-actions-right">
 
         <button
-          type="button"
-          class="secondary-btn"
+          class="cancel-btn"
           onclick="closeModal()">
-
           取消
-
         </button>
 
-
         <button
-          type="button"
-          class="primary-btn"
+          class="save-btn"
           onclick="saveCurrentExpense()">
-
           保存
-
         </button>
 
       </div>
@@ -2008,12 +1211,7 @@ button {
 <script>
 
 /* =========================================================
-   My Finance v4.2
-========================================================= */
-
-
-/* =========================================================
-   1. API
+   CONFIG
 ========================================================= */
 
 const API_URL =
@@ -2021,278 +1219,135 @@ const API_URL =
 
 
 /* =========================================================
-   2. Global
+   GLOBAL DATA
 ========================================================= */
 
 let expenses = [];
 
+/*
+ * Settings 只在页面打开时读取一次。
+ *
+ * 后续新增 / 编辑 / Filter 都使用这一份 settings。
+ */
 let settings = {
-  payments: [],
-  large: [],
-  middle: [],
+  paymentMethods: [],
+  largeCategories: [],
+  middleCategories: [],
   rules: []
 };
 
-let editingRow = null;
-let filtersInitialized = false;
 let currentPage = 'overview';
+let currentOverviewYear = new Date().getFullYear();
+let editingRowNumber = null;
 
 
 /* =========================================================
-   3. Helpers
+   INIT
 ========================================================= */
 
-function yen(value) {
-
-  return '¥' + Number(value || 0)
-    .toLocaleString('ja-JP', {
-      maximumFractionDigits: 0
-    });
-
-}
-
-
-function escapeHtml(value) {
-
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-
-}
-
-
-function parseDate(value) {
-
-  if (!value) return null;
-
-  if (value instanceof Date) {
-    return value;
-  }
-
-  const text = String(value);
-
-  let d = new Date(text);
-
-  if (!isNaN(d.getTime())) {
-    return d;
-  }
-
-  d = new Date(
-    text.replace(/\//g, '-').replace(' ', 'T')
-  );
-
-  if (!isNaN(d.getTime())) {
-    return d;
-  }
-
-  return null;
-
-}
-
-
-function formatDateInput(value) {
-
-  const d = parseDate(value);
-
-  if (!d) return '';
-
-  const pad = n =>
-    String(n).padStart(2, '0');
-
-  return (
-    `${d.getFullYear()}-` +
-    `${pad(d.getMonth() + 1)}-` +
-    `${pad(d.getDate())}T` +
-    `${pad(d.getHours())}:` +
-    `${pad(d.getMinutes())}`
-  );
-
-}
-
-
-function getYear(expense) {
-
-  const d =
-    parseDate(expense['日付']);
-
-  return d
-    ? d.getFullYear()
-    : null;
-
-}
-
-
-function getMonth(expense) {
-
-  const d =
-    parseDate(expense['日付']);
-
-  return d
-    ? d.getMonth() + 1
-    : null;
-
-}
-
-
-function isIncluded(expense) {
-
-  return Number(
-    expense['計算対象']
-  ) === 1;
-
-}
-
-
-function totalOf(list) {
-
-  return list.reduce(
-    (sum, expense) =>
-      sum + Number(
-        expense['金額'] || 0
-      ),
-    0
-  );
-
-}
-
-
-/* =========================================================
-   4. API GET with Retry
-========================================================= */
-
-async function fetchJson(url, options = {}, retries = 3) {
-
-  let lastError = null;
-
-  for (
-    let attempt = 0;
-    attempt < retries;
-    attempt++
-  ) {
-
-    try {
-
-      const response =
-        await fetch(
-          url,
-          {
-            ...options,
-            cache: 'no-store'
-          }
-        );
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          `HTTP ${response.status}`
-        );
-
-      }
-
-
-      const data =
-        await response.json();
-
-
-      return data;
-
-    } catch (error) {
-
-      lastError = error;
-
-      console.warn(
-        `API request failed, retry ${attempt + 1}/${retries}`,
-        error
-      );
-
-
-      if (
-        attempt <
-        retries - 1
-      ) {
-
-        await new Promise(
-          resolve =>
-            setTimeout(
-              resolve,
-              700 * (attempt + 1)
-            )
-        );
-
-      }
-
-    }
-
-  }
-
-
-  throw lastError ||
-    new Error('API request failed');
-
-}
-
-
-/* =========================================================
-   5. Load Data
-========================================================= */
-
-async function loadData() {
+document.addEventListener('DOMContentLoaded', async () => {
 
   try {
 
-    const data =
-      await fetchJson(
-        API_URL +
-        '?action=all'
-      );
+    await loadAllData();
 
-
-    if (!data ||
-        data.success === false) {
-
-      throw new Error(
-        data?.error ||
-        '数据读取失败'
-      );
-
-    }
-
-
-    expenses =
-      Array.isArray(data.expenses)
-        ? data.expenses
-        : [];
-
-
-    settings =
-      normalizeSettings(
-        data.settings
-      );
-
-
-    initializeYearSelect();
-
-    initializeSettings();
-
-    initializeDetailFilters();
+    initializeYearFilters();
 
     renderAll();
 
-
   } catch (error) {
 
-    console.error(
-      'My Finance load error:',
-      error
+    console.error(error);
+
+    alert(
+      '读取数据失败。\n\n' +
+      '请确认 Apps Script Web App 是否正常部署。\n\n' +
+      error.message
+    );
+
+  }
+
+});
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+async function loadAllData() {
+
+  /*
+   * 只在页面打开的时候请求一次。
+   *
+   * action=all
+   * → expenses
+   * → settings
+   */
+
+  const response = await fetch(
+    API_URL + '?action=all',
+    {
+      method: 'GET',
+      cache: 'no-store'
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      'Apps Script HTTP Error: ' + response.status
+    );
+  }
+
+  const data = await response.json();
+
+  if (data.success === false) {
+    throw new Error(
+      data.error || 'Apps Script 返回失败'
+    );
+  }
+
+  /*
+   * Expenses
+   */
+
+  expenses =
+    Array.isArray(data.expenses)
+      ? data.expenses
+      : [];
+
+
+  /*
+   * Settings
+   *
+   * 兼容 Apps Script 不同返回结构。
+   */
+
+  settings =
+    normalizeSettings(
+      data.settings ||
+      data.setting ||
+      data.config ||
+      data
     );
 
 
-    showLoadError(
-      error
+  console.log('Expenses:', expenses);
+  console.log('Settings:', settings);
+
+
+  /*
+   * 如果 Settings 没有读到任何东西，
+   * 直接提示，而不是让下拉框静默变成空白。
+   */
+
+  if (
+    settings.paymentMethods.length === 0 &&
+    settings.largeCategories.length === 0 &&
+    settings.middleCategories.length === 0
+  ) {
+
+    console.warn(
+      '没有从 Apps Script 读取到設定数据。'
     );
 
   }
@@ -2301,199 +1356,547 @@ async function loadData() {
 
 
 /* =========================================================
-   6. Normalize Settings
+   SETTINGS NORMALIZER
 ========================================================= */
 
 function normalizeSettings(raw) {
 
-  raw = raw || {};
-
-
-  const result = {
-
-    payments: [],
-    large: [],
-    middle: [],
+  let result = {
+    paymentMethods: [],
+    largeCategories: [],
+    middleCategories: [],
     rules: []
-
   };
 
 
-  if (Array.isArray(raw.payments)) {
-    result.payments = raw.payments;
+  /*
+   * 情况 1：
+   *
+   * {
+   *   paymentMethods: [],
+   *   largeCategories: [],
+   *   middleCategories: [],
+   *   rules: []
+   * }
+   */
+
+  if (raw && typeof raw === 'object') {
+
+    result.paymentMethods =
+      firstArray(
+        raw.paymentMethods,
+        raw.payments,
+        raw.payment,
+        raw.支払方法
+      );
+
+    result.largeCategories =
+      firstArray(
+        raw.largeCategories,
+        raw.categories,
+        raw.large,
+        raw.大項目
+      );
+
+    result.middleCategories =
+      firstArray(
+        raw.middleCategories,
+        raw.subcategories,
+        raw.middle,
+        raw.中項目
+      );
+
+    result.rules =
+      firstArray(
+        raw.rules,
+        raw.規則
+      );
+
   }
 
 
-  if (Array.isArray(raw.large)) {
-    result.large = raw.large;
+  /*
+   * 情况 2：
+   *
+   * Apps Script 返回：
+   *
+   * settings: [
+   *   {
+   *     paymentMethod: ...,
+   *     largeCategory: ...,
+   *     middleCategory: ...,
+   *     rule: ...
+   *   }
+   * ]
+   */
+
+  const rows =
+    Array.isArray(raw)
+      ? raw
+      : (
+          Array.isArray(raw?.rows)
+            ? raw.rows
+            : null
+        );
+
+  if (rows) {
+
+    const payments = [];
+    const larges = [];
+    const middles = [];
+    const rules = [];
+
+    rows.forEach(row => {
+
+      if (Array.isArray(row)) {
+
+        const payment = row[0];
+        const large = row[1];
+        const middle = row[2];
+        const rule = row[3];
+
+        if (payment) payments.push(String(payment));
+        if (large) larges.push(String(large));
+
+        if (large && middle) {
+
+          middles.push({
+            large: String(large),
+            middle: String(middle)
+          });
+
+        }
+
+        if (rule) {
+
+          rules.push({
+            payment: payment
+              ? String(payment)
+              : '',
+            large: large
+              ? String(large)
+              : '',
+            middle: middle
+              ? String(middle)
+              : '',
+            rule: String(rule)
+          });
+
+        }
+
+      } else if (
+        row &&
+        typeof row === 'object'
+      ) {
+
+        const payment =
+          row.paymentMethod ??
+          row.payment ??
+          row['支払方法'];
+
+        const large =
+          row.largeCategory ??
+          row.large ??
+          row['大項目'];
+
+        const middle =
+          row.middleCategory ??
+          row.middle ??
+          row['中項目'];
+
+        const rule =
+          row.rule ??
+          row['規則'];
+
+        if (payment) payments.push(String(payment));
+        if (large) larges.push(String(large));
+
+        if (large && middle) {
+
+          middles.push({
+            large: String(large),
+            middle: String(middle)
+          });
+
+        }
+
+        if (rule) {
+
+          rules.push({
+            payment: payment
+              ? String(payment)
+              : '',
+            large: large
+              ? String(large)
+              : '',
+            middle: middle
+              ? String(middle)
+              : '',
+            rule: String(rule)
+          });
+
+        }
+
+      }
+
+    });
+
+    if (result.paymentMethods.length === 0) {
+      result.paymentMethods = payments;
+    }
+
+    if (result.largeCategories.length === 0) {
+      result.largeCategories = larges;
+    }
+
+    if (result.middleCategories.length === 0) {
+      result.middleCategories = middles;
+    }
+
+    if (result.rules.length === 0) {
+      result.rules = rules;
+    }
+
   }
 
 
-  if (Array.isArray(raw.middle)) {
-    result.middle = raw.middle;
+  /*
+   * 去重
+   */
+
+  result.paymentMethods =
+    uniqueStrings(result.paymentMethods);
+
+  result.largeCategories =
+    uniqueStrings(result.largeCategories);
+
+
+  /*
+   * 中项目既可能是：
+   *
+   * ["食料品", "外食(ご飯)"]
+   *
+   * 也可能是：
+   *
+   * [
+   *   {large:"食費",middle:"食料品"}
+   * ]
+   */
+
+  if (
+    result.middleCategories.length &&
+    typeof result.middleCategories[0] === 'string'
+  ) {
+
+    result.middleCategories =
+      uniqueStrings(
+        result.middleCategories
+      );
+
+  } else {
+
+    const unique = [];
+
+    result.middleCategories.forEach(item => {
+
+      if (!item) return;
+
+      const large =
+        item.large ??
+        item.largeCategory ??
+        item['大項目'] ??
+        '';
+
+      const middle =
+        item.middle ??
+        item.middleCategory ??
+        item['中項目'] ??
+        '';
+
+      if (!middle) return;
+
+      const exists =
+        unique.some(
+          x =>
+            x.large === String(large) &&
+            x.middle === String(middle)
+        );
+
+      if (!exists) {
+
+        unique.push({
+          large: String(large),
+          middle: String(middle)
+        });
+
+      }
+
+    });
+
+    result.middleCategories = unique;
+
   }
-
-
-  if (Array.isArray(raw.rules)) {
-    result.rules = raw.rules;
-  }
-
 
   return result;
 
 }
 
 
-function showLoadError(error) {
+function firstArray(...values) {
 
-  const message =
-    '读取数据失败。' +
-    '正在尝试重新连接，请稍后刷新页面。';
+  for (const value of values) {
 
-
-  document.getElementById(
-    'overviewPage'
-  ).innerHTML = `
-
-    <div class="card loading-card">
-
-      <div style="font-size:34px;margin-bottom:15px;">
-        ☁️
-      </div>
-
-      <div style="font-size:16px;margin-bottom:8px;">
-        ${message}
-      </div>
-
-      <div
-        style="
-          font-size:12px;
-          color:var(--sub);
-          margin-bottom:20px;
-        ">
-
-        ${escapeHtml(
-          error?.message || ''
-        )}
-
-      </div>
-
-      <button
-        type="button"
-        class="primary-btn"
-        onclick="location.reload()">
-
-        重新读取
-
-      </button>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   7. Year
-========================================================= */
-
-function initializeYearSelect() {
-
-  const select =
-    document.getElementById(
-      'yearSelect'
-    );
-
-
-  const years =
-    new Set();
-
-
-  expenses.forEach(
-    expense => {
-
-      const year =
-        getYear(expense);
-
-      if (year) {
-        years.add(year);
-      }
-
+    if (Array.isArray(value)) {
+      return [...value];
     }
-  );
-
-
-  const now =
-    new Date().getFullYear();
-
-
-  years.add(now);
-  years.add(now - 1);
-
-
-  const sorted =
-    [...years].sort(
-      (a,b) => b - a
-    );
-
-
-  select.innerHTML =
-    sorted.map(
-      year =>
-        `<option value="${year}">
-          ${year}
-        </option>`
-    ).join('');
-
-
-  if (
-    !select.value &&
-    sorted.length
-  ) {
-
-    select.value =
-      sorted[0];
 
   }
 
-
-  select.onchange = () => {
-
-    renderOverview();
-
-    if (
-      currentPage ===
-      'details'
-    ) {
-
-      renderDetails();
-
-    }
-
-  };
+  return [];
 
 }
 
 
-function getSelectedYear() {
+function uniqueStrings(arr) {
 
-  const value =
-    Number(
-      document.getElementById(
-        'yearSelect'
-      ).value
-    );
+  const output = [];
 
+  arr.forEach(value => {
 
-  return value ||
-    new Date().getFullYear();
+    if (value === null || value === undefined) {
+      return;
+    }
+
+    const text = String(value).trim();
+
+    if (!text) return;
+
+    if (!output.includes(text)) {
+      output.push(text);
+    }
+
+  });
+
+  return output;
 
 }
 
 
 /* =========================================================
-   8. Render All
+   YEAR FILTERS
+========================================================= */
+
+function initializeYearFilters() {
+
+  const years = getAvailableYears();
+
+  if (!years.includes(currentOverviewYear)) {
+
+    currentOverviewYear =
+      years.length
+        ? Math.max(...years)
+        : new Date().getFullYear();
+
+  }
+
+  const overview =
+    document.getElementById('overviewYear');
+
+  const details =
+    document.getElementById('detailsYear');
+
+
+  overview.innerHTML =
+    years
+      .map(
+        year =>
+          `<option value="${year}">
+             ${year}年
+           </option>`
+      )
+      .join('');
+
+  details.innerHTML =
+    years
+      .map(
+        year =>
+          `<option value="${year}">
+             ${year}年
+           </option>`
+      )
+      .join('');
+
+
+  overview.value =
+    String(currentOverviewYear);
+
+
+  /*
+   * 花销明细默认今年。
+   */
+
+  const currentYear =
+    new Date().getFullYear();
+
+  if (years.includes(currentYear)) {
+
+    details.value =
+      String(currentYear);
+
+  } else if (years.length) {
+
+    details.value =
+      String(Math.max(...years));
+
+  }
+
+  initializeCategoryFilter();
+
+}
+
+
+function getAvailableYears() {
+
+  const set = new Set();
+
+  expenses.forEach(expense => {
+
+    const date =
+      parseExpenseDate(expense['日付']);
+
+    if (date) {
+      set.add(date.getFullYear());
+    }
+
+  });
+
+  /*
+   * 至少保留当前年份。
+   */
+
+  set.add(new Date().getFullYear());
+
+  return Array.from(set).sort(
+    (a,b) => b-a
+  );
+
+}
+
+
+function changeOverviewYear() {
+
+  currentOverviewYear =
+    Number(
+      document.getElementById('overviewYear').value
+    );
+
+  renderOverview();
+
+}
+
+
+/* =========================================================
+   CATEGORY FILTER
+========================================================= */
+
+function initializeCategoryFilter() {
+
+  const select =
+    document.getElementById('detailsCategory');
+
+  select.innerHTML =
+    '<option value="all">全部大项目</option>';
+
+
+  settings.largeCategories.forEach(category => {
+
+    const option =
+      document.createElement('option');
+
+    option.value = category;
+    option.textContent = category;
+
+    select.appendChild(option);
+
+  });
+
+}
+
+
+/* =========================================================
+   PAGE SWITCH
+========================================================= */
+
+function showPage(page) {
+
+  currentPage = page;
+
+  const overview =
+    document.getElementById('overviewPage');
+
+  const details =
+    document.getElementById('detailsPage');
+
+  const title =
+    document.getElementById('pageTitle');
+
+  const subtitle =
+    document.getElementById('pageSubtitle');
+
+  const overviewNav =
+    document.getElementById('navOverview');
+
+  const detailsNav =
+    document.getElementById('navDetails');
+
+  const mobileOverview =
+    document.getElementById('mobileOverview');
+
+  const mobileDetails =
+    document.getElementById('mobileDetails');
+
+
+  if (page === 'overview') {
+
+    overview.style.display = '';
+    details.style.display = 'none';
+
+    title.textContent = '全年纵览';
+    subtitle.textContent =
+      '看见你的钱都花在哪里';
+
+    overviewNav.classList.add('active');
+    detailsNav.classList.remove('active');
+
+    mobileOverview.classList.add('active');
+    mobileDetails.classList.remove('active');
+
+    renderOverview();
+
+  } else {
+
+    overview.style.display = 'none';
+    details.style.display = '';
+
+    title.textContent = '花销明细';
+    subtitle.textContent =
+      '查看、编辑和管理每一笔花销';
+
+    overviewNav.classList.remove('active');
+    detailsNav.classList.add('active');
+
+    mobileOverview.classList.remove('active');
+    mobileDetails.classList.add('active');
+
+    renderDetails();
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER ALL
 ========================================================= */
 
 function renderAll() {
@@ -2505,794 +1908,684 @@ function renderAll() {
 
 
 /* =========================================================
-   9. Navigation
+   OVERVIEW
 ========================================================= */
-
-function showPage(page) {
-
-  currentPage = page;
-
-
-  const overview =
-    document.getElementById(
-      'overviewPage'
-    );
-
-  const details =
-    document.getElementById(
-      'detailsPage'
-    );
-
-
-  const navOverview =
-    document.getElementById(
-      'navOverview'
-    );
-
-  const navDetails =
-    document.getElementById(
-      'navDetails'
-    );
-
-
-  const mobileOverview =
-    document.getElementById(
-      'mobileOverview'
-    );
-
-  const mobileDetails =
-    document.getElementById(
-      'mobileDetails'
-    );
-
-
-  if (
-    page === 'overview'
-  ) {
-
-    overview.style.display =
-      'block';
-
-    details.style.display =
-      'none';
-
-
-    navOverview.classList.add(
-      'active'
-    );
-
-    navDetails.classList.remove(
-      'active'
-    );
-
-
-    mobileOverview.classList.add(
-      'active'
-    );
-
-    mobileDetails.classList.remove(
-      'active'
-    );
-
-
-    renderOverview();
-
-  } else {
-
-    overview.style.display =
-      'none';
-
-    details.style.display =
-      'block';
-
-
-    navOverview.classList.remove(
-      'active'
-    );
-
-    navDetails.classList.add(
-      'active'
-    );
-
-
-    mobileOverview.classList.remove(
-      'active'
-    );
-
-    mobileDetails.classList.add(
-      'active'
-    );
-
-
-    renderDetails();
-
-  }
-
-}
-
-
-/* =========================================================
-   10. Overview
-========================================================= */
-
-function getYearExpenses(year) {
-
-  return expenses.filter(
-    expense =>
-      getYear(expense) === year &&
-      isIncluded(expense)
-  );
-
-}
-
 
 function renderOverview() {
 
   const year =
-    getSelectedYear();
+    currentOverviewYear;
+
+  const yearExpenses =
+    expenses.filter(expense => {
+
+      const date =
+        parseExpenseDate(expense['日付']);
+
+      return date &&
+             date.getFullYear() === year;
+
+    });
 
 
-  const current =
-    getYearExpenses(year);
+  /*
+   * 年度统计：
+   * 只计算 計算対象 = 1
+   *
+   * 这个值由 Apps Script 根据設定 Sheet D列规则计算。
+   */
+
+  const calculated =
+    yearExpenses.filter(
+      expense =>
+        Number(expense['計算対象']) === 1
+    );
 
 
-  const previous =
-    getYearExpenses(year - 1);
+  const total =
+    calculated.reduce(
+      (sum, expense) =>
+        sum + toNumber(expense['金額']),
+      0
+    );
 
 
-  renderHero(
-    year,
-    current,
-    previous
-  );
-
-
-  renderStructure(
-    current
-  );
-
-
-  renderTrend(
-    year
-  );
-
-
-  renderStores(
-    current
-  );
-
-
-  renderAI(
-    year,
-    current,
-    previous
-  );
-
-}
-
-
-/* =========================================================
-   11. Hero
-========================================================= */
-
-function renderHero(
-  year,
-  current,
-  previous
-) {
-
-  const currentTotal =
-    totalOf(current);
-
-
-  const previousTotal =
-    totalOf(previous);
-
-
-  document.getElementById(
-    'heroYear'
-  ).textContent =
-    year;
+  const activeMonths =
+    new Set(
+      calculated
+        .map(
+          expense =>
+            parseExpenseDate(expense['日付'])
+        )
+        .filter(Boolean)
+        .map(
+          date => date.getMonth() + 1
+        )
+    ).size;
 
 
   document.getElementById(
     'annualTotal'
+  ).innerHTML =
+    formatYen(total);
+
+
+  document.getElementById(
+    'monthlyAverage'
   ).textContent =
-    yen(currentTotal);
+    formatYen(
+      activeMonths
+        ? total / activeMonths
+        : 0
+    );
+
+
+  document.getElementById(
+    'activeMonths'
+  ).textContent =
+    activeMonths;
+
+
+  document.getElementById(
+    'annualCount'
+  ).textContent =
+    calculated.length;
 
 
   document.getElementById(
     'donutTotal'
   ).textContent =
-    yen(currentTotal);
+    formatYen(total);
 
 
-  let html =
-    '—';
+  renderCategoryStructure(
+    calculated,
+    total
+  );
 
 
-  if (previousTotal > 0) {
-
-    const change =
-      (
-        (currentTotal - previousTotal)
-        / previousTotal
-      ) * 100;
+  renderTrendChart();
 
 
-    if (change < 0) {
-
-      html =
-        `↓ ${Math.abs(change).toFixed(1)}%`
-        + `<span>较去年同期</span>`;
-
-    } else if (change > 0) {
-
-      html =
-        `↑ ${change.toFixed(1)}%`
-        + `<span>较去年同期</span>`;
-
-    } else {
-
-      html =
-        `→ 0.0%`
-        + `<span>较去年同期</span>`;
-
-    }
-
-  }
+  renderFrequentStores(
+    calculated
+  );
 
 
-  document.getElementById(
-    'annualChange'
-  ).innerHTML =
-    html;
+  renderAISummary(
+    calculated,
+    total,
+    year
+  );
+
+
+  renderAnnualOverviewText(
+    calculated,
+    total,
+    year
+  );
 
 }
 
 
 /* =========================================================
-   12. Structure
+   CATEGORY STRUCTURE
 ========================================================= */
 
-const categoryColors = [
-  '#E98B5C',
-  '#F4C95D',
-  '#8FAFC0',
-  '#9BC7BB',
-  '#6EA8B8',
-  '#D7D7D7',
-  '#E98278',
-  '#B9A5C9',
-  '#C9B78D',
-  '#A7A9AC'
-];
-
-
-function renderStructure(
-  current
+function renderCategoryStructure(
+  data,
+  total
 ) {
 
-  const total =
-    totalOf(current);
+  const container =
+    document.getElementById('categoryList');
+
+  const categories = {};
 
 
-  const map = {};
+  data.forEach(expense => {
+
+    const category =
+      expense['大項目'] ||
+      'その他';
+
+    categories[category] =
+      (categories[category] || 0) +
+      toNumber(expense['金額']);
+
+  });
 
 
-  current.forEach(
-    expense => {
-
-      const category =
-        expense['大項目'] ||
-        'その他';
-
-
-      map[category] =
-        (
-          map[category] || 0
-        ) +
-        Number(
-          expense['金額'] || 0
-        );
-
-    }
-  );
-
-
-  const entries =
-    Object.entries(map)
+  const sorted =
+    Object.entries(categories)
       .sort(
-        (a,b) =>
-          b[1] - a[1]
+        (a,b) => b[1] - a[1]
       );
 
 
-  const legend =
-    document.getElementById(
-      'categoryLegend'
+  /*
+   * 图表
+   */
+
+  drawDonutChart(
+    sorted.map(x => x[1])
+  );
+
+
+  /*
+   * 文字列表
+   *
+   * 金额 + 百分比
+   */
+
+  const dotColors = [
+    '#E98B5C',
+    '#F4C95D',
+    '#8FAFC0',
+    '#E98278',
+    '#9B8FBD',
+    '#83B692',
+    '#D49B76',
+    '#A5A5A5',
+    '#6F8F9F',
+    '#C9A0A0'
+  ];
+
+
+  container.innerHTML =
+    sorted.length
+      ? sorted
+          .map(
+            ([name, amount], index) => {
+
+              const percent =
+                total
+                  ? amount / total * 100
+                  : 0;
+
+              return `
+                <div class="category-row">
+
+                  <div
+                    class="category-dot"
+                    style="
+                      background:${dotColors[index % dotColors.length]}
+                    ">
+                  </div>
+
+                  <div class="category-name">
+                    ${escapeHtml(name)}
+                  </div>
+
+                  <div class="category-value">
+
+                    ${formatYen(amount)}
+
+                    <span class="category-percent">
+                      ${percent.toFixed(1)}%
+                    </span>
+
+                  </div>
+
+                </div>
+              `;
+
+            }
+          )
+          .join('')
+      : `
+          <div class="muted">
+            暂无数据
+          </div>
+        `;
+
+}
+
+
+/* =========================================================
+   DONUT
+========================================================= */
+
+function drawDonutChart(values) {
+
+  const canvas =
+    document.getElementById('donutChart');
+
+  const ctx =
+    canvas.getContext('2d');
+
+  const width =
+    canvas.width;
+
+  const height =
+    canvas.height;
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  const total =
+    values.reduce(
+      (a,b) => a+b,
+      0
     );
 
 
-  if (!entries.length) {
+  if (!total) {
 
-    legend.innerHTML =
-      `<div class="empty">
-        暂无数据
-      </div>`;
+    ctx.beginPath();
 
-    document.getElementById(
-      'donutChart'
-    ).style.background =
-      '#E5E5E5';
+    ctx.arc(
+      width/2,
+      height/2,
+      62,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.lineWidth = 20;
+    ctx.strokeStyle = '#ECEAE5';
+    ctx.stroke();
 
     return;
 
   }
 
 
-  legend.innerHTML =
-    entries
-      .slice(0, 8)
-      .map(
-        ([name, value], index) => {
-
-          const percent =
-            total > 0
-              ? value / total * 100
-              : 0;
-
-
-          return `
-
-            <div class="legend-item">
-
-              <div class="legend-left">
-
-                <span
-                  class="legend-dot"
-                  style="
-                    background:
-                    ${categoryColors[
-                      index %
-                      categoryColors.length
-                    ]};
-                  ">
-                </span>
-
-                <span class="legend-name">
-                  ${escapeHtml(name)}
-                </span>
-
-              </div>
-
-              <div class="legend-value">
-
-                ${yen(value)}
-
-                <span class="legend-percent">
-                  ${percent.toFixed(1)}%
-                </span>
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join('');
+  const colors = [
+    '#E98B5C',
+    '#F4C95D',
+    '#8FAFC0',
+    '#E98278',
+    '#9B8FBD',
+    '#83B692',
+    '#D49B76',
+    '#A5A5A5',
+    '#6F8F9F',
+    '#C9A0A0'
+  ];
 
 
-  let gradient = [];
-
-  let accumulated = 0;
-
-
-  entries.forEach(
-    ([name, value], index) => {
-
-      const percent =
-        total > 0
-          ? value / total * 100
-          : 0;
+  let start =
+    -Math.PI / 2;
 
 
-      const start =
-        accumulated;
+  values.forEach(
+    (value, index) => {
 
+      const angle =
+        value / total *
+        Math.PI * 2;
 
-      accumulated +=
-        percent;
+      ctx.beginPath();
 
-
-      gradient.push(
-        `${categoryColors[
-          index %
-          categoryColors.length
-        ]} ${start}% ${accumulated}%`
+      ctx.arc(
+        width/2,
+        height/2,
+        62,
+        start,
+        start + angle
       );
+
+      ctx.lineWidth = 20;
+
+      ctx.strokeStyle =
+        colors[index % colors.length];
+
+      ctx.stroke();
+
+      start += angle;
 
     }
   );
-
-
-  document.getElementById(
-    'donutChart'
-  ).style.background =
-    `conic-gradient(${gradient.join(',')})`;
 
 }
 
 
 /* =========================================================
-   13. Monthly Trend
+   MONTHLY TREND
+   同一张图显示多个年份
 ========================================================= */
 
-function getMonthlyTotals(year) {
+function renderTrendChart() {
 
-  const result =
-    Array(12).fill(0);
+  const canvas =
+    document.getElementById('trendChart');
 
+  const rect =
+    canvas.getBoundingClientRect();
 
-  getYearExpenses(year)
-    .forEach(
-      expense => {
+  const dpr =
+    window.devicePixelRatio || 1;
 
-        const month =
-          getMonth(expense);
+  const width =
+    rect.width || 500;
 
+  const height =
+    rect.height || 250;
 
-        if (month) {
+  canvas.width =
+    width * dpr;
 
-          result[month - 1] +=
-            Number(
-              expense['金額'] || 0
-            );
+  canvas.height =
+    height * dpr;
 
-        }
+  const ctx =
+    canvas.getContext('2d');
 
-      }
-    );
+  ctx.scale(dpr,dpr);
 
-
-  return result;
-
-}
-
-
-function renderTrend(year) {
-
-  const current =
-    getMonthlyTotals(year);
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
 
 
-  const previous =
-    getMonthlyTotals(year - 1);
+  /*
+   * 找到所有年份
+   */
+
+  const years =
+    getAvailableYears()
+      .sort((a,b) => a-b);
 
 
-  const svg =
-    document.getElementById(
-      'trendSvg'
-    );
+  const series = {};
 
 
-  const width = 700;
-  const height = 250;
+  years.forEach(year => {
 
-  const left = 45;
-  const right = 12;
-  const top = 18;
-  const bottom = 32;
+    series[year] =
+      Array(12).fill(0);
 
-
-  const chartWidth =
-    width - left - right;
+  });
 
 
-  const chartHeight =
-    height - top - bottom;
+  expenses.forEach(expense => {
+
+    if (
+      Number(expense['計算対象']) !== 1
+    ) {
+      return;
+    }
+
+    const date =
+      parseExpenseDate(
+        expense['日付']
+      );
+
+    if (!date) return;
+
+    const year =
+      date.getFullYear();
+
+    if (!series[year]) {
+      series[year] =
+        Array(12).fill(0);
+    }
+
+    series[year][
+      date.getMonth()
+    ] +=
+      toNumber(expense['金額']);
+
+  });
+
+
+  const padding = {
+    left: 48,
+    right: 20,
+    top: 24,
+    bottom: 35
+  };
+
+
+  const chartW =
+    width -
+    padding.left -
+    padding.right;
+
+  const chartH =
+    height -
+    padding.top -
+    padding.bottom;
+
+
+  const allValues =
+    Object.values(series)
+      .flat();
 
 
   const maxValue =
     Math.max(
-      ...current,
-      ...previous,
-      1000
+      ...allValues,
+      100
     );
 
 
-  const gridMax =
-    Math.max(
-      50000,
-      Math.ceil(
-        maxValue / 50000
-      ) * 50000
-    );
-
-
-  let html = '';
+  const roundedMax =
+    niceMax(maxValue);
 
 
   /*
-   * Grid
+   * 网格
    */
 
-  for (
-    let i = 0;
-    i <= 4;
-    i++
-  ) {
+  ctx.font =
+    '11px -apple-system, BlinkMacSystemFont, sans-serif';
+
+  ctx.textAlign = 'right';
+
+  ctx.textBaseline = 'middle';
+
+  ctx.fillStyle = '#8A8D92';
+
+  for (let i=0; i<=4; i++) {
+
+    const ratio =
+      i / 4;
 
     const y =
-      top +
-      chartHeight * i / 4;
-
+      padding.top +
+      chartH -
+      ratio * chartH;
 
     const value =
-      gridMax *
-      (1 - i / 4);
+      roundedMax * ratio;
 
+    ctx.beginPath();
 
-    html += `
+    ctx.moveTo(
+      padding.left,
+      y
+    );
 
-      <line
-        class="chart-grid-line"
-        x1="${left}"
-        y1="${y}"
-        x2="${width-right}"
-        y2="${y}">
-      </line>
+    ctx.lineTo(
+      width - padding.right,
+      y
+    );
 
-      <text
-        class="chart-axis-text"
-        x="0"
-        y="${y + 4}">
-        ${formatCompactYen(value)}
-      </text>
+    ctx.strokeStyle = '#F0EEEA';
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
-    `;
+    ctx.fillText(
+      formatCompactYen(value),
+      padding.left - 8,
+      y
+    );
 
   }
 
 
   /*
-   * Month labels
+   * X labels
    */
 
-  for (
-    let i = 0;
-    i < 12;
-    i++
-  ) {
+  ctx.textAlign = 'center';
+
+  ctx.textBaseline = 'top';
+
+  for (let month=0; month<12; month++) {
 
     const x =
-      left +
-      chartWidth * i / 11;
+      padding.left +
+      month / 11 * chartW;
 
+    ctx.fillStyle = '#8A8D92';
 
-    html += `
-
-      <text
-        class="chart-axis-text"
-        text-anchor="middle"
-        x="${x}"
-        y="${height - 5}">
-        ${i + 1}月
-      </text>
-
-    `;
+    ctx.fillText(
+      `${month+1}月`,
+      x,
+      height - padding.bottom + 10
+    );
 
   }
 
 
-  const currentPoints =
-    createChartPoints(
-      current,
-      gridMax,
-      left,
-      top,
-      chartWidth,
-      chartHeight
-    );
-
-
-  const previousPoints =
-    createChartPoints(
-      previous,
-      gridMax,
-      left,
-      top,
-      chartWidth,
-      chartHeight
-    );
-
-
-  html += `
-
-    <polyline
-      class="previous-line"
-      points="
-        ${previousPoints
-          .map(
-            p =>
-              `${p.x},${p.y}`
-          )
-          .join(' ')}
-      ">
-    </polyline>
-
-
-    <polyline
-      class="current-line"
-      points="
-        ${currentPoints
-          .map(
-            p =>
-              `${p.x},${p.y}`
-          )
-          .join(' ')}
-      ">
-    </polyline>
-
-  `;
-
-
   /*
-   * Previous dots
+   * 不同年份用不同线型 / 色调。
    */
 
-  previousPoints.forEach(
-    (point, index) => {
-
-      html += `
-
-        <circle
-          class="previous-dot"
-          cx="${point.x}"
-          cy="${point.y}"
-          r="3.5"
-          data-year="${year - 1}"
-          data-month="${index + 1}"
-          data-value="${previous[index]}">
-        </circle>
-
-      `;
-
-    }
-  );
+  const lineColors = [
+    '#E98B5C',
+    '#8FAFC0',
+    '#9B8FBD',
+    '#83B692',
+    '#E98278',
+    '#D49B76'
+  ];
 
 
-  /*
-   * Current dots
-   */
+  years.forEach(
+    (year, yearIndex) => {
 
-  currentPoints.forEach(
-    (point, index) => {
+      const values =
+        series[year];
 
-      html += `
-
-        <circle
-          class="current-dot"
-          cx="${point.x}"
-          cy="${point.y}"
-          r="4"
-          data-year="${year}"
-          data-month="${index + 1}"
-          data-value="${current[index]}">
-        </circle>
-
-      `;
-
-    }
-  );
+      const color =
+        lineColors[
+          yearIndex % lineColors.length
+        ];
 
 
-  svg.innerHTML =
-    html;
+      ctx.beginPath();
 
-
-  svg.querySelectorAll(
-    'circle[data-value]'
-  ).forEach(
-    dot => {
-
-      dot.addEventListener(
-        'mouseenter',
-        event => {
-
-          const target =
-            event.currentTarget;
-
-
-          const targetYear =
-            target.dataset.year;
-
-
-          const month =
-            target.dataset.month;
-
-
-          const value =
-            Number(
-              target.dataset.value
-            );
-
-
-          const tooltip =
-            document.getElementById(
-              'chartTooltip'
-            );
-
-
-          tooltip.innerHTML =
-            `${targetYear}年 ${month}月<br>`
-            + `<strong>${yen(value)}</strong>`;
-
-
-          tooltip.style.display =
-            'block';
-
+      values.forEach(
+        (value, month) => {
 
           const x =
-            Number(
-              target.getAttribute(
-                'cx'
-              )
-            );
-
+            padding.left +
+            month / 11 * chartW;
 
           const y =
-            Number(
-              target.getAttribute(
-                'cy'
-              )
-            );
+            padding.top +
+            chartH -
+            value / roundedMax *
+            chartH;
 
-
-          const chartArea =
-            document.querySelector(
-              '.chart-area'
-            );
-
-
-          const areaWidth =
-            chartArea.clientWidth;
-
-
-          tooltip.style.left =
-            Math.min(
-              areaWidth - 110,
-              Math.max(
-                0,
-                x / width *
-                areaWidth - 35
-              )
-            ) + 'px';
-
-
-          tooltip.style.top =
-            Math.max(
-              0,
-              y - 55
-            ) + 'px';
+          if (month === 0) {
+            ctx.moveTo(x,y);
+          } else {
+            ctx.lineTo(x,y);
+          }
 
         }
       );
 
 
-      dot.addEventListener(
-        'mouseleave',
-        () => {
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.stroke();
 
-          document.getElementById(
-            'chartTooltip'
-          ).style.display =
-            'none';
+
+      /*
+       * 数据点
+       */
+
+      values.forEach(
+        (value, month) => {
+
+          const x =
+            padding.left +
+            month / 11 * chartW;
+
+          const y =
+            padding.top +
+            chartH -
+            value / roundedMax *
+            chartH;
+
+          ctx.beginPath();
+
+          ctx.arc(
+            x,
+            y,
+            3,
+            0,
+            Math.PI * 2
+          );
+
+          ctx.fillStyle = color;
+          ctx.fill();
 
         }
       );
+
+    }
+  );
+
+
+  /*
+   * Legend
+   */
+
+  let legendX = padding.left;
+
+  const legendY = 7;
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+
+  years.forEach(
+    (year, index) => {
+
+      const color =
+        lineColors[
+          index % lineColors.length
+        ];
+
+      ctx.beginPath();
+
+      ctx.arc(
+        legendX,
+        legendY,
+        4,
+        0,
+        Math.PI * 2
+      );
+
+      ctx.fillStyle = color;
+      ctx.fill();
+
+      ctx.fillStyle = '#686B70';
+
+      ctx.fillText(
+        String(year),
+        legendX + 8,
+        legendY
+      );
+
+      legendX +=
+        42 + String(year).length * 6;
 
     }
   );
@@ -3300,40 +2593,25 @@ function renderTrend(year) {
 }
 
 
-function createChartPoints(
-  values,
-  max,
-  left,
-  top,
-  chartWidth,
-  chartHeight
-) {
+function niceMax(value) {
 
-  return values.map(
-    (value, index) => {
+  if (value <= 1000) {
+    return Math.ceil(value / 200) * 200;
+  }
 
-      const x =
-        left +
-        chartWidth *
-        index / 11;
+  if (value <= 10000) {
+    return Math.ceil(value / 2000) * 2000;
+  }
 
+  if (value <= 100000) {
+    return Math.ceil(value / 20000) * 20000;
+  }
 
-      const y =
-        top +
-        chartHeight -
-        (
-          value / max
-        ) *
-        chartHeight;
+  if (value <= 1000000) {
+    return Math.ceil(value / 200000) * 200000;
+  }
 
-
-      return {
-        x,
-        y
-      };
-
-    }
-  );
+  return Math.ceil(value / 1000000) * 1000000;
 
 }
 
@@ -3341,25 +2619,16 @@ function createChartPoints(
 function formatCompactYen(value) {
 
   if (value >= 1000000) {
-
     return '¥' +
-      (value / 1000000)
-        .toFixed(1) +
+      (value / 1000000).toFixed(1) +
       'M';
-
   }
-
 
   if (value >= 1000) {
-
     return '¥' +
-      Math.round(
-        value / 1000
-      ) +
+      (value / 1000).toFixed(0) +
       'k';
-
   }
-
 
   return '¥' +
     Math.round(value);
@@ -3368,96 +2637,55 @@ function formatCompactYen(value) {
 
 
 /* =========================================================
-   14. Frequent Stores
+   FREQUENT STORES
 ========================================================= */
 
-function renderStores(current) {
-
-  const map = {};
-
-
-  current.forEach(
-    expense => {
-
-      const store =
-        String(
-          expense['店舗'] || ''
-        ).trim();
-
-
-      if (!store) {
-        return;
-      }
-
-
-      if (!map[store]) {
-
-        map[store] = {
-          count: 0,
-          amount: 0
-        };
-
-      }
-
-
-      map[store].count++;
-
-
-      map[store].amount +=
-        Number(
-          expense['金額'] || 0
-        );
-
-    }
-  );
-
-
-  const stores =
-    Object.entries(map)
-      .map(
-        ([name, data]) => ({
-          name,
-          ...data
-        })
-      )
-      .sort(
-        (a,b) => {
-
-          if (
-            b.count !==
-            a.count
-          ) {
-
-            return (
-              b.count -
-              a.count
-            );
-
-          }
-
-
-          return (
-            b.amount -
-            a.amount
-          );
-
-        }
-      )
-      .slice(0, 5);
-
+function renderFrequentStores(data) {
 
   const container =
-    document.getElementById(
-      'storeList'
-    );
+    document.getElementById('storeList');
+
+  const stores = {};
 
 
-  if (!stores.length) {
+  data.forEach(expense => {
+
+    const store =
+      String(
+        expense['店舗'] || '未填写'
+      ).trim();
+
+    if (!stores[store]) {
+
+      stores[store] = {
+        count: 0,
+        total: 0
+      };
+
+    }
+
+    stores[store].count += 1;
+
+    stores[store].total +=
+      toNumber(expense['金額']);
+
+  });
+
+
+  const sorted =
+    Object.entries(stores)
+      .sort(
+        (a,b) =>
+          b[1].count - a[1].count ||
+          b[1].total - a[1].total
+      )
+      .slice(0, 6);
+
+
+  if (!sorted.length) {
 
     container.innerHTML =
-      `<div class="loading-card">
-        暂无店铺数据
-      </div>`;
+      '<div class="empty">暂无数据</div>';
 
     return;
 
@@ -3465,692 +2693,370 @@ function renderStores(current) {
 
 
   container.innerHTML =
-    stores.map(
-      (store, index) => {
-
-        return `
-
+    sorted
+      .map(
+        ([store, info]) => `
           <div class="store-row">
 
-            <div class="store-rank">
-              ${index + 1}
+            <div class="store-name">
+              ${escapeHtml(store)}
             </div>
 
-
-            <div class="store-info">
-
-              <div class="store-main">
-
-                <div class="store-name">
-                  ${escapeHtml(
-                    store.name
-                  )}
-                </div>
-
-                <div class="store-frequency">
-                  ${store.count} 次
-                </div>
-
-              </div>
-
+            <div class="store-count">
+              ${info.count}
+              <span>次</span>
             </div>
 
-
-            <div class="store-amount">
-              ${yen(store.amount)}
+            <div class="store-total">
+              ${formatYen(info.total)}
             </div>
 
           </div>
-
-        `;
-
-      }
-    ).join('');
+        `
+      )
+      .join('');
 
 }
 
 
 /* =========================================================
-   15. AI
+   AI SUMMARY
 ========================================================= */
 
-function renderAI(
-  year,
-  current,
-  previous
+function renderAISummary(
+  data,
+  total,
+  year
 ) {
 
-  const total =
-    totalOf(current);
+  const container =
+    document.getElementById('aiSummary');
 
+  if (!data.length) {
 
-  const previousTotal =
-    totalOf(previous);
+    container.innerHTML =
+      `${year}年目前还没有可统计的消费记录。`;
+
+    return;
+
+  }
 
 
   const categoryMap = {};
 
+  data.forEach(expense => {
 
-  current.forEach(
-    expense => {
+    const category =
+      expense['大項目'] || '其他';
 
-      const category =
-        expense['大項目'] ||
-        'その他';
+    categoryMap[category] =
+      (categoryMap[category] || 0) +
+      toNumber(expense['金額']);
 
-
-      categoryMap[category] =
-        (
-          categoryMap[category] || 0
-        ) +
-        Number(
-          expense['金額'] || 0
-        );
-
-    }
-  );
-
-
-  const categories =
-    Object.entries(
-      categoryMap
-    ).sort(
-      (a,b) =>
-        b[1] - a[1]
-    );
+  });
 
 
   const topCategory =
-    categories[0]
-      ? categories[0][0]
-      : '—';
+    Object.entries(categoryMap)
+      .sort(
+        (a,b) => b[1] - a[1]
+      )[0];
 
 
-  const topCategoryAmount =
-    categories[0]
-      ? categories[0][1]
-      : 0;
+  const monthly = Array(12).fill(0);
+
+  data.forEach(expense => {
+
+    const date =
+      parseExpenseDate(
+        expense['日付']
+      );
+
+    if (!date) return;
+
+    monthly[
+      date.getMonth()
+    ] += toNumber(expense['金額']);
+
+  });
 
 
-  const topCategoryPercent =
-    total > 0
-      ? (
-          topCategoryAmount /
-          total
-        ) * 100
-      : 0;
+  const maxMonthIndex =
+    monthly.indexOf(
+      Math.max(...monthly)
+    );
 
 
-  const months =
-    getMonthlyTotals(year);
+  const average =
+    total / data.length;
 
 
-  let maxMonthIndex = 0;
+  container.innerHTML = `
+    <div>
+      ${year}年共有
+      <strong>${data.length}</strong>
+      笔计入年度统计的消费，
+      总支出约
+      <strong>${formatYen(total)}</strong>。
+    </div>
+
+    <div style="margin-top:7px;">
+      支出最多的大项目是
+      <strong>${escapeHtml(topCategory?.[0] || '暂无')}</strong>，
+      共
+      <strong>${formatYen(topCategory?.[1] || 0)}</strong>。
+    </div>
+
+    <div style="margin-top:7px;">
+      单笔平均消费约
+      <strong>${formatYen(average)}</strong>，
+      ${maxMonthIndex >= 0
+        ? `其中 ${maxMonthIndex + 1}月支出最高。`
+        : ''}
+    </div>
+
+    <div style="
+      margin-top:10px;
+      color:#8A8D92;
+      font-size:11px;">
+      以上为基于当前账目自动生成的年度概览。
+    </div>
+  `;
+
+}
 
 
-  months.forEach(
-    (value, index) => {
+/* =========================================================
+   ANNUAL OVERVIEW TEXT
+========================================================= */
 
-      if (
-        value >
-        months[maxMonthIndex]
-      ) {
+function renderAnnualOverviewText(
+  data,
+  total,
+  year
+) {
 
-        maxMonthIndex =
-          index;
+  const container =
+    document.getElementById(
+      'annualOverviewText'
+    );
 
-      }
+  if (!data.length) {
 
-    }
-  );
+    container.textContent =
+      `${year}年还没有可统计的消费记录。`;
 
-
-  const topMonth =
-    months[maxMonthIndex] > 0
-      ? `${maxMonthIndex + 1}月`
-      : '—';
-
-
-  const storeMap = {};
-
-
-  current.forEach(
-    expense => {
-
-      const store =
-        String(
-          expense['店舗'] || ''
-        ).trim();
-
-
-      if (!store) return;
-
-
-      storeMap[store] =
-        (
-          storeMap[store] || 0
-        ) + 1;
-
-    }
-  );
-
-
-  const topStore =
-    Object.entries(
-      storeMap
-    ).sort(
-      (a,b) =>
-        b[1] - a[1]
-    )[0];
-
-
-  const topStoreName =
-    topStore
-      ? topStore[0]
-      : '—';
-
-
-  const topStoreCount =
-    topStore
-      ? topStore[1]
-      : 0;
-
-
-  document.getElementById(
-    'aiTopCategory'
-  ).textContent =
-    topCategory;
-
-
-  document.getElementById(
-    'aiTopMonth'
-  ).textContent =
-    topMonth;
-
-
-  document.getElementById(
-    'aiTopStore'
-  ).textContent =
-    topStoreName;
-
-
-  let summary = '';
-
-
-  if (!current.length) {
-
-    summary =
-      `${year}年目前还没有计入年度统计的消费记录。`;
-
-  } else {
-
-    const average =
-      total / 12;
-
-
-    summary =
-      `${year}年的累计支出为 ${yen(total)}，`
-      + `平均每月约 ${yen(average)}。`;
-
-
-    if (previousTotal > 0) {
-
-      const change =
-        (
-          (total - previousTotal) /
-          previousTotal
-        ) * 100;
-
-
-      if (change < 0) {
-
-        summary +=
-          `相比去年同期下降 ${Math.abs(change).toFixed(1)}%，`
-          + `整体支出有所减少。`;
-
-      } else if (change > 0) {
-
-        summary +=
-          `相比去年同期增加 ${change.toFixed(1)}%，`
-          + `整体支出有所增加。`;
-
-      } else {
-
-        summary +=
-          `与去年同期基本持平。`;
-
-      }
-
-    }
-
-
-    summary +=
-      `其中「${topCategory}」是最大的支出类别，`
-      + `占全年支出的 ${topCategoryPercent.toFixed(1)}%。`;
+    return;
 
   }
 
 
-  document.getElementById(
-    'aiSummary'
-  ).textContent =
-    summary;
+  const monthly =
+    Array(12).fill(0);
 
 
-  let advice =
-    '💡 建议：继续保持对主要支出类别的关注。';
+  data.forEach(expense => {
+
+    const date =
+      parseExpenseDate(
+        expense['日付']
+      );
+
+    if (!date) return;
+
+    monthly[
+      date.getMonth()
+    ] += toNumber(expense['金額']);
+
+  });
 
 
-  if (
-    topCategory === '食費'
-  ) {
+  const max =
+    Math.max(...monthly);
 
-    advice =
-      '💡 建议：如果希望降低整体支出，可以优先关注外食频率。';
-
-  } else if (
-    topCategory === '趣味・娯楽'
-  ) {
-
-    advice =
-      '💡 建议：可以进一步观察旅行、票券和订阅服务的具体支出变化。';
-
-  } else if (
-    topCategory === '日用品'
-  ) {
-
-    advice =
-      '💡 建议：可以关注高频购买的店铺和重复购买的日用品。';
-
-  } else if (
-    topCategory === '交通費'
-  ) {
-
-    advice =
-      '💡 建议：可以结合月度趋势观察是否存在集中出行导致的高峰月份。';
-
-  }
-
-
-  document.getElementById(
-    'aiAdvice'
-  ).textContent =
-    advice;
-
-
-  document.getElementById(
-    'aiDetail1'
-  ).textContent =
-    current.length
-      ? `今年共有 ${current.length} 笔计入年度统计的消费记录。最大支出类别为「${topCategory}」，占全年支出的 ${topCategoryPercent.toFixed(1)}%。`
-      : '目前还没有足够的数据进行分析。';
-
-
-  document.getElementById(
-    'aiDetail2'
-  ).textContent =
-    months[maxMonthIndex] > 0
-      ? `${topMonth}是目前消费最高的月份，当月支出为 ${yen(months[maxMonthIndex])}。可以结合该月明细进一步确认高支出的原因。`
-      : '目前还没有足够的月度数据。';
-
-
-  document.getElementById(
-    'aiDetail3'
-  ).textContent =
-    topStoreName !== '—'
-      ? `最常去的店铺是「${topStoreName}」，共记录 ${topStoreCount} 次。建议重点关注高频消费，而不仅仅是单笔金额较大的消费。`
-      : '目前还没有足够的店铺数据。';
-
-
-  document.getElementById(
-    'focusCategory'
-  ).textContent =
-    topCategory;
-
-
-  document.getElementById(
-    'focusStore'
-  ).textContent =
-    topStoreName;
-
-}
-
-
-/* =========================================================
-   16. Settings / Form
-========================================================= */
-
-function initializeSettings() {
-
-  const payment =
-    document.getElementById(
-      'formPayment'
+  const min =
+    Math.min(
+      ...monthly.filter(x => x > 0)
     );
 
 
-  const large =
-    document.getElementById(
-      'formLarge'
-    );
+  const maxMonth =
+    monthly.indexOf(max) + 1;
 
 
-  payment.innerHTML =
-    settings.payments
-      .map(
-        item =>
-          `<option value="${escapeHtml(item)}">
-            ${escapeHtml(item)}
-          </option>`
-      )
-      .join('');
+  container.innerHTML = `
+    <div>
+      ${year}年的月度趋势中，
+      <strong>${maxMonth}月</strong>
+      是支出最高的月份，
+      共 ${formatYen(max)}。
+    </div>
 
+    <div style="margin-top:9px;">
+      全年共有
+      <strong>${data.length}</strong>
+      笔计入统计的消费。
+    </div>
 
-  large.innerHTML =
-    settings.large
-      .map(
-        item =>
-          `<option value="${escapeHtml(item)}">
-            ${escapeHtml(item)}
-          </option>`
-      )
-      .join('');
-
-
-  large.onchange =
-    updateMiddleOptions;
-
-
-  updateMiddleOptions();
-
-}
-
-
-function updateMiddleOptions() {
-
-  const large =
-    document.getElementById(
-      'formLarge'
-    ).value;
-
-
-  const middle =
-    document.getElementById(
-      'formMiddle'
-    );
-
-
-  /*
-   * 你的 Settings 中项目如果是纯字符串，
-   * 这里会全部显示；
-   * 如果是带大项目关系的对象，
-   * 则只显示对应大项目。
-   */
-
-  let options = [];
-
-
-  settings.middle.forEach(
-    item => {
-
-      if (
-        typeof item ===
-        'string'
-      ) {
-
-        options.push(item);
-
-        return;
-
-      }
-
-
-      const itemLarge =
-        item['大項目'] ||
-        item.large ||
-        '';
-
-
-      if (
-        !itemLarge ||
-        itemLarge === large
-      ) {
-
-        options.push(
-          item['中項目'] ||
-          item.middle ||
-          ''
-        );
-
-      }
-
+    ${
+      min !== Infinity
+        ? `
+          <div style="margin-top:9px;">
+            支出较少的月份约为
+            <strong>${formatYen(min)}</strong>
+            起。
+          </div>
+        `
+        : ''
     }
-  );
-
-
-  options =
-    [...new Set(
-      options.filter(Boolean)
-    )];
-
-
-  middle.innerHTML =
-    options.map(
-      item =>
-        `<option value="${escapeHtml(item)}">
-          ${escapeHtml(item)}
-        </option>`
-    ).join('');
+  `;
 
 }
 
 
 /* =========================================================
-   17. Detail Filters
-========================================================= */
-
-function initializeDetailFilters() {
-
-  const category =
-    document.getElementById(
-      'filterCategory'
-    );
-
-
-  category.innerHTML =
-    `<option value="">
-      全部大项目
-    </option>`
-    +
-    settings.large.map(
-      item =>
-        `<option value="${escapeHtml(item)}">
-          ${escapeHtml(item)}
-        </option>`
-    ).join('');
-
-
-  document.getElementById(
-    'filterMonth'
-  ).onchange =
-    renderDetails;
-
-
-  category.onchange =
-    renderDetails;
-
-
-  document.getElementById(
-    'filterSearch'
-  ).oninput =
-    renderDetails;
-
-
-  filtersInitialized = true;
-
-}
-
-
-/* =========================================================
-   18. Details
+   DETAILS
 ========================================================= */
 
 function renderDetails() {
 
-  if (
-    !filtersInitialized
-  ) {
-    return;
-  }
-
-
   const year =
-    getSelectedYear();
+    Number(
+      document.getElementById(
+        'detailsYear'
+      ).value
+    );
 
 
   const month =
     document.getElementById(
-      'filterMonth'
+      'detailsMonth'
     ).value;
 
 
   const category =
     document.getElementById(
-      'filterCategory'
+      'detailsCategory'
     ).value;
 
 
   const search =
     document.getElementById(
-      'filterSearch'
+      'detailsSearch'
     ).value
       .trim()
       .toLowerCase();
 
 
-  const filtered =
-    expenses
-      .filter(
-        expense => {
+  let data =
+    expenses.filter(expense => {
 
-          if (
-            getYear(expense) !==
-            year
-          ) {
+      const date =
+        parseExpenseDate(
+          expense['日付']
+        );
 
-            return false;
+      if (!date) return false;
 
-          }
+      if (
+        year &&
+        date.getFullYear() !== year
+      ) {
+        return false;
+      }
 
+      if (
+        month !== 'all' &&
+        date.getMonth() + 1 !== Number(month)
+      ) {
+        return false;
+      }
 
-          if (
-            month &&
-            String(
-              getMonth(expense)
-            ) !== String(month)
-          ) {
+      if (
+        category !== 'all' &&
+        expense['大項目'] !== category
+      ) {
+        return false;
+      }
 
-            return false;
+      if (search) {
 
-          }
+        const store =
+          String(
+            expense['店舗'] || ''
+          ).toLowerCase();
 
+        const content =
+          String(
+            expense['内容'] || ''
+          ).toLowerCase();
 
-          if (
-            category &&
-            expense['大項目'] !==
-            category
-          ) {
-
-            return false;
-
-          }
-
-
-          if (search) {
-
-            const text =
-              [
-                expense['店舗'],
-                expense['内容'],
-                expense['大項目'],
-                expense['中項目']
-              ]
-              .join(' ')
-              .toLowerCase();
-
-
-            if (
-              !text.includes(search)
-            ) {
-
-              return false;
-
-            }
-
-          }
-
-
-          return true;
-
+        if (
+          !store.includes(search) &&
+          !content.includes(search)
+        ) {
+          return false;
         }
-      )
-      .sort(
-        (a,b) => {
 
-          const da =
-            parseDate(
-              a['日付']
-            )?.getTime() || 0;
+      }
+
+      return true;
+
+    });
 
 
-          const db =
-            parseDate(
-              b['日付']
-            )?.getTime() || 0;
+  data.sort(
+    (a,b) =>
+      parseExpenseDate(b['日付']) -
+      parseExpenseDate(a['日付'])
+  );
 
 
-          return db - da;
-
-        }
-      );
-
-
-  const included =
-    filtered.filter(
-      isIncluded
+  const total =
+    data.reduce(
+      (sum, expense) =>
+        sum + toNumber(expense['金額']),
+      0
     );
 
 
   document.getElementById(
-    'filteredTotal'
+    'detailsTotal'
   ).textContent =
-    yen(
-      totalOf(included)
-    );
+    formatYen(total);
 
 
   document.getElementById(
-    'filteredCount'
+    'detailsCount'
   ).textContent =
-    filtered.length;
+    data.length;
 
+
+  renderExpenseList(data);
+
+}
+
+
+/* =========================================================
+   EXPENSE LIST
+========================================================= */
+
+function renderExpenseList(data) {
 
   const container =
     document.getElementById(
-      'expenseContainer'
+      'detailsList'
     );
 
 
-  if (!filtered.length) {
+  if (!data.length) {
 
-    container.innerHTML = `
-
-      <div class="card loading-card">
-
-        暂无符合条件的花销记录
-
-      </div>
-
-    `;
+    container.innerHTML =
+      `
+        <div class="card empty">
+          没有符合条件的记录
+        </div>
+      `;
 
     return;
 
@@ -4160,280 +3066,180 @@ function renderDetails() {
   const groups = {};
 
 
-  filtered.forEach(
-    expense => {
+  data.forEach(expense => {
 
-      const d =
-        parseDate(
-          expense['日付']
-        );
-
-
-      const key =
-        d
-          ? `${d.getFullYear()}/`
-            + `${String(
-                d.getMonth() + 1
-              ).padStart(2,'0')}/`
-            + `${String(
-                d.getDate()
-              ).padStart(2,'0')}`
-          : '日期未知';
-
-
-      if (!groups[key]) {
-        groups[key] = [];
-      }
-
-
-      groups[key].push(
-        expense
+    const date =
+      parseExpenseDate(
+        expense['日付']
       );
 
+    if (!date) return;
+
+    const key =
+      dateKey(date);
+
+    if (!groups[key]) {
+      groups[key] = [];
     }
-  );
+
+    groups[key].push(expense);
+
+  });
 
 
   container.innerHTML =
     Object.entries(groups)
       .map(
-        ([date, list]) => `
+        ([date, records]) => {
 
-          <div class="expense-group">
+          return `
+            <div class="expense-group">
 
-            <div class="expense-date-title">
-              ${date}
-            </div>
+              <div class="expense-date">
+                ${formatDateTitle(date)}
+              </div>
 
-            <div class="expense-list">
-
-              ${list.map(
-                expense => {
-
-                  const d =
-                    parseDate(
-                      expense['日付']
-                    );
-
-
-                  const time =
-                    d
-                      ? d.toLocaleTimeString(
-                          'ja-JP',
-                          {
-                            hour: '2-digit',
-                            minute: '2-digit'
-                          }
-                        )
-                      : '';
-
-
-                  return `
-
-                    <div class="expense-row">
-
-                      <div class="expense-time">
-                        ${time}
-                      </div>
-
-
-                      <div>
-
-                        <div class="expense-store">
-                          ${escapeHtml(
-                            expense['店舗']
-                          )}
-                        </div>
-
-                        <div class="expense-content">
-                          ${escapeHtml(
-                            expense['内容']
-                          )}
-                        </div>
-
-                      </div>
-
-
-                      <div class="expense-amount">
-                        ${yen(
-                          expense['金額']
-                        )}
-                      </div>
-
-
-                      <div class="expense-category">
-                        ${escapeHtml(
-                          expense['中項目'] || ''
-                        )}
-                      </div>
-
-
-                      <button
-                        type="button"
-                        class="edit-btn"
-                        onclick="editExpenseByRow(${Number(expense.rowNumber)})">
-
-                        编辑
-
-                      </button>
-
-                    </div>
-
-                  `;
-
-                }
-              ).join('')}
+              ${records
+                .map(
+                  expense =>
+                    renderExpenseItem(expense)
+                )
+                .join('')}
 
             </div>
+          `;
 
-          </div>
-
-        `
+        }
       )
       .join('');
 
 }
 
 
-/* =========================================================
-   19. Edit
-========================================================= */
+function renderExpenseItem(expense) {
 
-function editExpenseByRow(
-  rowNumber
-) {
+  return `
+    <div class="expense-item">
 
-  const expense =
-    expenses.find(
-      item =>
-        Number(
-          item.rowNumber
-        ) === Number(rowNumber)
-    );
+      <div class="expense-main">
 
+        <div class="expense-store">
+          ${escapeHtml(
+            expense['店舗'] || '未填写'
+          )}
+        </div>
 
-  if (!expense) {
+        <div class="expense-content">
+          ${escapeHtml(
+            expense['内容'] || ''
+          )}
+        </div>
 
-    alert(
-      '找不到这笔记录。请刷新页面后再试。'
-    );
+      </div>
 
-    return;
+      <div class="expense-category">
 
-  }
+        ${escapeHtml(
+          expense['大項目'] || ''
+        )}
 
+        /
+        
+        ${escapeHtml(
+          expense['中項目'] || ''
+        )}
 
-  openEditModal(
-    expense
-  );
+      </div>
+
+      <div style="
+        display:flex;
+        align-items:center;
+        gap:12px;">
+
+        <div class="expense-amount">
+          ${formatYen(
+            toNumber(expense['金額'])
+          )}
+        </div>
+
+        <button
+          class="edit-btn"
+          onclick='openEditModal(${JSON.stringify(
+            expense
+          )})'>
+          编辑
+        </button>
+
+      </div>
+
+    </div>
+  `;
 
 }
 
 
 /* =========================================================
-   20. Modal
+   MODAL
 ========================================================= */
 
 function openAddModal() {
 
-  try {
+  editingRowNumber = null;
 
-    editingRow = null;
-
-
-    document.getElementById(
-      'modalTitle'
-    ).textContent =
-      '添加花销';
+  document.getElementById(
+    'modalTitle'
+  ).textContent =
+    '添加花销';
 
 
-    document.getElementById(
-      'deleteBtn'
-    ).style.display =
-      'none';
+  document.getElementById(
+    'deleteButton'
+  ).style.display =
+    'none';
 
 
-    document.getElementById(
-      'formDate'
-    ).value =
-      formatDateInput(
-        new Date()
-      );
+  clearForm();
 
 
-    document.getElementById(
-      'formStore'
-    ).value =
-      '';
+  /*
+   * 设置页面打开时已经读取过。
+   * 这里直接使用 settings，
+   * 不再请求 Apps Script。
+   */
+
+  populatePaymentSelect();
+  populateLargeSelect();
 
 
-    document.getElementById(
-      'formAmount'
-    ).value =
-      '';
+  /*
+   * 默认时间 = 当前时间
+   */
+
+  const now =
+    new Date();
+
+  now.setMinutes(
+    now.getMinutes() -
+    now.getTimezoneOffset()
+  );
+
+  document.getElementById(
+    'formDate'
+  ).value =
+    now.toISOString()
+      .slice(0,16);
 
 
-    document.getElementById(
-      'formContent'
-    ).value =
-      '';
-
-
-    if (
-      settings.payments.length
-    ) {
-
-      document.getElementById(
-        'formPayment'
-      ).value =
-        settings.payments[0];
-
-    }
-
-
-    if (
-      settings.large.length
-    ) {
-
-      document.getElementById(
-        'formLarge'
-      ).value =
-        settings.large[0];
-
-
-      updateMiddleOptions();
-
-    }
-
-
-    document.getElementById(
-      'modalOverlay'
-    ).classList.add(
-      'show'
-    );
-
-  } catch (error) {
-
-    console.error(
-      'Open modal error:',
-      error
-    );
-
-
-    alert(
-      '打开添加窗口失败，请刷新页面后再试。'
-    );
-
-  }
+  document.getElementById(
+    'modalBackdrop'
+  ).classList.add('show');
 
 }
 
 
-function openEditModal(
-  expense
-) {
+function openEditModal(expense) {
 
-  editingRow =
+  editingRowNumber =
     Number(
       expense.rowNumber
     );
@@ -4446,17 +3252,30 @@ function openEditModal(
 
 
   document.getElementById(
-    'deleteBtn'
+    'deleteButton'
   ).style.display =
     'block';
 
 
+  populatePaymentSelect();
+  populateLargeSelect();
+
+
+  /*
+   * 日期
+   */
+
+  const date =
+    parseExpenseDate(
+      expense['日付']
+    );
+
   document.getElementById(
     'formDate'
   ).value =
-    formatDateInput(
-      expense['日付']
-    );
+    date
+      ? toDatetimeLocal(date)
+      : '';
 
 
   document.getElementById(
@@ -4468,7 +3287,7 @@ function openEditModal(
   document.getElementById(
     'formAmount'
   ).value =
-    expense['金額'] || '';
+    expense['金額'] ?? '';
 
 
   document.getElementById(
@@ -4483,7 +3302,13 @@ function openEditModal(
     expense['大項目'] || '';
 
 
-  updateMiddleOptions();
+  /*
+   * 先设置大项目，再生成中项目。
+   */
+
+  populateMiddleSelect(
+    expense['大項目'] || ''
+  );
 
 
   document.getElementById(
@@ -4499,10 +3324,196 @@ function openEditModal(
 
 
   document.getElementById(
-    'modalOverlay'
-  ).classList.add(
-    'show'
+    'modalBackdrop'
+  ).classList.add('show');
+
+}
+
+
+/* =========================================================
+   DYNAMIC SETTINGS SELECTS
+========================================================= */
+
+function populatePaymentSelect() {
+
+  const select =
+    document.getElementById(
+      'formPayment'
+    );
+
+
+  select.innerHTML =
+    '<option value="">请选择</option>';
+
+
+  settings.paymentMethods.forEach(
+    payment => {
+
+      const option =
+        document.createElement('option');
+
+      option.value = payment;
+      option.textContent = payment;
+
+      select.appendChild(option);
+
+    }
   );
+
+}
+
+
+function populateLargeSelect() {
+
+  const select =
+    document.getElementById(
+      'formLarge'
+    );
+
+
+  select.innerHTML =
+    '<option value="">请选择</option>';
+
+
+  settings.largeCategories.forEach(
+    category => {
+
+      const option =
+        document.createElement('option');
+
+      option.value = category;
+      option.textContent = category;
+
+      select.appendChild(option);
+
+    }
+  );
+
+
+  /*
+   * 大项目改变时，
+   * 自动重新生成中项目。
+   */
+
+  select.onchange =
+    function() {
+
+      populateMiddleSelect(
+        this.value
+      );
+
+    };
+
+}
+
+
+function populateMiddleSelect(
+  largeCategory
+) {
+
+  const select =
+    document.getElementById(
+      'formMiddle'
+    );
+
+
+  select.innerHTML =
+    '<option value="">请选择</option>';
+
+
+  let middles = [];
+
+
+  /*
+   * 如果中项目包含所属大项目，
+   * 直接按照关系过滤。
+   */
+
+  if (
+    settings.middleCategories.length &&
+    typeof settings.middleCategories[0] === 'object'
+  ) {
+
+    middles =
+      settings.middleCategories
+        .filter(
+          item =>
+            item.large === largeCategory
+        )
+        .map(
+          item => item.middle
+        );
+
+  } else {
+
+    /*
+     * 如果 Apps Script 返回的中项目只是字符串，
+     * 就全部显示。
+     *
+     * 但按照我们现在的 Apps Script 设定结构，
+     * 正常应该能获得大项目→中项目关系。
+     */
+
+    middles =
+      settings.middleCategories;
+
+  }
+
+
+  uniqueStrings(middles)
+    .forEach(
+      middle => {
+
+        const option =
+          document.createElement('option');
+
+        option.value = middle;
+        option.textContent = middle;
+
+        select.appendChild(option);
+
+      }
+    );
+
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+function clearForm() {
+
+  document.getElementById(
+    'formDate'
+  ).value = '';
+
+  document.getElementById(
+    'formStore'
+  ).value = '';
+
+  document.getElementById(
+    'formAmount'
+  ).value = '';
+
+  document.getElementById(
+    'formPayment'
+  ).innerHTML =
+    '<option value="">请选择</option>';
+
+  document.getElementById(
+    'formLarge'
+  ).innerHTML =
+    '<option value="">请选择</option>';
+
+  document.getElementById(
+    'formMiddle'
+  ).innerHTML =
+    '<option value="">请选择</option>';
+
+  document.getElementById(
+    'formContent'
+  ).value = '';
 
 }
 
@@ -4510,16 +3521,16 @@ function openEditModal(
 function closeModal() {
 
   document.getElementById(
-    'modalOverlay'
-  ).classList.remove(
-    'show'
-  );
+    'modalBackdrop'
+  ).classList.remove('show');
+
+  editingRowNumber = null;
 
 }
 
 
 /* =========================================================
-   21. Save
+   SAVE
 ========================================================= */
 
 async function saveCurrentExpense() {
@@ -4568,102 +3579,208 @@ async function saveCurrentExpense() {
     ).value.trim();
 
 
+  if (!date) {
+
+    alert('请选择日期。');
+    return;
+
+  }
+
+  if (!store) {
+
+    alert('请填写店铺。');
+    return;
+
+  }
+
   if (
-    !date ||
-    !store ||
-    !amount ||
-    !payment ||
-    !large ||
-    !middle ||
-    !content
+    !Number.isFinite(amount) ||
+    amount < 0
   ) {
 
-    alert(
-      '请完整填写日期、店舗、金额、支付方式、大项目、中项目和内容。'
-    );
+    alert('请输入正确的金额。');
+    return;
 
+  }
+
+  if (!payment) {
+
+    alert('请选择支付方法。');
+    return;
+
+  }
+
+  if (!large) {
+
+    alert('请选择大项目。');
+    return;
+
+  }
+
+  if (!middle) {
+
+    alert('请选择中项目。');
     return;
 
   }
 
 
+  /*
+   * 注意：
+   *
+   * 这里故意不发送 計算対象。
+   *
+   * Apps Script 会根据「設定」Sheet D列规则
+   * 自动计算。
+   */
+
   const payload = {
 
-    action:
-      editingRow
-        ? 'update'
-        : 'add',
-
-    rowNumber:
-      editingRow || undefined,
-
-    '日付':
-      date,
-
-    '店舗':
-      store,
-
-    '金額':
-      amount,
-
-    '支払方法':
-      payment,
-
-    '大項目':
-      large,
-
-    '中項目':
-      middle,
-
-    '内容':
-      content
+    date: date,
+    store: store,
+    amount: amount,
+    paymentMethod: payment,
+    largeCategory: large,
+    middleCategory: middle,
+    content: content
 
   };
 
 
   try {
 
-    const result =
-      await fetchJson(
-        API_URL,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-          body:
-            JSON.stringify(payload)
-        },
-        2
-      );
+    if (editingRowNumber) {
+
+      payload.action = 'update';
+
+      payload.rowNumber =
+        editingRowNumber;
+
+    } else {
+
+      payload.action = 'add';
+
+    }
 
 
-    if (
-      !result ||
-      result.success === false
-    ) {
+    const response =
+      await postData(payload);
+
+
+    if (!response.success) {
 
       throw new Error(
-        result?.error ||
+        response.error ||
         '保存失败'
       );
 
     }
 
 
+    /*
+     * 保存成功后，
+     * 重新读取 expense 数据会违反
+     * “页面打开时读取一次”的设定。
+     *
+     * 因此这里直接根据服务器返回结果
+     * 更新本地数据。
+     */
+
+    if (payload.action === 'add') {
+
+      if (response.expense) {
+
+        expenses.push(
+          response.expense
+        );
+
+      } else {
+
+        /*
+         * 如果 Apps Script 只返回 success，
+         * 为保证当前页面立即看到新记录，
+         * 直接构造本地记录。
+         */
+
+        expenses.push({
+          rowNumber:
+            response.rowNumber || null,
+
+          '日付': date,
+          '店舗': store,
+          '金額': amount,
+          '支払方法': payment,
+          '大項目': large,
+          '中項目': middle,
+          '内容': content,
+
+          /*
+           * 本地暂时使用规则推断。
+           * 如果 Apps Script 返回了计算结果，
+           * 优先使用服务器结果。
+           */
+
+          '計算対象':
+            response['計算対象'] ??
+            response.calculationTarget ??
+            inferCalculationTarget(payment)
+
+        });
+
+      }
+
+    } else {
+
+      const index =
+        expenses.findIndex(
+          expense =>
+            Number(expense.rowNumber) ===
+            Number(editingRowNumber)
+        );
+
+
+      if (index >= 0) {
+
+        expenses[index] = {
+
+          ...expenses[index],
+
+          '日付': date,
+          '店舗': store,
+          '金額': amount,
+          '支払方法': payment,
+          '大項目': large,
+          '中項目': middle,
+          '内容': content
+
+        };
+
+
+        if (
+          response['計算対象'] !== undefined
+        ) {
+
+          expenses[index]['計算対象'] =
+            response['計算対象'];
+
+        }
+
+      }
+
+    }
+
+
     closeModal();
 
-    await loadData();
+    initializeYearFilters();
 
+    initializeCategoryFilter();
+
+    renderAll();
 
   } catch (error) {
 
-    console.error(
-      'Save error:',
-      error
-    );
-
+    console.error(error);
 
     alert(
       '保存失败：\n' +
@@ -4676,19 +3793,19 @@ async function saveCurrentExpense() {
 
 
 /* =========================================================
-   22. Delete
+   DELETE
 ========================================================= */
 
 async function deleteCurrentExpense() {
 
-  if (!editingRow) {
+  if (!editingRowNumber) {
     return;
   }
 
 
   const confirmed =
     confirm(
-      '确定要删除这笔花销吗？\n\n删除后无法恢复。'
+      '确定要删除这笔花销吗？'
     );
 
 
@@ -4699,51 +3816,43 @@ async function deleteCurrentExpense() {
 
   try {
 
-    const result =
-      await fetchJson(
-        API_URL,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type':
-              'text/plain;charset=utf-8'
-          },
-          body:
-            JSON.stringify({
-              action: 'delete',
-              rowNumber:
-                editingRow
-            })
-        },
-        2
-      );
+    const response =
+      await postData({
+        action: 'delete',
+        rowNumber:
+          editingRowNumber
+      });
 
 
-    if (
-      !result ||
-      result.success === false
-    ) {
+    if (!response.success) {
 
       throw new Error(
-        result?.error ||
+        response.error ||
         '删除失败'
       );
 
     }
 
 
+    expenses =
+      expenses.filter(
+        expense =>
+          Number(expense.rowNumber) !==
+          Number(editingRowNumber)
+      );
+
+
     closeModal();
 
-    await loadData();
+    initializeYearFilters();
 
+    initializeCategoryFilter();
+
+    renderAll();
 
   } catch (error) {
 
-    console.error(
-      'Delete error:',
-      error
-    );
-
+    console.error(error);
 
     alert(
       '删除失败：\n' +
@@ -4756,22 +3865,241 @@ async function deleteCurrentExpense() {
 
 
 /* =========================================================
-   23. Modal Background
+   POST
 ========================================================= */
 
-document.getElementById(
-  'modalOverlay'
-).addEventListener(
-  'click',
-  event => {
+async function postData(payload) {
 
-    if (
-      event.target.id ===
-      'modalOverlay'
-    ) {
+  const response =
+    await fetch(
+      API_URL,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type':
+            'text/plain;charset=utf-8'
+        },
+        body:
+          JSON.stringify(payload)
+      }
+    );
 
-      closeModal();
 
+  if (!response.ok) {
+
+    throw new Error(
+      'HTTP Error: ' +
+      response.status
+    );
+
+  }
+
+
+  return await response.json();
+
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function parseExpenseDate(value) {
+
+  if (!value) return null;
+
+
+  if (
+    value instanceof Date
+  ) {
+    return value;
+  }
+
+
+  const text =
+    String(value);
+
+
+  /*
+   * Google Apps Script 常见：
+   * 2026-08-30T17:34:00.000Z
+   */
+
+  let date =
+    new Date(text);
+
+
+  if (!isNaN(date.getTime())) {
+    return date;
+  }
+
+
+  /*
+   * yyyy/mm/dd hh:mm
+   */
+
+  const match =
+    text.match(
+      /^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})(?:\s+(\d{1,2}):(\d{2}))?/
+    );
+
+
+  if (match) {
+
+    return new Date(
+      Number(match[1]),
+      Number(match[2]) - 1,
+      Number(match[3]),
+      Number(match[4] || 0),
+      Number(match[5] || 0)
+    );
+
+  }
+
+
+  return null;
+
+}
+
+
+function toDatetimeLocal(date) {
+
+  const local =
+    new Date(
+      date.getTime() -
+      date.getTimezoneOffset() * 60000
+    );
+
+  return local
+    .toISOString()
+    .slice(0,16);
+
+}
+
+
+function dateKey(date) {
+
+  return [
+    date.getFullYear(),
+    String(date.getMonth()+1)
+      .padStart(2,'0'),
+    String(date.getDate())
+      .padStart(2,'0')
+  ].join('-');
+
+}
+
+
+function formatDateTitle(key) {
+
+  const [
+    year,
+    month,
+    day
+  ] =
+    key.split('-');
+
+
+  return `${year}年${Number(month)}月${Number(day)}日`;
+
+}
+
+
+/* =========================================================
+   NUMBER / MONEY
+========================================================= */
+
+function toNumber(value) {
+
+  if (
+    value === null ||
+    value === undefined ||
+    value === ''
+  ) {
+    return 0;
+  }
+
+
+  const number =
+    Number(
+      String(value)
+        .replace(/,/g,'')
+        .replace(/[¥￥]/g,'')
+        .trim()
+    );
+
+
+  return Number.isFinite(number)
+    ? number
+    : 0;
+
+}
+
+
+function formatYen(value) {
+
+  return '¥' +
+    Math.round(
+      toNumber(value)
+    ).toLocaleString('ja-JP');
+
+}
+
+
+/*
+ * 仅用于保存成功后本地立即更新。
+ *
+ * 真正的计算规则仍然以 Apps Script / 設定 Sheet D列为准。
+ */
+
+function inferCalculationTarget(payment) {
+
+  /*
+   * 这里只是为了在 Apps Script 只返回 success 时，
+   * 让当前画面可以马上显示。
+   *
+   * 下一次打开页面时，
+   * 一定以 Apps Script 保存后的真实值为准。
+   */
+
+  if (
+    payment === 'Suica' ||
+    payment === 'その他ポイント'
+  ) {
+    return 0;
+  }
+
+  return 1;
+
+}
+
+
+/* =========================================================
+   ESCAPE
+========================================================= */
+
+function escapeHtml(value) {
+
+  return String(value ?? '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#039;');
+
+}
+
+
+/* =========================================================
+   RESIZE
+========================================================= */
+
+window.addEventListener(
+  'resize',
+  () => {
+
+    if (currentPage === 'overview') {
+      renderTrendChart();
     }
 
   }
@@ -4779,10 +4107,23 @@ document.getElementById(
 
 
 /* =========================================================
-   24. Start
+   MODAL BACKDROP
 ========================================================= */
 
-loadData();
+document.getElementById(
+  'modalBackdrop'
+).addEventListener(
+  'click',
+  function(event) {
+
+    if (
+      event.target === this
+    ) {
+      closeModal();
+    }
+
+  }
+);
 
 </script>
 
