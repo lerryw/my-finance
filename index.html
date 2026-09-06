@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Finance Test</title>
+</head>
+
+<body>
+
+  <h1>My Finance</h1>
+
+  <h2>支出テスト</h2>
+
+  <label>
+    日付
+    <input type="datetime-local" id="date">
+  </label>
+
+  <br><br>
+
+  <label>
+    店舗
+    <input type="text" id="store">
+  </label>
+
+  <br><br>
+
+  <label>
+    金額
+    <input type="number" id="amount" step="0.01">
+  </label>
+
+  <br><br>
+
+  <label>
+    支払方法
+    <select id="payment">
+      <option>クレカ(Amex pearl)</option>
+      <option>クレカ(JCB Gold)</option>
+      <option>クレカ(Rakuten)</option>
+      <option>Paypay</option>
+      <option>Alipay</option>
+      <option>現金/振込</option>
+      <option>Suica</option>
+      <option>WechatPay</option>
+      <option>その他ポイント</option>
+    </select>
+  </label>
+
+  <br><br>
+
+  <label>
+    大項目
+    <select id="category">
+      <option>食費</option>
+      <option>日用品</option>
+      <option>交通費</option>
+      <option>服・美容</option>
+      <option>健康・医療</option>
+      <option>交際費</option>
+      <option>趣味・娯楽</option>
+      <option>ペット</option>
+      <option>その他</option>
+      <option>インフラ</option>
+    </select>
+  </label>
+
+  <br><br>
+
+  <label>
+    中項目
+    <input type="text" id="subcategory">
+  </label>
+
+  <br><br>
+
+  <label>
+    内容
+    <input type="text" id="content">
+  </label>
+
+  <br><br>
+
+  <button onclick="saveExpense()">保存</button>
+
+  <p id="result"></p>
+
+
+<script>
+
+const API_URL = 'https://script.google.com/macros/s/AKfycbxb--pgAmPuBxtOUt2N7PTsU4C5D8-i7DhvXbcmL69OLRCNHiTDPyjU7ZmuV5loMZwfYA/exec';
+
+
+async function saveExpense() {
+
+  const data = {
+    日付: document.getElementById('date').value,
+    店舗: document.getElementById('store').value,
+    金額: document.getElementById('amount').value,
+    支払方法: document.getElementById('payment').value,
+    大項目: document.getElementById('category').value,
+    中項目: document.getElementById('subcategory').value,
+    内容: document.getElementById('content').value
+  };
+
+  try {
+
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain;charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      document.getElementById('result').textContent =
+        '保存成功！';
+
+    } else {
+      document.getElementById('result').textContent =
+        '保存失败：' + result.error;
+    }
+
+  } catch (error) {
+
+    document.getElementById('result').textContent =
+      '通信错误：' + error.message;
+
+  }
+}
+
+</script>
+
+</body>
+</html>
