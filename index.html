@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
   <title>My Finance</title>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
@@ -19,8 +21,7 @@
         -apple-system,
         BlinkMacSystemFont,
         "Helvetica Neue",
-        "Hiragino Sans",
-        "Yu Gothic",
+        Arial,
         sans-serif;
     }
 
@@ -34,44 +35,42 @@
       cursor: pointer;
     }
 
-    .app {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 32px 28px 60px;
-    }
+    /* ---------- Layout ---------- */
 
-    /* ---------- Header ---------- */
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+    }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .brand {
-      font-size: 25px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-    }
-
-    .brand span {
-      color: #E98B5C;
-    }
-
-    .header-subtitle {
-      margin-top: 5px;
-      color: #74777C;
       font-size: 13px;
+      font-weight: 700;
+      color: #E98B5C;
+      letter-spacing: 0.04em;
+    }
+
+    .title {
+      margin-top: 5px;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
 
     .add-button {
       border: none;
-      border-radius: 16px;
       background: #E98B5C;
       color: white;
-      padding: 12px 19px;
-      font-weight: 600;
+      padding: 12px 18px;
+      border-radius: 14px;
+      font-weight: 700;
       box-shadow: 0 5px 14px rgba(233, 139, 92, 0.18);
     }
 
@@ -79,884 +78,1394 @@
       opacity: 0.9;
     }
 
+
     /* ---------- Summary ---------- */
 
-    .summary {
+    .summary-grid {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
-      gap: 16px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
       margin-bottom: 22px;
     }
 
     .summary-card {
       background: #FFFFFF;
-      border-radius: 22px;
-      padding: 22px 24px;
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
     }
 
     .summary-label {
       color: #74777C;
-      font-size: 13px;
-      margin-bottom: 9px;
+      font-size: 12px;
+      margin-bottom: 8px;
     }
 
     .summary-value {
-      font-size: 28px;
+      font-size: 24px;
       font-weight: 700;
-      letter-spacing: -0.5px;
     }
 
-    .summary-value.orange {
-      color: #E98B5C;
-    }
 
     /* ---------- Filters ---------- */
 
     .filter-card {
       background: #FFFFFF;
-      border-radius: 22px;
-      padding: 18px;
+      border-radius: 20px;
+      padding: 16px;
       margin-bottom: 22px;
+      display: grid;
+      grid-template-columns: 180px 180px 1fr;
+      gap: 10px;
       box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
     }
 
-    .filters {
-      display: grid;
-      grid-template-columns: 170px 190px 1fr;
-      gap: 12px;
-    }
-
-    .input,
-    .select {
+    .select,
+    .input {
       width: 100%;
       border: 1px solid #E7E4DE;
-      border-radius: 13px;
-      background: #FAF9F6;
+      background: #FFFFFF;
       color: #292B2F;
-      padding: 11px 13px;
+      border-radius: 12px;
+      padding: 11px 12px;
       outline: none;
     }
 
-    .input:focus,
-    .select:focus {
+    .select:focus,
+    .input:focus {
       border-color: #E98B5C;
-      background: white;
     }
+
 
     /* ---------- Expense list ---------- */
 
-    .section-title {
-      font-size: 17px;
-      font-weight: 700;
-      margin: 0 0 12px 4px;
+    .expense-section {
+      margin-top: 8px;
     }
 
-    .expense-group {
-      margin-bottom: 22px;
+    .date-group {
+      margin-bottom: 25px;
     }
 
     .date-title {
-      color: #74777C;
       font-size: 13px;
-      font-weight: 600;
-      margin: 0 0 8px 5px;
+      color: #74777C;
+      font-weight: 700;
+      margin-bottom: 9px;
+      padding-left: 4px;
     }
 
     .expense-list {
-      background: #FFFFFF;
-      border-radius: 22px;
-      overflow: hidden;
-      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .expense-item {
+      background: #FFFFFF;
+      border-radius: 17px;
+      padding: 15px 17px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      padding: 17px 21px;
-      border-bottom: 1px solid #F0EEE9;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(41, 43, 47, 0.035);
+      transition: transform 0.12s ease;
     }
 
-    .expense-item:last-child {
-      border-bottom: none;
+    .expense-item:hover {
+      transform: translateY(-1px);
     }
 
-    .expense-main {
+    .expense-left {
       min-width: 0;
     }
 
     .expense-store {
       font-size: 15px;
-      font-weight: 650;
+      font-weight: 700;
       margin-bottom: 5px;
     }
 
-    .expense-meta {
-      color: #74777C;
+    .expense-detail {
       font-size: 12px;
-    }
-
-    .expense-content {
       color: #74777C;
-      margin-left: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 600px;
     }
 
     .expense-right {
-      text-align: right;
-      flex-shrink: 0;
-      margin-left: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-left: 15px;
     }
 
     .expense-amount {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-      margin-bottom: 4px;
+      white-space: nowrap;
     }
 
-    .expense-payment {
+    .edit-button {
+      border: none;
+      background: #F4F2ED;
       color: #74777C;
+      border-radius: 10px;
+      padding: 7px 10px;
       font-size: 11px;
+    }
+
+    .edit-button:hover {
+      background: #EEEAE3;
     }
 
     .empty {
       background: #FFFFFF;
-      border-radius: 22px;
-      padding: 55px 20px;
+      border-radius: 20px;
+      padding: 50px 20px;
       text-align: center;
       color: #74777C;
-      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+      font-size: 13px;
     }
+
+
+    /* ---------- Loading ---------- */
 
     .loading {
       text-align: center;
-      padding: 50px;
       color: #74777C;
+      padding: 40px;
+      font-size: 13px;
     }
 
     .error {
       background: #FFF1EF;
       color: #B9554D;
-      border-radius: 16px;
-      padding: 15px 18px;
+      padding: 13px 15px;
+      border-radius: 13px;
       margin-bottom: 20px;
-      display: none;
+      font-size: 13px;
     }
 
-/* ---------- Modal ---------- */
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(41, 43, 47, 0.28);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  z-index: 1000;
-}
+    /* ---------- Modal ---------- */
 
-.modal-overlay.show {
-  display: flex;
-}
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(41, 43, 47, 0.28);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
 
-.modal {
-  width: 100%;
-  max-width: 560px;
-  max-height: 90vh;
-  overflow-y: auto;
-  background: #FFFFFF;
-  border-radius: 24px;
-  padding: 26px;
-  box-shadow: 0 18px 50px rgba(41, 43, 47, 0.16);
-}
+    .modal-overlay.show {
+      display: flex;
+    }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 24px;
-}
+    .modal {
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: #FFFFFF;
+      border-radius: 24px;
+      padding: 26px;
+      box-shadow: 0 18px 50px rgba(41, 43, 47, 0.16);
+    }
 
-.modal-title {
-  font-size: 21px;
-  font-weight: 700;
-}
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
 
-.modal-subtitle {
-  margin-top: 5px;
-  color: #74777C;
-  font-size: 12px;
-}
+    .modal-title {
+      font-size: 21px;
+      font-weight: 700;
+    }
 
-.modal-close {
-  border: none;
-  background: #F4F2ED;
-  color: #74777C;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  font-size: 23px;
-  line-height: 1;
-}
+    .modal-subtitle {
+      margin-top: 5px;
+      color: #74777C;
+      font-size: 12px;
+    }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+    .modal-close {
+      border: none;
+      background: #F4F2ED;
+      color: #74777C;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 23px;
+      line-height: 1;
+    }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-}
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
 
-.form-group label {
-  color: #74777C;
-  font-size: 12px;
-  font-weight: 600;
-}
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
+    .form-group label {
+      color: #74777C;
+      font-size: 12px;
+      font-weight: 600;
+    }
 
-.form-error {
-  display: none;
-  margin-top: 15px;
-  padding: 11px 13px;
-  border-radius: 12px;
-  background: #FFF1EF;
-  color: #B9554D;
-  font-size: 12px;
-}
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
 
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-}
+    .form-error {
+      display: none;
+      margin-top: 15px;
+      padding: 11px 13px;
+      border-radius: 12px;
+      background: #FFF1EF;
+      color: #B9554D;
+      font-size: 12px;
+    }
 
-.cancel-button,
-.save-button {
-  border: none;
-  border-radius: 13px;
-  padding: 11px 20px;
-  font-weight: 600;
-}
+    .modal-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+    }
 
-.cancel-button {
-  background: #F4F2ED;
-  color: #74777C;
-}
+    .modal-actions-right {
+      display: flex;
+      gap: 10px;
+    }
 
-.save-button {
-  background: #E98B5C;
-  color: white;
-  min-width: 85px;
-}
+    .delete-button {
+      border: none;
+      background: #FFF1EF;
+      color: #B9554D;
+      border-radius: 13px;
+      padding: 11px 17px;
+      font-weight: 600;
+    }
 
-.save-button:disabled {
-  opacity: 0.55;
-  cursor: default;
-}
+    .cancel-button,
+    .save-button {
+      border: none;
+      border-radius: 13px;
+      padding: 11px 20px;
+      font-weight: 600;
+    }
 
-@media (max-width: 760px) {
+    .cancel-button {
+      background: #F4F2ED;
+      color: #74777C;
+    }
 
-  .modal-overlay {
-    align-items: flex-end;
-    padding: 0;
-  }
+    .save-button {
+      background: #E98B5C;
+      color: white;
+      min-width: 85px;
+    }
 
-  .modal {
-    max-height: 92vh;
-    border-radius: 24px 24px 0 0;
-    padding: 22px 18px 25px;
-  }
+    .save-button:disabled,
+    .delete-button:disabled {
+      opacity: 0.55;
+      cursor: default;
+    }
 
-  .form-row {
-    grid-template-columns: 1fr;
-  }
 
-}
-    
     /* ---------- Mobile ---------- */
 
     @media (max-width: 760px) {
 
-      .app {
-        padding: 22px 16px 90px;
+      .page {
+        padding: 24px 15px 45px;
       }
 
       .header {
-        margin-bottom: 22px;
+        align-items: flex-start;
       }
 
-      .brand {
-        font-size: 22px;
-      }
-
-      .header-subtitle {
-        font-size: 12px;
+      .title {
+        font-size: 25px;
       }
 
       .add-button {
-        padding: 10px 14px;
-        border-radius: 13px;
+        padding: 10px 13px;
+        font-size: 12px;
       }
 
-      .summary {
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-      }
-
-      .summary-card:first-child {
-        grid-column: 1 / -1;
+      .summary-grid {
+        gap: 8px;
       }
 
       .summary-card {
-        padding: 18px;
-        border-radius: 18px;
+        padding: 14px;
+        border-radius: 16px;
+      }
+
+      .summary-label {
+        font-size: 10px;
       }
 
       .summary-value {
-        font-size: 23px;
-      }
-
-      .filters {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .filters .search {
-        grid-column: 1 / -1;
+        font-size: 18px;
       }
 
       .filter-card {
-        border-radius: 18px;
-        padding: 13px;
+        grid-template-columns: 1fr 1fr;
       }
 
-      .expense-list {
-        border-radius: 18px;
+      .filter-card .search-input {
+        grid-column: 1 / -1;
       }
 
       .expense-item {
-        padding: 15px 16px;
+        padding: 13px 14px;
       }
 
-      .expense-store {
-        font-size: 14px;
-      }
-
-      .expense-meta {
-        font-size: 11px;
-      }
-
-      .expense-amount {
-        font-size: 15px;
+      .expense-detail {
+        max-width: 210px;
       }
 
       .expense-right {
-        margin-left: 10px;
+        gap: 7px;
+        margin-left: 8px;
       }
+
+      .expense-amount {
+        font-size: 14px;
+      }
+
+      .edit-button {
+        padding: 7px 8px;
+      }
+
+      .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .modal {
+        max-height: 92vh;
+        border-radius: 24px 24px 0 0;
+        padding: 22px 18px 25px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
-<div class="app">
+<div class="page">
 
   <!-- Header -->
-  <header class="header">
+
+  <div class="header">
+
     <div>
-      <div class="brand">My <span>Finance</span></div>
-      <div class="header-subtitle">花销明细</div>
+      <div class="brand">MY FINANCE</div>
+      <div class="title">花销明细</div>
     </div>
 
-    <button class="add-button" onclick="addExpense()">
+    <button
+      class="add-button"
+      onclick="addExpense()"
+    >
       ＋ 添加支出
     </button>
-  </header>
+
+  </div>
 
 
   <!-- Error -->
-  <div id="error" class="error"></div>
+
+  <div
+    id="pageError"
+    class="error"
+    style="display:none;"
+  ></div>
 
 
   <!-- Summary -->
-  <section class="summary">
+
+  <div class="summary-grid">
 
     <div class="summary-card">
-      <div class="summary-label">本月支出</div>
-      <div id="monthTotal" class="summary-value orange">¥0</div>
+
+      <div class="summary-label">
+        本月支出
+      </div>
+
+      <div
+        id="monthlyAmount"
+        class="summary-value"
+      >
+        ¥0
+      </div>
+
     </div>
+
 
     <div class="summary-card">
-      <div class="summary-label">本月笔数</div>
-      <div id="monthCount" class="summary-value">0</div>
+
+      <div class="summary-label">
+        本月笔数
+      </div>
+
+      <div
+        id="monthlyCount"
+        class="summary-value"
+      >
+        0
+      </div>
+
     </div>
+
 
     <div class="summary-card">
-      <div class="summary-label">全部记录</div>
-      <div id="allCount" class="summary-value">0</div>
+
+      <div class="summary-label">
+        全部记录
+      </div>
+
+      <div
+        id="totalCount"
+        class="summary-value"
+      >
+        0
+      </div>
+
     </div>
 
-  </section>
+  </div>
 
 
   <!-- Filters -->
-  <section class="filter-card">
 
-    <div class="filters">
+  <div class="filter-card">
 
-      <select id="monthFilter" class="select"
-              onchange="renderExpenses()">
-        <option value="all">全部月份</option>
-      </select>
+    <select
+      id="monthFilter"
+      class="select"
+      onchange="applyFilters()"
+    >
+      <option value="">全部月份</option>
+    </select>
 
-      <select id="categoryFilter" class="select"
-              onchange="renderExpenses()">
-        <option value="all">全部大項目</option>
-      </select>
 
-      <input
-        id="searchFilter"
-        class="input search"
-        type="search"
-        placeholder="搜索店舗 / 内容"
-        oninput="renderExpenses()"
-      >
+    <select
+      id="categoryFilter"
+      class="select"
+      onchange="applyFilters()"
+    >
+      <option value="">全部大項目</option>
+    </select>
 
-    </div>
 
-  </section>
+    <input
+      id="searchInput"
+      class="input search-input"
+      type="text"
+      placeholder="搜索店舗 / 内容"
+      oninput="applyFilters()"
+    >
+
+  </div>
 
 
   <!-- Expenses -->
-  <section>
 
-    <h2 class="section-title">支出记录</h2>
+  <div id="expenseContainer">
 
-    <div id="expenseContainer">
-      <div class="loading">
-        正在读取账目……
-      </div>
+    <div class="loading">
+      读取中…
     </div>
 
-  </section>
+  </div>
 
 </div>
 
 
-<script>
 
-  /*
-   * ==============================================
-   * API
-   * ==============================================
-   */
+<!-- Add / Edit Modal -->
 
-  const API_URL =
-    'https://script.google.com/macros/s/AKfycbxb--pgAmPuBxtOUt2N7PTsU4C5D8-i7DhvXbcmL69OLRCNHiTDPyjU7ZmuV5loMZwfYA/exec';
+<div
+  id="expenseModal"
+  class="modal-overlay"
+>
 
+  <div class="modal">
 
-  /*
-   * ==============================================
-   * Global data
-   * ==============================================
-   */
+    <div class="modal-header">
 
-  let expenses = [];
-  let settings = {};
+      <div>
 
-
-  /*
-   * ==============================================
-   * 初始化
-   * ==============================================
-   */
-
-  window.addEventListener('DOMContentLoaded', loadData);
-
-
-  async function loadData() {
-
-    try {
-
-      const response =
-        await fetch(API_URL + '?action=all');
-
-      const data =
-        await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error);
-      }
-
-      settings = data.settings;
-      expenses = data.expenses || [];
-
-      setupFilters();
-      updateSummary();
-      renderExpenses();
-
-    } catch (error) {
-
-      showError(
-        '读取数据失败：' + error.message
-      );
-
-    }
-  }
-
-
-  /*
-   * ==============================================
-   * Filter setup
-   * ==============================================
-   */
-
-  function setupFilters() {
-
-    const monthFilter =
-      document.getElementById('monthFilter');
-
-    const categoryFilter =
-      document.getElementById('categoryFilter');
-
-
-    // 月份
-    const months =
-      [...new Set(
-        expenses
-          .map(expense => getMonthKey(expense.日付))
-          .filter(Boolean)
-      )].sort().reverse();
-
-
-    months.forEach(month => {
-
-      const option =
-        document.createElement('option');
-
-      option.value = month;
-      option.textContent =
-        formatMonth(month);
-
-      monthFilter.appendChild(option);
-
-    });
-
-
-    // 大項目
-    (settings.largeCategories || [])
-      .forEach(category => {
-
-        const option =
-          document.createElement('option');
-
-        option.value = category;
-        option.textContent = category;
-
-        categoryFilter.appendChild(option);
-
-      });
-  }
-
-
-  /*
-   * ==============================================
-   * Summary
-   * ==============================================
-   */
-
-  function updateSummary() {
-
-    const now = new Date();
-
-    const currentYear =
-      now.getFullYear();
-
-    const currentMonth =
-      now.getMonth();
-
-    const currentMonthExpenses =
-      expenses.filter(expense => {
-
-        if (Number(expense.計算対象) !== 1) {
-          return false;
-        }
-
-        const date =
-          new Date(expense.日付);
-
-        return (
-          date.getFullYear() === currentYear &&
-          date.getMonth() === currentMonth
-        );
-
-      });
-
-
-    const total =
-      currentMonthExpenses.reduce(
-        (sum, expense) =>
-          sum + Number(expense.金額 || 0),
-        0
-      );
-
-
-    document.getElementById('monthTotal')
-      .textContent =
-      formatCurrency(total);
-
-    document.getElementById('monthCount')
-      .textContent =
-      currentMonthExpenses.length;
-
-    document.getElementById('allCount')
-      .textContent =
-      expenses.length;
-  }
-
-
-  /*
-   * ==============================================
-   * Render expenses
-   * ==============================================
-   */
-
-  function renderExpenses() {
-
-    const container =
-      document.getElementById('expenseContainer');
-
-    const month =
-      document.getElementById('monthFilter').value;
-
-    const category =
-      document.getElementById('categoryFilter').value;
-
-    const search =
-      document.getElementById('searchFilter')
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    let filtered =
-      expenses.filter(expense => {
-
-        const monthMatch =
-          month === 'all' ||
-          getMonthKey(expense.日付) === month;
-
-        const categoryMatch =
-          category === 'all' ||
-          expense.大項目 === category;
-
-        const searchMatch =
-          !search ||
-          String(expense.店舗)
-            .toLowerCase()
-            .includes(search) ||
-          String(expense.内容)
-            .toLowerCase()
-            .includes(search);
-
-        return (
-          monthMatch &&
-          categoryMatch &&
-          searchMatch
-        );
-      });
-
-
-    // 按日期倒序
-    filtered.sort(
-      (a, b) =>
-        new Date(b.日付) -
-        new Date(a.日付)
-    );
-
-
-    if (filtered.length === 0) {
-
-      container.innerHTML = `
-        <div class="empty">
-          这个筛选条件下没有支出记录。
+        <div
+          id="modalTitle"
+          class="modal-title"
+        >
+          添加支出
         </div>
-      `;
 
-      return;
-    }
+        <div
+          id="modalSubtitle"
+          class="modal-subtitle"
+        >
+          记录一笔新的花销
+        </div>
 
-
-    // 按日期分组
-    const groups = {};
-
-    filtered.forEach(expense => {
-
-      const key =
-        formatDateOnly(expense.日付);
-
-      if (!groups[key]) {
-        groups[key] = [];
-      }
-
-      groups[key].push(expense);
-
-    });
+      </div>
 
 
-    container.innerHTML =
-      Object.entries(groups)
-        .map(([date, items]) => {
-
-          return `
-            <div class="expense-group">
-
-              <div class="date-title">
-                ${date}
-              </div>
-
-              <div class="expense-list">
-
-                ${items.map(renderExpense).join('')}
-
-              </div>
-
-            </div>
-          `;
-
-        })
-        .join('');
-  }
-
-
-  /*
-   * ==============================================
-   * Single expense
-   * ==============================================
-   */
-
-  function renderExpense(expense) {
-
-    const amount =
-      formatCurrency(expense.金額);
-
-    const content =
-      expense.内容
-        ? `・${escapeHtml(expense.内容)}`
-        : '';
-
-    return `
-      <div
-        class="expense-item"
-        onclick="editExpense(${expense.rowNumber})"
+      <button
+        class="modal-close"
+        onclick="closeExpenseModal()"
       >
+        ×
+      </button>
 
-        <div class="expense-main">
+    </div>
 
-          <div class="expense-store">
-            ${escapeHtml(expense.店舗)}
-          </div>
 
-          <div class="expense-meta">
+    <div class="form">
 
-            ${escapeHtml(expense.大項目)}
-            ·
-            ${escapeHtml(expense.中項目)}
+      <div class="form-group">
 
-            <span class="expense-content">
-              ${content}
-            </span>
+        <label>日付</label>
 
-          </div>
+        <input
+          id="formDate"
+          class="input"
+          type="datetime-local"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>店舗</label>
+
+        <input
+          id="formStore"
+          class="input"
+          type="text"
+          placeholder="例如：無印良品"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>金額</label>
+
+        <input
+          id="formAmount"
+          class="input"
+          type="number"
+          step="0.01"
+          placeholder="0.00"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>支払方法</label>
+
+        <select
+          id="formPayment"
+          class="select"
+        >
+        </select>
+
+      </div>
+
+
+      <div class="form-row">
+
+        <div class="form-group">
+
+          <label>大項目</label>
+
+          <select
+            id="formCategory"
+            class="select"
+            onchange="updateMiddleCategories()"
+          >
+          </select>
 
         </div>
 
 
-        <div class="expense-right">
+        <div class="form-group">
 
-          <div class="expense-amount">
-            ${amount}
-          </div>
+          <label>中項目</label>
 
-          <div class="expense-payment">
-            ${escapeHtml(expense.支払方法)}
-          </div>
+          <select
+            id="formSubcategory"
+            class="select"
+          >
+          </select>
 
         </div>
 
       </div>
+
+
+      <div class="form-group">
+
+        <label>内容</label>
+
+        <input
+          id="formContent"
+          class="input"
+          type="text"
+          placeholder="例如：牛乳"
+        >
+
+      </div>
+
+    </div>
+
+
+    <div
+      id="formError"
+      class="form-error"
+    ></div>
+
+
+    <div class="modal-actions">
+
+      <button
+        id="deleteButton"
+        class="delete-button"
+        onclick="deleteCurrentExpense()"
+        style="display:none;"
+      >
+        删除
+      </button>
+
+
+      <div class="modal-actions-right">
+
+        <button
+          class="cancel-button"
+          onclick="closeExpenseModal()"
+        >
+          取消
+        </button>
+
+
+        <button
+          id="saveButton"
+          class="save-button"
+          onclick="submitExpense()"
+        >
+          保存
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   CONFIG
+   ===================================================== */
+
+const API_URL =
+  'https://script.google.com/macros/s/AKfycbxb--pgAmPuBxtOUt2N7PTsU4C5D8-i7DhvXbcmL69OLRCNHiTDPyjU7ZmuV5loMZwfYA/exec';
+
+
+
+/* =====================================================
+   GLOBAL DATA
+   ===================================================== */
+
+let expenses = [];
+
+let settings = {
+  paymentMethods: [],
+  largeCategories: [],
+  middleCategories: {},
+  rules: []
+};
+
+let editingRowNumber = null;
+
+
+
+/* =====================================================
+   INITIAL LOAD
+   ===================================================== */
+
+document.addEventListener(
+  'DOMContentLoaded',
+  loadData
+);
+
+
+
+/* =====================================================
+   LOAD DATA
+   ===================================================== */
+
+async function loadData() {
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL + '?action=all'
+      );
+
+    const data =
+      await response.json();
+
+
+    if (!data.success) {
+      throw new Error(
+        data.error || '读取数据失败'
+      );
+    }
+
+
+    expenses =
+      data.expenses || [];
+
+
+    settings =
+      data.settings || settings;
+
+
+    setupFilters();
+
+    updateSummary();
+
+    applyFilters();
+
+
+    hidePageError();
+
+
+  } catch (error) {
+
+    showPageError(
+      '读取数据失败：' + error.message
+    );
+
+  }
+
+}
+
+
+
+/* =====================================================
+   FILTERS
+   ===================================================== */
+
+function setupFilters() {
+
+  const monthFilter =
+    document.getElementById(
+      'monthFilter'
+    );
+
+  const categoryFilter =
+    document.getElementById(
+      'categoryFilter'
+    );
+
+
+  monthFilter.innerHTML =
+    '<option value="">全部月份</option>';
+
+  categoryFilter.innerHTML =
+    '<option value="">全部大項目</option>';
+
+
+  const months =
+    [...new Set(
+      expenses
+        .map(e => getMonth(e['日付']))
+        .filter(Boolean)
+    )]
+    .sort()
+    .reverse();
+
+
+  months.forEach(month => {
+
+    const option =
+      document.createElement('option');
+
+    option.value = month;
+
+    option.textContent =
+      month.replace('-', '年') + '月';
+
+    monthFilter.appendChild(option);
+
+  });
+
+
+  (settings.largeCategories || [])
+    .forEach(category => {
+
+      const option =
+        document.createElement('option');
+
+      option.value = category;
+
+      option.textContent = category;
+
+      categoryFilter.appendChild(option);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   APPLY FILTERS
+   ===================================================== */
+
+function applyFilters() {
+
+  const month =
+    document.getElementById(
+      'monthFilter'
+    ).value;
+
+
+  const category =
+    document.getElementById(
+      'categoryFilter'
+    ).value;
+
+
+  const search =
+    document.getElementById(
+      'searchInput'
+    ).value
+      .trim()
+      .toLowerCase();
+
+
+  const filtered =
+    expenses.filter(expense => {
+
+      const expenseMonth =
+        getMonth(expense['日付']);
+
+
+      const monthOK =
+        !month ||
+        expenseMonth === month;
+
+
+      const categoryOK =
+        !category ||
+        expense['大項目'] === category;
+
+
+      const searchText =
+        (
+          (expense['店舗'] || '') +
+          ' ' +
+          (expense['内容'] || '')
+        ).toLowerCase();
+
+
+      const searchOK =
+        !search ||
+        searchText.includes(search);
+
+
+      return (
+        monthOK &&
+        categoryOK &&
+        searchOK
+      );
+
+    });
+
+
+  renderExpenses(filtered);
+
+}
+
+
+
+/* =====================================================
+   SUMMARY
+   ===================================================== */
+
+function updateSummary() {
+
+  const now =
+    new Date();
+
+  const currentMonth =
+    now.getFullYear() +
+    '-' +
+    String(
+      now.getMonth() + 1
+    ).padStart(2, '0');
+
+
+  const monthly =
+    expenses.filter(
+      expense =>
+        getMonth(expense['日付']) ===
+        currentMonth &&
+        Number(expense['計算対象']) === 1
+    );
+
+
+  const monthlyAmount =
+    monthly.reduce(
+      (sum, expense) =>
+        sum + Number(expense['金額'] || 0),
+      0
+    );
+
+
+  document.getElementById(
+    'monthlyAmount'
+  ).textContent =
+    formatCurrency(monthlyAmount);
+
+
+  document.getElementById(
+    'monthlyCount'
+  ).textContent =
+    monthly.length;
+
+
+  document.getElementById(
+    'totalCount'
+  ).textContent =
+    expenses.length;
+
+}
+
+
+
+/* =====================================================
+   RENDER EXPENSES
+   ===================================================== */
+
+function renderExpenses(list) {
+
+  const container =
+    document.getElementById(
+      'expenseContainer'
+    );
+
+
+  if (!list.length) {
+
+    container.innerHTML = `
+      <div class="empty">
+        没有找到符合条件的记录
+      </div>
     `;
+
+    return;
+
   }
 
 
-  /*
-   * ==============================================
-   * Future actions
-   * ==============================================
-   */
+  const sorted =
+    [...list].sort(
+      (a, b) =>
+        new Date(b['日付']) -
+        new Date(a['日付'])
+    );
 
-  function addExpense() {
 
-  document.getElementById('expenseModal')
-    .classList.add('show');
+  const groups = {};
 
-  document.getElementById('formError')
-    .style.display = 'none';
 
-  document.getElementById('formStore').value = '';
-  document.getElementById('formAmount').value = '';
-  document.getElementById('formContent').value = '';
+  sorted.forEach(expense => {
+
+    const date =
+      getDateOnly(
+        expense['日付']
+      );
+
+
+    if (!groups[date]) {
+      groups[date] = [];
+    }
+
+
+    groups[date].push(expense);
+
+  });
+
+
+  container.innerHTML = '';
+
+
+  Object.keys(groups)
+    .forEach(date => {
+
+      const group =
+        document.createElement('div');
+
+      group.className =
+        'date-group';
+
+
+      const title =
+        document.createElement('div');
+
+      title.className =
+        'date-title';
+
+      title.textContent =
+        formatDateTitle(date);
+
+
+      const listElement =
+        document.createElement('div');
+
+      listElement.className =
+        'expense-list';
+
+
+      groups[date]
+        .forEach(expense => {
+
+          const item =
+            document.createElement('div');
+
+          item.className =
+            'expense-item';
+
+
+          const left =
+            document.createElement('div');
+
+          left.className =
+            'expense-left';
+
+
+          const store =
+            document.createElement('div');
+
+          store.className =
+            'expense-store';
+
+          store.textContent =
+            expense['店舗'] ||
+            '（店舗未入力）';
+
+
+          const detail =
+            document.createElement('div');
+
+          detail.className =
+            'expense-detail';
+
+
+          detail.textContent =
+            [
+              formatTime(expense['日付']),
+              expense['大項目'],
+              expense['中項目'],
+              expense['内容']
+            ]
+            .filter(Boolean)
+            .join(' · ');
+
+
+          left.appendChild(store);
+
+          left.appendChild(detail);
+
+
+          const right =
+            document.createElement('div');
+
+          right.className =
+            'expense-right';
+
+
+          const amount =
+            document.createElement('div');
+
+          amount.className =
+            'expense-amount';
+
+          amount.textContent =
+            formatCurrency(
+              expense['金額']
+            );
+
+
+          const edit =
+            document.createElement('button');
+
+          edit.className =
+            'edit-button';
+
+          edit.textContent =
+            '编辑';
+
+          edit.onclick =
+            () =>
+              editExpense(
+                expense
+              );
+
+
+          right.appendChild(amount);
+
+          right.appendChild(edit);
+
+
+          item.appendChild(left);
+
+          item.appendChild(right);
+
+
+          listElement.appendChild(item);
+
+        });
+
+
+      group.appendChild(title);
+
+      group.appendChild(listElement);
+
+      container.appendChild(group);
+
+    });
+
+}
+
+
+
+/* =====================================================
+   ADD EXPENSE
+   ===================================================== */
+
+function addExpense() {
+
+  editingRowNumber = null;
+
+
+  document.getElementById(
+    'modalTitle'
+  ).textContent =
+    '添加支出';
+
+
+  document.getElementById(
+    'modalSubtitle'
+  ).textContent =
+    '记录一笔新的花销';
+
+
+  document.getElementById(
+    'deleteButton'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'formError'
+  ).style.display =
+    'none';
+
+
+  document.getElementById(
+    'formStore'
+  ).value = '';
+
+
+  document.getElementById(
+    'formAmount'
+  ).value = '';
+
+
+  document.getElementById(
+    'formContent'
+  ).value = '';
+
 
   setDefaultDate();
 
   setupFormOptions();
 
+
+  document.getElementById(
+    'expenseModal'
+  ).classList.add('show');
+
 }
+
+
+
+/* =====================================================
+   EDIT EXPENSE
+   ===================================================== */
+
+function editExpense(expense) {
+
+  editingRowNumber =
+    expense.rowNumber;
+
+
+  document.getElementById(
+    'modalTitle'
+  ).textContent =
+    '编辑支出';
+
+
+  document.getElementById(
+    'modalSubtitle'
+  ).textContent =
+    '修改这笔花销';
+
+
+  document.getElementById(
+    'deleteButton'
+  ).style.display =
+    'block';
+
+
+  document.getElementById(
+    'formError'
+  ).style.display =
+    'none';
+
+
+  setupFormOptions();
+
+
+  document.getElementById(
+    'formDate'
+  ).value =
+    convertToDatetimeLocal(
+      expense['日付']
+    );
+
+
+  document.getElementById(
+    'formStore'
+  ).value =
+    expense['店舗'] || '';
+
+
+  document.getElementById(
+    'formAmount'
+  ).value =
+    expense['金額'] || '';
+
+
+  document.getElementById(
+    'formPayment'
+  ).value =
+    expense['支払方法'] || '';
+
+
+  document.getElementById(
+    'formCategory'
+  ).value =
+    expense['大項目'] || '';
+
+
+  updateMiddleCategories();
+
+
+  document.getElementById(
+    'formSubcategory'
+  ).value =
+    expense['中項目'] || '';
+
+
+  document.getElementById(
+    'formContent'
+  ).value =
+    expense['内容'] || '';
+
+
+  document.getElementById(
+    'expenseModal'
+  ).classList.add('show');
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL
+   ===================================================== */
 
 function closeExpenseModal() {
 
-  document.getElementById('expenseModal')
-    .classList.remove('show');
+  document.getElementById(
+    'expenseModal'
+  ).classList.remove('show');
 
 }
 
-function setDefaultDate() {
 
-  const now = new Date();
 
-  const offset =
-    now.getTimezoneOffset();
-
-  const localDate =
-    new Date(
-      now.getTime() - offset * 60000
-    );
-
-  document.getElementById('formDate').value =
-    localDate
-      .toISOString()
-      .slice(0, 16);
-
-}
-
+/* =====================================================
+   FORM OPTIONS
+   ===================================================== */
 
 function setupFormOptions() {
 
   const payment =
-    document.getElementById('formPayment');
+    document.getElementById(
+      'formPayment'
+    );
 
   const category =
-    document.getElementById('formCategory');
+    document.getElementById(
+      'formCategory'
+    );
 
 
   payment.innerHTML = '';
@@ -968,10 +1477,14 @@ function setupFormOptions() {
     .forEach(method => {
 
       const option =
-        document.createElement('option');
+        document.createElement(
+          'option'
+        );
 
       option.value = method;
-      option.textContent = method;
+
+      option.textContent =
+        method;
 
       payment.appendChild(option);
 
@@ -979,13 +1492,18 @@ function setupFormOptions() {
 
 
   (settings.largeCategories || [])
-    .forEach(item => {
+    .forEach(categoryName => {
 
       const option =
-        document.createElement('option');
+        document.createElement(
+          'option'
+        );
 
-      option.value = item;
-      option.textContent = item;
+      option.value =
+        categoryName;
+
+      option.textContent =
+        categoryName;
 
       category.appendChild(option);
 
@@ -997,14 +1515,23 @@ function setupFormOptions() {
 }
 
 
+
+/* =====================================================
+   MIDDLE CATEGORIES
+   ===================================================== */
+
 function updateMiddleCategories() {
 
   const category =
-    document.getElementById('formCategory')
-      .value;
+    document.getElementById(
+      'formCategory'
+    ).value;
+
 
   const subcategory =
-    document.getElementById('formSubcategory');
+    document.getElementById(
+      'formSubcategory'
+    );
 
 
   subcategory.innerHTML = '';
@@ -1020,9 +1547,12 @@ function updateMiddleCategories() {
   middleCategories.forEach(item => {
 
     const option =
-      document.createElement('option');
+      document.createElement(
+        'option'
+      );
 
     option.value = item;
+
     option.textContent = item;
 
     subcategory.appendChild(option);
@@ -1032,67 +1562,174 @@ function updateMiddleCategories() {
 }
 
 
+
+/* =====================================================
+   SUBMIT ADD / UPDATE
+   ===================================================== */
+
 async function submitExpense() {
 
   const saveButton =
-    document.getElementById('saveButton');
+    document.getElementById(
+      'saveButton'
+    );
+
 
   const errorBox =
-    document.getElementById('formError');
+    document.getElementById(
+      'formError'
+    );
 
 
-  errorBox.style.display = 'none';
+  errorBox.style.display =
+    'none';
 
-  saveButton.disabled = true;
-  saveButton.textContent = '保存中…';
+
+  const date =
+    document.getElementById(
+      'formDate'
+    ).value;
+
+
+  const store =
+    document.getElementById(
+      'formStore'
+    ).value.trim();
+
+
+  const amount =
+    document.getElementById(
+      'formAmount'
+    ).value;
+
+
+  const payment =
+    document.getElementById(
+      'formPayment'
+    ).value;
+
+
+  const category =
+    document.getElementById(
+      'formCategory'
+    ).value;
+
+
+  const subcategory =
+    document.getElementById(
+      'formSubcategory'
+    ).value;
+
+
+  const content =
+    document.getElementById(
+      'formContent'
+    ).value.trim();
+
+
+  if (!date) {
+    showFormError(
+      '请输入日付。'
+    );
+    return;
+  }
+
+
+  if (!amount || Number(amount) < 0) {
+    showFormError(
+      '请输入正确的金额。'
+    );
+    return;
+  }
+
+
+  if (!payment) {
+    showFormError(
+      '请选择支払方法。'
+    );
+    return;
+  }
+
+
+  if (!category) {
+    showFormError(
+      '请选择大項目。'
+    );
+    return;
+  }
+
+
+  if (!subcategory) {
+    showFormError(
+      '请选择中項目。'
+    );
+    return;
+  }
 
 
   const data = {
 
-    action: 'add',
+    action:
+      editingRowNumber
+        ? 'update'
+        : 'add',
 
     日付:
-      document.getElementById('formDate').value,
+      date,
 
     店舗:
-      document.getElementById('formStore').value
-        .trim(),
+      store,
 
     金額:
-      document.getElementById('formAmount').value,
+      amount,
 
     支払方法:
-      document.getElementById('formPayment').value,
+      payment,
 
     大項目:
-      document.getElementById('formCategory').value,
+      category,
 
     中項目:
-      document.getElementById('formSubcategory').value,
+      subcategory,
 
     内容:
-      document.getElementById('formContent').value
-        .trim()
+      content
 
   };
+
+
+  if (editingRowNumber) {
+
+    data.rowNumber =
+      editingRowNumber;
+
+  }
+
+
+  saveButton.disabled =
+    true;
+
+  saveButton.textContent =
+    '保存中…';
 
 
   try {
 
     const response =
-      await fetch(API_URL, {
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
 
-        method: 'POST',
+          headers: {
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
 
-        headers: {
-          'Content-Type':
-            'text/plain;charset=utf-8'
-        },
-
-        body:
-          JSON.stringify(data)
-
-      });
+          body:
+            JSON.stringify(data)
+        }
+      );
 
 
     const result =
@@ -1100,259 +1737,430 @@ async function submitExpense() {
 
 
     if (!result.success) {
-      throw new Error(result.error);
+
+      throw new Error(
+        result.error ||
+        '保存失败'
+      );
+
     }
 
 
     closeExpenseModal();
+
 
     await loadData();
 
 
   } catch (error) {
 
-    errorBox.textContent =
-      '保存失败：' + error.message;
-
-    errorBox.style.display = 'block';
+    showFormError(
+      '保存失败：' +
+      error.message
+    );
 
   }
 
 
-  saveButton.disabled = false;
-  saveButton.textContent = '保存';
+  saveButton.disabled =
+    false;
+
+  saveButton.textContent =
+    '保存';
 
 }
-  
-  function editExpense(rowNumber) {
 
-    alert(
-      '编辑功能将在下一版加入。\n\nSheet row: ' +
-      rowNumber
-    );
 
+
+/* =====================================================
+   DELETE
+   ===================================================== */
+
+async function deleteCurrentExpense() {
+
+  if (!editingRowNumber) {
+    return;
   }
 
 
-  /*
-   * ==============================================
-   * Helpers
-   * ==============================================
-   */
+  const confirmed =
+    confirm(
+      '确定要删除这笔支出吗？\n\n删除后无法恢复。'
+    );
 
-  function getMonthKey(dateString) {
 
-    const date =
-      new Date(dateString);
+  if (!confirmed) {
+    return;
+  }
 
-    if (isNaN(date.getTime())) {
-      return '';
+
+  const deleteButton =
+    document.getElementById(
+      'deleteButton'
+    );
+
+
+  const errorBox =
+    document.getElementById(
+      'formError'
+    );
+
+
+  errorBox.style.display =
+    'none';
+
+
+  deleteButton.disabled =
+    true;
+
+  deleteButton.textContent =
+    '删除中…';
+
+
+  try {
+
+    const response =
+      await fetch(
+        API_URL,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'text/plain;charset=utf-8'
+          },
+
+          body:
+            JSON.stringify({
+
+              action: 'delete',
+
+              rowNumber:
+                editingRowNumber
+
+            })
+
+          }
+      );
+
+
+    const result =
+      await response.json();
+
+
+    if (!result.success) {
+
+      throw new Error(
+        result.error ||
+        '删除失败'
+      );
+
     }
 
-    return (
-      date.getFullYear() +
-      '-' +
-      String(date.getMonth() + 1)
-        .padStart(2, '0')
+
+    closeExpenseModal();
+
+
+    await loadData();
+
+
+  } catch (error) {
+
+    showFormError(
+      '删除失败：' +
+      error.message
     );
+
   }
 
 
-  function formatMonth(monthKey) {
+  deleteButton.disabled =
+    false;
 
-    const parts =
-      monthKey.split('-');
+  deleteButton.textContent =
+    '删除';
 
-    return (
-      parts[0] +
-      '年' +
-      Number(parts[1]) +
-      '月'
+}
+
+
+
+/* =====================================================
+   DATE HELPERS
+   ===================================================== */
+
+function setDefaultDate() {
+
+  const now =
+    new Date();
+
+
+  const offset =
+    now.getTimezoneOffset();
+
+
+  const localDate =
+    new Date(
+      now.getTime() -
+      offset * 60000
     );
+
+
+  document.getElementById(
+    'formDate'
+  ).value =
+    localDate
+      .toISOString()
+      .slice(0, 16);
+
+}
+
+
+function convertToDatetimeLocal(value) {
+
+  if (!value) {
+    return '';
   }
 
 
-  function formatDateOnly(dateString) {
+  const date =
+    new Date(value);
 
-    const date =
-      new Date(dateString);
 
-    if (isNaN(date.getTime())) {
-      return dateString;
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+
+  const offset =
+    date.getTimezoneOffset();
+
+
+  const localDate =
+    new Date(
+      date.getTime() -
+      offset * 60000
+    );
+
+
+  return localDate
+    .toISOString()
+    .slice(0, 16);
+
+}
+
+
+function getMonth(value) {
+
+  if (!value) {
+    return '';
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+
+  return (
+    date.getFullYear() +
+    '-' +
+    String(
+      date.getMonth() + 1
+    ).padStart(2, '0')
+  );
+
+}
+
+
+function getDateOnly(value) {
+
+  if (!value) {
+    return '';
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+
+  return (
+    date.getFullYear() +
+    '-' +
+    String(
+      date.getMonth() + 1
+    ).padStart(2, '0') +
+    '-' +
+    String(
+      date.getDate()
+    ).padStart(2, '0')
+  );
+
+}
+
+
+function formatDateTitle(value) {
+
+  const date =
+    new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return value;
+  }
+
+
+  return (
+    date.getFullYear() +
+    '/' +
+    String(
+      date.getMonth() + 1
+    ).padStart(2, '0') +
+    '/' +
+    String(
+      date.getDate()
+    ).padStart(2, '0')
+  );
+
+}
+
+
+function formatTime(value) {
+
+  if (!value) {
+    return '';
+  }
+
+
+  const date =
+    new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return '';
+  }
+
+
+  return (
+    String(
+      date.getHours()
+    ).padStart(2, '0') +
+    ':' +
+    String(
+      date.getMinutes()
+    ).padStart(2, '0')
+  );
+
+}
+
+
+
+/* =====================================================
+   FORMAT
+   ===================================================== */
+
+function formatCurrency(value) {
+
+  const number =
+    Number(value || 0);
+
+
+  return (
+    '¥' +
+    number.toLocaleString(
+      'ja-JP',
+      {
+        maximumFractionDigits: 2
+      }
+    )
+  );
+
+}
+
+
+
+/* =====================================================
+   ERROR
+   ===================================================== */
+
+function showFormError(message) {
+
+  const box =
+    document.getElementById(
+      'formError'
+    );
+
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    'block';
+
+}
+
+
+function showPageError(message) {
+
+  const box =
+    document.getElementById(
+      'pageError'
+    );
+
+
+  box.textContent =
+    message;
+
+  box.style.display =
+    'block';
+
+}
+
+
+function hidePageError() {
+
+  document.getElementById(
+    'pageError'
+  ).style.display =
+    'none';
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL WHEN CLICKING BACKDROP
+   ===================================================== */
+
+document
+  .getElementById('expenseModal')
+  .addEventListener(
+    'click',
+    function(event) {
+
+      if (
+        event.target ===
+        this
+      ) {
+
+        closeExpenseModal();
+
+      }
+
     }
+  );
 
-    return (
-      date.getFullYear() +
-      '/' +
-      String(date.getMonth() + 1)
-        .padStart(2, '0') +
-      '/' +
-      String(date.getDate())
-        .padStart(2, '0')
-    );
-  }
-
-
-  function formatCurrency(amount) {
-
-    return (
-      '¥' +
-      Number(amount || 0)
-        .toLocaleString('ja-JP')
-    );
-
-  }
-
-
-  function escapeHtml(value) {
-
-    return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-
-  }
-
-
-  function showError(message) {
-
-    const error =
-      document.getElementById('error');
-
-    error.textContent = message;
-    error.style.display = 'block';
-
-  }
 
 </script>
-<!-- Add Expense Modal -->
 
-<div id="expenseModal" class="modal-overlay">
-
-  <div class="modal">
-
-    <div class="modal-header">
-      <div>
-        <div class="modal-title">添加支出</div>
-        <div class="modal-subtitle">记录一笔新的花销</div>
-      </div>
-
-      <button class="modal-close" onclick="closeExpenseModal()">
-        ×
-      </button>
-    </div>
-
-
-    <div class="form">
-
-      <div class="form-group">
-        <label>日付</label>
-        <input
-          id="formDate"
-          class="input"
-          type="datetime-local"
-        >
-      </div>
-
-
-      <div class="form-group">
-        <label>店舗</label>
-        <input
-          id="formStore"
-          class="input"
-          type="text"
-          placeholder="例如：無印良品"
-        >
-      </div>
-
-
-      <div class="form-group">
-        <label>金額</label>
-        <input
-          id="formAmount"
-          class="input"
-          type="number"
-          step="0.01"
-          placeholder="0.00"
-        >
-      </div>
-
-
-      <div class="form-group">
-        <label>支払方法</label>
-
-        <select id="formPayment" class="select">
-        </select>
-      </div>
-
-
-      <div class="form-row">
-
-        <div class="form-group">
-          <label>大項目</label>
-
-          <select
-            id="formCategory"
-            class="select"
-            onchange="updateMiddleCategories()"
-          >
-          </select>
-        </div>
-
-
-        <div class="form-group">
-          <label>中項目</label>
-
-          <select
-            id="formSubcategory"
-            class="select"
-          >
-          </select>
-        </div>
-
-      </div>
-
-
-      <div class="form-group">
-        <label>内容</label>
-
-        <input
-          id="formContent"
-          class="input"
-          type="text"
-          placeholder="例如：牛乳"
-        >
-      </div>
-
-    </div>
-
-
-    <div id="formError" class="form-error"></div>
-
-
-    <div class="modal-actions">
-
-      <button
-        class="cancel-button"
-        onclick="closeExpenseModal()"
-      >
-        取消
-      </button>
-
-      <button
-        id="saveButton"
-        class="save-button"
-        onclick="submitExpense()"
-      >
-        保存
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
 </body>
+
 </html>
