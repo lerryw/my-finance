@@ -3,135 +3,877 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Finance Test</title>
+
+  <title>My Finance</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #FAF9F6;
+      color: #292B2F;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        "Hiragino Sans",
+        "Yu Gothic",
+        sans-serif;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 32px 28px 60px;
+    }
+
+    /* ---------- Header ---------- */
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .brand {
+      font-size: 25px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand span {
+      color: #E98B5C;
+    }
+
+    .header-subtitle {
+      margin-top: 5px;
+      color: #74777C;
+      font-size: 13px;
+    }
+
+    .add-button {
+      border: none;
+      border-radius: 16px;
+      background: #E98B5C;
+      color: white;
+      padding: 12px 19px;
+      font-weight: 600;
+      box-shadow: 0 5px 14px rgba(233, 139, 92, 0.18);
+    }
+
+    .add-button:hover {
+      opacity: 0.9;
+    }
+
+    /* ---------- Summary ---------- */
+
+    .summary {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .summary-card {
+      background: #FFFFFF;
+      border-radius: 22px;
+      padding: 22px 24px;
+      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+    }
+
+    .summary-label {
+      color: #74777C;
+      font-size: 13px;
+      margin-bottom: 9px;
+    }
+
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .summary-value.orange {
+      color: #E98B5C;
+    }
+
+    /* ---------- Filters ---------- */
+
+    .filter-card {
+      background: #FFFFFF;
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: 170px 190px 1fr;
+      gap: 12px;
+    }
+
+    .input,
+    .select {
+      width: 100%;
+      border: 1px solid #E7E4DE;
+      border-radius: 13px;
+      background: #FAF9F6;
+      color: #292B2F;
+      padding: 11px 13px;
+      outline: none;
+    }
+
+    .input:focus,
+    .select:focus {
+      border-color: #E98B5C;
+      background: white;
+    }
+
+    /* ---------- Expense list ---------- */
+
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin: 0 0 12px 4px;
+    }
+
+    .expense-group {
+      margin-bottom: 22px;
+    }
+
+    .date-title {
+      color: #74777C;
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 0 8px 5px;
+    }
+
+    .expense-list {
+      background: #FFFFFF;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+    }
+
+    .expense-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 17px 21px;
+      border-bottom: 1px solid #F0EEE9;
+    }
+
+    .expense-item:last-child {
+      border-bottom: none;
+    }
+
+    .expense-main {
+      min-width: 0;
+    }
+
+    .expense-store {
+      font-size: 15px;
+      font-weight: 650;
+      margin-bottom: 5px;
+    }
+
+    .expense-meta {
+      color: #74777C;
+      font-size: 12px;
+    }
+
+    .expense-content {
+      color: #74777C;
+      margin-left: 5px;
+    }
+
+    .expense-right {
+      text-align: right;
+      flex-shrink: 0;
+      margin-left: 20px;
+    }
+
+    .expense-amount {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .expense-payment {
+      color: #74777C;
+      font-size: 11px;
+    }
+
+    .empty {
+      background: #FFFFFF;
+      border-radius: 22px;
+      padding: 55px 20px;
+      text-align: center;
+      color: #74777C;
+      box-shadow: 0 2px 12px rgba(41, 43, 47, 0.035);
+    }
+
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: #74777C;
+    }
+
+    .error {
+      background: #FFF1EF;
+      color: #B9554D;
+      border-radius: 16px;
+      padding: 15px 18px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* ---------- Mobile ---------- */
+
+    @media (max-width: 760px) {
+
+      .app {
+        padding: 22px 16px 90px;
+      }
+
+      .header {
+        margin-bottom: 22px;
+      }
+
+      .brand {
+        font-size: 22px;
+      }
+
+      .header-subtitle {
+        font-size: 12px;
+      }
+
+      .add-button {
+        padding: 10px 14px;
+        border-radius: 13px;
+      }
+
+      .summary {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .summary-card:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .summary-card {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .summary-value {
+        font-size: 23px;
+      }
+
+      .filters {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .filters .search {
+        grid-column: 1 / -1;
+      }
+
+      .filter-card {
+        border-radius: 18px;
+        padding: 13px;
+      }
+
+      .expense-list {
+        border-radius: 18px;
+      }
+
+      .expense-item {
+        padding: 15px 16px;
+      }
+
+      .expense-store {
+        font-size: 14px;
+      }
+
+      .expense-meta {
+        font-size: 11px;
+      }
+
+      .expense-amount {
+        font-size: 15px;
+      }
+
+      .expense-right {
+        margin-left: 10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>My Finance</h1>
+<div class="app">
 
-  <h2>支出テスト</h2>
+  <!-- Header -->
+  <header class="header">
+    <div>
+      <div class="brand">My <span>Finance</span></div>
+      <div class="header-subtitle">花销明细</div>
+    </div>
 
-  <label>
-    日付
-    <input type="datetime-local" id="date">
-  </label>
+    <button class="add-button" onclick="addExpense()">
+      ＋ 添加支出
+    </button>
+  </header>
 
-  <br><br>
 
-  <label>
-    店舗
-    <input type="text" id="store">
-  </label>
+  <!-- Error -->
+  <div id="error" class="error"></div>
 
-  <br><br>
 
-  <label>
-    金額
-    <input type="number" id="amount" step="0.01">
-  </label>
+  <!-- Summary -->
+  <section class="summary">
 
-  <br><br>
+    <div class="summary-card">
+      <div class="summary-label">本月支出</div>
+      <div id="monthTotal" class="summary-value orange">¥0</div>
+    </div>
 
-  <label>
-    支払方法
-    <select id="payment">
-      <option>クレカ(Amex pearl)</option>
-      <option>クレカ(JCB Gold)</option>
-      <option>クレカ(Rakuten)</option>
-      <option>Paypay</option>
-      <option>Alipay</option>
-      <option>現金/振込</option>
-      <option>Suica</option>
-      <option>WechatPay</option>
-      <option>その他ポイント</option>
-    </select>
-  </label>
+    <div class="summary-card">
+      <div class="summary-label">本月笔数</div>
+      <div id="monthCount" class="summary-value">0</div>
+    </div>
 
-  <br><br>
+    <div class="summary-card">
+      <div class="summary-label">全部记录</div>
+      <div id="allCount" class="summary-value">0</div>
+    </div>
 
-  <label>
-    大項目
-    <select id="category">
-      <option>食費</option>
-      <option>日用品</option>
-      <option>交通費</option>
-      <option>服・美容</option>
-      <option>健康・医療</option>
-      <option>交際費</option>
-      <option>趣味・娯楽</option>
-      <option>ペット</option>
-      <option>その他</option>
-      <option>インフラ</option>
-    </select>
-  </label>
+  </section>
 
-  <br><br>
 
-  <label>
-    中項目
-    <input type="text" id="subcategory">
-  </label>
+  <!-- Filters -->
+  <section class="filter-card">
 
-  <br><br>
+    <div class="filters">
 
-  <label>
-    内容
-    <input type="text" id="content">
-  </label>
+      <select id="monthFilter" class="select"
+              onchange="renderExpenses()">
+        <option value="all">全部月份</option>
+      </select>
 
-  <br><br>
+      <select id="categoryFilter" class="select"
+              onchange="renderExpenses()">
+        <option value="all">全部大項目</option>
+      </select>
 
-  <button onclick="saveExpense()">保存</button>
+      <input
+        id="searchFilter"
+        class="input search"
+        type="search"
+        placeholder="搜索店舗 / 内容"
+        oninput="renderExpenses()"
+      >
 
-  <p id="result"></p>
+    </div>
+
+  </section>
+
+
+  <!-- Expenses -->
+  <section>
+
+    <h2 class="section-title">支出记录</h2>
+
+    <div id="expenseContainer">
+      <div class="loading">
+        正在读取账目……
+      </div>
+    </div>
+
+  </section>
+
+</div>
 
 
 <script>
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbxb--pgAmPuBxtOUt2N7PTsU4C5D8-i7DhvXbcmL69OLRCNHiTDPyjU7ZmuV5loMZwfYA/exec';
+  /*
+   * ==============================================
+   * API
+   * ==============================================
+   */
+
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbxb--pgAmPuBxtOUt2N7PTsU4C5D8-i7DhvXbcmL69OLRCNHiTDPyjU7ZmuV5loMZwfYA/exec';
 
 
-async function saveExpense() {
+  /*
+   * ==============================================
+   * Global data
+   * ==============================================
+   */
 
-  const data = {
-    日付: document.getElementById('date').value,
-    店舗: document.getElementById('store').value,
-    金額: document.getElementById('amount').value,
-    支払方法: document.getElementById('payment').value,
-    大項目: document.getElementById('category').value,
-    中項目: document.getElementById('subcategory').value,
-    内容: document.getElementById('content').value
-  };
+  let expenses = [];
+  let settings = {};
 
-  try {
 
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain;charset=utf-8'
-      },
-      body: JSON.stringify(data)
+  /*
+   * ==============================================
+   * 初始化
+   * ==============================================
+   */
+
+  window.addEventListener('DOMContentLoaded', loadData);
+
+
+  async function loadData() {
+
+    try {
+
+      const response =
+        await fetch(API_URL + '?action=all');
+
+      const data =
+        await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error);
+      }
+
+      settings = data.settings;
+      expenses = data.expenses || [];
+
+      setupFilters();
+      updateSummary();
+      renderExpenses();
+
+    } catch (error) {
+
+      showError(
+        '读取数据失败：' + error.message
+      );
+
+    }
+  }
+
+
+  /*
+   * ==============================================
+   * Filter setup
+   * ==============================================
+   */
+
+  function setupFilters() {
+
+    const monthFilter =
+      document.getElementById('monthFilter');
+
+    const categoryFilter =
+      document.getElementById('categoryFilter');
+
+
+    // 月份
+    const months =
+      [...new Set(
+        expenses
+          .map(expense => getMonthKey(expense.日付))
+          .filter(Boolean)
+      )].sort().reverse();
+
+
+    months.forEach(month => {
+
+      const option =
+        document.createElement('option');
+
+      option.value = month;
+      option.textContent =
+        formatMonth(month);
+
+      monthFilter.appendChild(option);
+
     });
 
-    const result = await response.json();
 
-    if (result.success) {
-      document.getElementById('result').textContent =
-        '保存成功！';
+    // 大項目
+    (settings.largeCategories || [])
+      .forEach(category => {
 
-    } else {
-      document.getElementById('result').textContent =
-        '保存失败：' + result.error;
+        const option =
+          document.createElement('option');
+
+        option.value = category;
+        option.textContent = category;
+
+        categoryFilter.appendChild(option);
+
+      });
+  }
+
+
+  /*
+   * ==============================================
+   * Summary
+   * ==============================================
+   */
+
+  function updateSummary() {
+
+    const now = new Date();
+
+    const currentYear =
+      now.getFullYear();
+
+    const currentMonth =
+      now.getMonth();
+
+    const currentMonthExpenses =
+      expenses.filter(expense => {
+
+        if (Number(expense.計算対象) !== 1) {
+          return false;
+        }
+
+        const date =
+          new Date(expense.日付);
+
+        return (
+          date.getFullYear() === currentYear &&
+          date.getMonth() === currentMonth
+        );
+
+      });
+
+
+    const total =
+      currentMonthExpenses.reduce(
+        (sum, expense) =>
+          sum + Number(expense.金額 || 0),
+        0
+      );
+
+
+    document.getElementById('monthTotal')
+      .textContent =
+      formatCurrency(total);
+
+    document.getElementById('monthCount')
+      .textContent =
+      currentMonthExpenses.length;
+
+    document.getElementById('allCount')
+      .textContent =
+      expenses.length;
+  }
+
+
+  /*
+   * ==============================================
+   * Render expenses
+   * ==============================================
+   */
+
+  function renderExpenses() {
+
+    const container =
+      document.getElementById('expenseContainer');
+
+    const month =
+      document.getElementById('monthFilter').value;
+
+    const category =
+      document.getElementById('categoryFilter').value;
+
+    const search =
+      document.getElementById('searchFilter')
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    let filtered =
+      expenses.filter(expense => {
+
+        const monthMatch =
+          month === 'all' ||
+          getMonthKey(expense.日付) === month;
+
+        const categoryMatch =
+          category === 'all' ||
+          expense.大項目 === category;
+
+        const searchMatch =
+          !search ||
+          String(expense.店舗)
+            .toLowerCase()
+            .includes(search) ||
+          String(expense.内容)
+            .toLowerCase()
+            .includes(search);
+
+        return (
+          monthMatch &&
+          categoryMatch &&
+          searchMatch
+        );
+      });
+
+
+    // 按日期倒序
+    filtered.sort(
+      (a, b) =>
+        new Date(b.日付) -
+        new Date(a.日付)
+    );
+
+
+    if (filtered.length === 0) {
+
+      container.innerHTML = `
+        <div class="empty">
+          这个筛选条件下没有支出记录。
+        </div>
+      `;
+
+      return;
     }
 
-  } catch (error) {
 
-    document.getElementById('result').textContent =
-      '通信错误：' + error.message;
+    // 按日期分组
+    const groups = {};
+
+    filtered.forEach(expense => {
+
+      const key =
+        formatDateOnly(expense.日付);
+
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+
+      groups[key].push(expense);
+
+    });
+
+
+    container.innerHTML =
+      Object.entries(groups)
+        .map(([date, items]) => {
+
+          return `
+            <div class="expense-group">
+
+              <div class="date-title">
+                ${date}
+              </div>
+
+              <div class="expense-list">
+
+                ${items.map(renderExpense).join('')}
+
+              </div>
+
+            </div>
+          `;
+
+        })
+        .join('');
+  }
+
+
+  /*
+   * ==============================================
+   * Single expense
+   * ==============================================
+   */
+
+  function renderExpense(expense) {
+
+    const amount =
+      formatCurrency(expense.金額);
+
+    const content =
+      expense.内容
+        ? `・${escapeHtml(expense.内容)}`
+        : '';
+
+    return `
+      <div
+        class="expense-item"
+        onclick="editExpense(${expense.rowNumber})"
+      >
+
+        <div class="expense-main">
+
+          <div class="expense-store">
+            ${escapeHtml(expense.店舗)}
+          </div>
+
+          <div class="expense-meta">
+
+            ${escapeHtml(expense.大項目)}
+            ·
+            ${escapeHtml(expense.中項目)}
+
+            <span class="expense-content">
+              ${content}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="expense-right">
+
+          <div class="expense-amount">
+            ${amount}
+          </div>
+
+          <div class="expense-payment">
+            ${escapeHtml(expense.支払方法)}
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  }
+
+
+  /*
+   * ==============================================
+   * Future actions
+   * ==============================================
+   */
+
+  function addExpense() {
+
+    alert(
+      '添加支出功能将在下一版加入。'
+    );
 
   }
-}
+
+
+  function editExpense(rowNumber) {
+
+    alert(
+      '编辑功能将在下一版加入。\n\nSheet row: ' +
+      rowNumber
+    );
+
+  }
+
+
+  /*
+   * ==============================================
+   * Helpers
+   * ==============================================
+   */
+
+  function getMonthKey(dateString) {
+
+    const date =
+      new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return '';
+    }
+
+    return (
+      date.getFullYear() +
+      '-' +
+      String(date.getMonth() + 1)
+        .padStart(2, '0')
+    );
+  }
+
+
+  function formatMonth(monthKey) {
+
+    const parts =
+      monthKey.split('-');
+
+    return (
+      parts[0] +
+      '年' +
+      Number(parts[1]) +
+      '月'
+    );
+  }
+
+
+  function formatDateOnly(dateString) {
+
+    const date =
+      new Date(dateString);
+
+    if (isNaN(date.getTime())) {
+      return dateString;
+    }
+
+    return (
+      date.getFullYear() +
+      '/' +
+      String(date.getMonth() + 1)
+        .padStart(2, '0') +
+      '/' +
+      String(date.getDate())
+        .padStart(2, '0')
+    );
+  }
+
+
+  function formatCurrency(amount) {
+
+    return (
+      '¥' +
+      Number(amount || 0)
+        .toLocaleString('ja-JP')
+    );
+
+  }
+
+
+  function escapeHtml(value) {
+
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+  }
+
+
+  function showError(message) {
+
+    const error =
+      document.getElementById('error');
+
+    error.textContent = message;
+    error.style.display = 'block';
+
+  }
 
 </script>
 
