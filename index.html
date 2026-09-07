@@ -118,6 +118,11 @@ button{cursor:pointer}
 .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.modal-title{font-size:20px;font-weight:700}.close{border:0;background:#F5F3EF;border-radius:50%;width:34px;height:34px}
 .mode-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;background:#F7F5F1;padding:4px;border-radius:12px;margin-bottom:20px}
 .mode-tabs button{border:0;background:transparent;border-radius:9px;padding:9px;color:#777}.mode-tabs button.active{background:#fff;color:#C96F46;box-shadow:0 2px 7px rgba(0,0,0,.06);font-weight:650}
+.voice-panel{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding:14px 16px;background:#FFF6EF;border-radius:14px}
+.voice-record-btn{flex:none;border:0;border-radius:10px;padding:10px 16px;background:var(--orange);color:#fff;font-weight:650;white-space:nowrap}
+.voice-record-btn.recording{background:#C9433A}
+.voice-record-btn:disabled{opacity:.6;cursor:default}
+.voice-status{font-size:13px;color:#8a7860;line-height:1.5}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}.field label{font-size:13px;color:#686c71}.field input,.field select{height:43px;border:1px solid #E5E2DC;border-radius:11px;padding:0 12px;background:#fff;outline:0;color:var(--text);width:100%}.field input:focus,.field select:focus{border-color:#DFA37F;box-shadow:0 0 0 3px rgba(233,139,92,.08)}
 .modal-actions{display:flex;justify-content:space-between;align-items:center;margin-top:22px}.danger{border:0;background:#FFF0EF;color:#C96359;border-radius:10px;padding:10px 14px}.save{border:0;background:var(--orange);color:#fff;border-radius:11px;padding:11px 22px;font-weight:650}
 .status{position:fixed;left:50%;bottom:25px;transform:translateX(-50%) translateY(20px);background:#292B2F;color:#fff;padding:10px 16px;border-radius:12px;font-size:13px;opacity:0;pointer-events:none;transition:.2s;z-index:100}.status.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -233,6 +238,10 @@ button{cursor:pointer}
       <button id="modeVoice" onclick="setEntryMode('voice')">语音记账</button>
       <button id="modeReceipt" onclick="setEntryMode('receipt')">拍小票</button>
       <button id="modeManual" class="active" onclick="setEntryMode('manual')">手动输入</button>
+    </div>
+    <div id="voicePanel" class="voice-panel" style="display:none">
+      <button id="voiceRecordBtn" type="button" class="voice-record-btn" onclick="toggleVoiceRecording()">● 开始录音</button>
+      <span id="voiceStatus" class="voice-status">点击开始说话，例如"8月22日晚上9点31分在药局买牛奶224日元，Amex"</span>
     </div>
     <div class="form-grid">
       <div class="field"><label>日期时间</label><input id="fDate" type="datetime-local"></div>
@@ -582,6 +591,7 @@ function openExpenseModal(mode="manual"){
   editingRow=null;entryMode=mode;$("modalTitle").textContent="添加花销";$("deleteBtn").style.display="none";
   $("fDate").value=nowLocalInput();$("fStore").value="";$("fAmount").value="";$("fContent").value="";
   $("fPayment").value="";$("fLarge").value="";updateMiddleOptions();
+  resetVoicePanel();
   setEntryMode(mode);$("modalBackdrop").classList.add("show");
 }
 function editExpense(row){
@@ -595,8 +605,10 @@ function editExpense(row){
 function setEntryMode(mode){
   entryMode=mode;
   ["voice","receipt","manual"].forEach(x=>$("mode"+x[0].toUpperCase()+x.slice(1)).classList.toggle("active",x===mode));
+  $("voicePanel").style.display=mode==="voice"?"flex":"none";
+  if(mode!=="voice")stopVoiceRecording();
 }
-function closeExpenseModal(){$("modalBackdrop").classList.remove("show")}
+function closeExpenseModal(){$("modalBackdrop").classList.remove("show");stopVoiceRecording()}
 function backdropClose(e){if(e.target===$("modalBackdrop"))closeExpenseModal()}
 
 async function saveCurrent(){
@@ -606,7 +618,7 @@ async function saveCurrent(){
   try{
     showStatus(editingRow?"正在保存修改…":"正在保存…",1200);
     const res=editingRow?await postAPI({action:"update",rowNumber:editingRow,...payload}):await postAPI({action:"add",...payload});
-    if(res?.success===false)throw new Error(res.message||"保存失败");
+    if(res?.success===false)throw new Error(res.error||res.message||"保存失败");
     closeExpenseModal();
     const fresh=await getAPI("expenses");expenses=normalizeExpenses(fresh);
     renderAll();showStatus(editingRow?"修改成功":"添加成功");
@@ -618,11 +630,110 @@ async function deleteByRow(row){
   if(!confirm(`确定删除「${storeOf(e)} ${yen(amountOf(e))}」吗？`))return;
   try{
     const res=await postAPI({action:"delete",rowNumber:Number(row)});
-    if(res?.success===false)throw new Error(res.message||"删除失败");
+    if(res?.success===false)throw new Error(res.error||res.message||"删除失败");
     if(editingRow)closeExpenseModal();
     const fresh=await getAPI("expenses");expenses=normalizeExpenses(fresh);renderAll();showStatus("删除成功");
   }catch(err){console.error(err);showStatus("删除失败："+err.message,4000)}
 }
+
+/* ===================== 语音记账 ===================== */
+let voiceStream=null, mediaRecorder=null, voiceChunks=[], voiceRecording=false, voiceBusy=false;
+
+function resetVoicePanel(){
+  voiceChunks=[];voiceRecording=false;voiceBusy=false;
+  const btn=$("voiceRecordBtn");
+  if(btn){btn.textContent="● 开始录音";btn.classList.remove("recording");btn.disabled=false}
+  const st=$("voiceStatus");
+  if(st)st.textContent='点击开始说话，例如"8月22日晚上9点31分在药局买牛奶224日元，Amex"';
+}
+
+function pickAudioMimeType(){
+  const candidates=["audio/mp4","audio/webm;codecs=opus","audio/webm","audio/ogg;codecs=opus","audio/ogg"];
+  if(!window.MediaRecorder||!MediaRecorder.isTypeSupported)return "";
+  for(const t of candidates){if(MediaRecorder.isTypeSupported(t))return t}
+  return "";
+}
+
+async function toggleVoiceRecording(){
+  if(voiceBusy)return;
+  if(voiceRecording){stopVoiceRecording();return}
+  if(!navigator.mediaDevices||!window.MediaRecorder){
+    $("voiceStatus").textContent="当前浏览器不支持录音，请换用手动输入";return;
+  }
+  try{
+    voiceStream=await navigator.mediaDevices.getUserMedia({audio:true});
+  }catch(err){
+    $("voiceStatus").textContent="无法访问麦克风，请检查权限设置";return;
+  }
+  const mimeType=pickAudioMimeType();
+  voiceChunks=[];
+  try{
+    mediaRecorder=mimeType?new MediaRecorder(voiceStream,{mimeType}):new MediaRecorder(voiceStream);
+  }catch(err){
+    $("voiceStatus").textContent="无法开始录音："+err.message;
+    voiceStream.getTracks().forEach(t=>t.stop());voiceStream=null;return;
+  }
+  mediaRecorder.ondataavailable=e=>{if(e.data&&e.data.size>0)voiceChunks.push(e.data)};
+  mediaRecorder.onstop=onVoiceRecordingStop;
+  mediaRecorder.start();
+  voiceRecording=true;
+  $("voiceRecordBtn").textContent="■ 停止录音";
+  $("voiceRecordBtn").classList.add("recording");
+  $("voiceStatus").textContent="正在录音…再点一次结束";
+}
+
+function stopVoiceRecording(){
+  if(mediaRecorder&&voiceRecording){
+    try{mediaRecorder.stop()}catch(err){}
+  }else if(voiceStream){
+    voiceStream.getTracks().forEach(t=>t.stop());voiceStream=null;
+  }
+  voiceRecording=false;
+  const btn=$("voiceRecordBtn");
+  if(btn){btn.textContent="● 开始录音";btn.classList.remove("recording")}
+}
+
+function blobToBase64(blob){
+  return new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onloadend=()=>resolve(String(reader.result).split(",")[1]||"");
+    reader.onerror=()=>reject(new Error("音频读取失败"));
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function onVoiceRecordingStop(){
+  if(voiceStream){voiceStream.getTracks().forEach(t=>t.stop());voiceStream=null}
+  if(!voiceChunks.length){$("voiceStatus").textContent="没有录到声音，请重试";return}
+  const mimeType=(mediaRecorder&&mediaRecorder.mimeType)||"audio/webm";
+  const blob=new Blob(voiceChunks,{type:mimeType});
+  voiceChunks=[];
+  voiceBusy=true;
+  $("voiceRecordBtn").disabled=true;
+  $("voiceStatus").textContent="正在识别并记账…";
+  try{
+    const audioBase64=await blobToBase64(blob);
+    const res=await postAPI({action:"voiceAdd",audioBase64,mimeType});
+    if(res?.success===false)throw new Error(res.error||res.message||"记账失败");
+    const fresh=await getAPI("expenses");expenses=normalizeExpenses(fresh);renderAll();
+    $("voiceStatus").textContent=voiceResultSummary(res.expense)+"　（如有误可在「花销明细」里编辑）";
+  }catch(err){
+    console.error(err);
+    $("voiceStatus").textContent="记账失败："+err.message+"，可以重新录一遍";
+  }finally{
+    voiceBusy=false;
+    $("voiceRecordBtn").disabled=false;
+  }
+}
+
+function voiceResultSummary(e){
+  if(!e||typeof e!=="object")return "✅ 已记录，可以继续说下一笔";
+  const store=norm(e["店舗"])||"未识别店铺";
+  const content=norm(e["内容"]);
+  const amount=yen(Number(e["金額"])||0);
+  return `✅ 已记录：${store}${content?"·"+content:""} ${amount}`;
+}
+/* =================================================== */
 
 window.addEventListener("resize",()=>{if($("overviewPage").style.display!=="none")renderTrend(selectedOverviewYear)});
 init();
