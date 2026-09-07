@@ -81,8 +81,18 @@ button{cursor:pointer}
 .chart-svg{width:100%;height:100%;display:block;overflow:visible}
 .chart-tooltip{position:absolute;pointer-events:none;background:#fff;border:1px solid #e9e6df;border-radius:10px;padding:8px 10px;box-shadow:0 7px 20px rgba(0,0,0,.09);font-size:12px;white-space:nowrap;display:none;z-index:3}
 .chart-tooltip strong{font-size:14px}
-.legend{display:flex;gap:18px;align-items:center;font-size:12px;color:#777;margin-top:4px}
+.legend{display:flex;gap:14px;align-items:center;font-size:12px;color:#777}
+.chart-legend{margin-left:auto;margin-top:0;font-weight:500}
 .legend-item{display:flex;gap:6px;align-items:center}.legend-line{width:18px;height:3px;border-radius:2px}
+.below-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:28px;margin-top:28px}
+.below-grid .rank-card{margin-top:0}
+.focus-card{padding:22px 25px;min-height:150px}
+.focus-text{font-size:14px;line-height:1.75;color:#62666b;margin:13px 0 12px}
+.focus-items{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.focus-item{border-radius:13px;background:#FAF7F1;padding:10px 11px}
+.focus-item .label{font-size:11px;color:#85888c}
+.focus-item .value{font-size:14px;font-weight:700;margin-top:4px}
+
 .rank-card{margin-top:28px;padding:22px 25px}
 .store-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
 .store-item{background:#FAF9F6;border-radius:14px;padding:13px 15px;min-height:74px}
@@ -114,7 +124,7 @@ button{cursor:pointer}
 .loading{padding:80px 20px;text-align:center;color:#888}
 @media(max-width:1100px){
   .sidebar{width:220px}.main{margin-left:220px;width:calc(100% - 220px);padding-left:20px;padding-right:20px}
-  .overview-grid,.overview-lower{grid-template-columns:1fr}.hero{height:250px}.ai-card{min-height:250px}.structure-body{grid-template-columns:210px 1fr}
+  .overview-grid,.overview-lower,.below-grid{grid-template-columns:1fr}.hero{height:250px}.ai-card{min-height:250px}.structure-body{grid-template-columns:210px 1fr}
 }
 @media(max-width:760px){
   .sidebar{display:none}.main{margin-left:0;width:100%;padding:8px 14px 80px}.topbar{height:45px}.search{width:200px}.overview-head{margin-top:6px}.overview-grid{gap:14px}.hero{padding:23px 22px;height:225px}.hero-amount{font-size:40px}.hero-note,.hero-smile{display:none}.overview-lower{gap:14px}.structure-body{grid-template-columns:1fr}.donut-wrap{height:190px}.donut{width:175px;height:175px}.donut-hole{inset:42px}.trend{padding:19px 15px 14px}.chart-wrap{height:220px}.store-list{grid-template-columns:1fr 1fr}.expense-row{grid-template-columns:54px minmax(0,1fr) 85px 76px}.expense-cat{display:none}.detail-year{margin-left:0}.details-card{padding:15px}.filters{align-items:stretch}.filter-input{min-width:0;flex:1}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.bottom-nav{display:flex!important}
@@ -178,15 +188,21 @@ button{cursor:pointer}
           </div>
         </div>
         <div class="card trend">
-          <div class="card-title"><span>月度支出趋势</span></div>
+          <div class="card-title"><span>月度支出趋势</span><div id="chartLegend" class="legend chart-legend"></div></div>
           <div id="chartWrap" class="chart-wrap"><svg id="trendSvg" class="chart-svg" viewBox="0 0 800 235" preserveAspectRatio="none"></svg><div id="chartTooltip" class="chart-tooltip"></div></div>
-          <div id="chartLegend" class="legend"></div>
         </div>
       </div>
 
-      <div class="card rank-card">
-        <div class="card-title"><span>常去的店铺</span></div>
-        <div id="storeList" class="store-list"></div>
+      <div class="below-grid">
+        <div class="card rank-card">
+          <div class="card-title"><span>常去的店铺</span></div>
+          <div id="storeList" class="store-list"></div>
+        </div>
+        <div class="card focus-card">
+          <div class="card-title"><div class="ai-title"><span class="ai-spark">✦</span>今年值得关注的消费</div><small>AI 分析</small></div>
+          <div id="focusText" class="focus-text">正在分析今年的消费结构……</div>
+          <div id="focusItems" class="focus-items"></div>
+        </div>
       </div>
     </section>
 
@@ -262,7 +278,7 @@ function dateValue(v){
   s=s.replace("T"," ").replace(/\./g,"/");
   let d=new Date(s);
   if(!isNaN(d))return d;
-  const m=s.match(/(\\d{4})[/-](\\d{1,2})[/-](\\d{1,2})(?:\\s+(\\d{1,2}):(\\d{2})(?::(\\d{2}))?)?/);
+  const m=s.match(/(\d{4})[/-](\d{1,2})[/-](\d{1,2})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?)?/);
   if(m)return new Date(+m[1],+m[2]-1,+m[3],+(m[4]||0),+(m[5]||0),+(m[6]||0));
   return null;
 }
@@ -333,34 +349,71 @@ function normalizeSettings(raw){
 }
 
 function normalizeExpenses(raw){
-  const arr=raw?.expenses??raw?.data?.expenses??raw?.rows??raw?.data?.rows??(Array.isArray(raw)?raw:[]);
-  if(!Array.isArray(arr))return [];
+  // 兼容 Apps Script 常见返回：
+  // 1. 直接数组
+  // 2. {expenses:[...]}
+  // 3. {data:[...]}
+  // 4. {data:{expenses:[...]}}
+  // 5. {rows:[...]} / {data:{rows:[...]}}
+  let arr=null;
+  if(Array.isArray(raw)) arr=raw;
+  else if(Array.isArray(raw?.expenses)) arr=raw.expenses;
+  else if(Array.isArray(raw?.data)) arr=raw.data;
+  else if(Array.isArray(raw?.rows)) arr=raw.rows;
+  else if(Array.isArray(raw?.records)) arr=raw.records;
+  else if(Array.isArray(raw?.data?.expenses)) arr=raw.data.expenses;
+  else if(Array.isArray(raw?.data?.rows)) arr=raw.data.rows;
+  else if(Array.isArray(raw?.data?.records)) arr=raw.data.records;
+
+  if(!Array.isArray(arr)) return [];
+
   return arr.map((e,i)=>{
-    if(Array.isArray(e))return {"計算対象":e[0],"日付":e[1],"店舗":e[2],"金額":e[3],"支払方法":e[4],"大項目":e[5],"中項目":e[6],"内容":e[7],"rowNumber":i+2};
-    return e;
-  }).filter(e=>storeOf(e)||amountOf(e)||dateValue(e["日付"]??e.date));
+    if(Array.isArray(e)){
+      return {
+        "計算対象":e[0],
+        "日付":e[1],
+        "店舗":e[2],
+        "金額":e[3],
+        "支払方法":e[4],
+        "大項目":e[5],
+        "中項目":e[6],
+        "内容":e[7],
+        "rowNumber":i+2
+      };
+    }
+    if(e && typeof e==="object"){
+      // Apps Script 已经返回 rowNumber 时保留；没有时按数据数组位置推算。
+      if(e.rowNumber==null && e["行番号"]==null) e.rowNumber=i+2;
+      return e;
+    }
+    return null;
+  }).filter(Boolean);
 }
 
 async function init(){
   try{
-    const raw=await getAPI("all");
-    settings=normalizeSettings(raw);
-    expenses=normalizeExpenses(raw);
-    // If all response doesn't include settings, fetch settings once only.
-    if(!settings.payments.length && !settings.larges.length && !Object.keys(settings.middleMap).length){
-      settings=normalizeSettings(await getAPI("settings"));
-    }
+    // 设置只在页面初次打开时读取一次；花销明细单独读取，避免 all 接口不同返回结构导致记录丢失。
+    const [settingsRaw, expensesRaw] = await Promise.all([
+      getAPI("settings"),
+      getAPI("expenses")
+    ]);
+    settings=normalizeSettings(settingsRaw);
+    expenses=normalizeExpenses(expensesRaw);
+
     dataReady=true;
     const years=[new Date().getFullYear(),...expenses.map(yearOf)].filter(Boolean).sort((a,b)=>b-a);
     if(years.length)selectedOverviewYear=years[0];
     selectedDetailYear=selectedOverviewYear;
     renderAll();
+
+    if(!expenses.length){
+      console.warn("Google Sheets returned no expense rows.", expensesRaw);
+    }
   }catch(err){
-    console.error(err);
+    console.error("Initial load failed:",err);
     showStatus("读取数据失败："+err.message,5000);
-    // Do not silently use hardcoded settings.
     dataReady=false;
-    renderEmptyState("无法读取数据，请确认 Apps Script 已部署且可访问。");
+    renderEmptyState("无法读取 Google Sheets 的花销记录，请检查 Apps Script 的 expenses 接口。");
   }
 }
 
@@ -425,7 +478,7 @@ function renderOverview(){
   const pct=prevTotal?((total-prevTotal)/prevTotal*100):null;
   $("heroChange").textContent=pct===null?"—":(pct<0?"↓ ":"↑ ")+Math.abs(pct).toFixed(1)+"%";
   $("heroChange").style.color=pct!==null&&pct<0?"#35A878":"#D9774B";
-  renderAI(cur,prev,total,prevTotal);renderStructure(cur,total);renderTrend(y);renderStores(cur);
+  renderAI(cur,prev,total,prevTotal);renderStructure(cur,total);renderTrend(y);renderStores(cur);renderFocus(cur,prev,total);
 }
 function renderAI(cur,prev,total,prevTotal){
   const sum=(large)=>cur.filter(e=>largeOf(e)===large).reduce((s,e)=>s+amountOf(e),0);
@@ -475,6 +528,24 @@ function renderTrend(y){
   }));
   wrap.onclick=ev=>{if(!ev.target.classList.contains("trend-point"))$("chartTooltip").style.display="none"};
 }
+function renderFocus(cur,prev,total){
+  const rows=[...new Set(cur.map(largeOf).filter(Boolean))].map(k=>({
+    name:k,
+    amount:cur.filter(e=>largeOf(e)===k).reduce((s,e)=>s+amountOf(e),0),
+    count:cur.filter(e=>largeOf(e)===k).length
+  })).sort((a,b)=>b.amount-a.amount).slice(0,3);
+
+  if(!rows.length){
+    $("focusText").textContent="今年暂时还没有足够的消费记录可供分析。";
+    $("focusItems").innerHTML="";
+    return;
+  }
+  const top=rows[0];
+  const share=total?top.amount/total*100:0;
+  $("focusText").textContent=`今年消费中「${top.name}」占比最高，共 ${yen(top.amount)}，约占总支出的 ${share.toFixed(1)}%。可以重点关注这一类支出的变化。`;
+  $("focusItems").innerHTML=rows.map(x=>`<div class="focus-item"><div class="label">${escapeHtml(x.name)}</div><div class="value">${yen(x.amount)}</div></div>`).join("");
+}
+
 function renderStores(cur){
   const map=new Map();
   cur.forEach(e=>{const s=storeOf(e)||"未填写店铺";const x=map.get(s)||{count:0,amount:0};x.count++;x.amount+=amountOf(e);map.set(s,x)});
