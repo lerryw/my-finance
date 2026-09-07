@@ -44,7 +44,7 @@ button{cursor:pointer}
 .add-btn{border:0;background:var(--orange);color:#fff;border-radius:13px;padding:11px 18px;font-weight:600;box-shadow:0 6px 14px rgba(233,139,92,.22)}
 .overview-head{display:flex;justify-content:space-between;align-items:center;margin:3px 4px 18px}
 .overview-year{font-size:20px;font-weight:650}
-.overview-grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);gap:28px;margin-bottom:18px}
+.overview-grid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:28px;margin-bottom:18px}
 .hero{height:276px;border-radius:22px;position:relative;overflow:hidden;padding:28px 34px;background:linear-gradient(125deg,#fff8ed,#fffdf9 54%,#fff3dc);box-shadow:var(--shadow);border:1px solid rgba(238,232,223,.75)}
 .hero:before{content:"";position:absolute;width:270px;height:270px;border-radius:50%;right:-45px;bottom:-120px;background:rgba(244,201,93,.35)}
 .hero:after{content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:75px;bottom:-110px;background:rgba(233,139,92,.22)}
@@ -60,11 +60,12 @@ button{cursor:pointer}
 .card-title small{font-size:13px;color:#83A9B8;font-weight:600}
 .ai-title{display:flex;align-items:center;gap:9px}
 .ai-spark{font-size:23px}
-.ai-text{font-size:14px;line-height:1.75;color:#60646a;margin:13px 0 15px}
-.ai-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.insight{border-radius:14px;padding:12px 10px;min-height:74px}
-.insight.orange{background:#FFF3EC}.insight.blue{background:#EEF6F8}.insight.yellow{background:#FFF8E7}
-.insight-label{font-size:12px;color:#777;margin-bottom:5px}.insight-value{font-size:16px;font-weight:700}.orange .insight-value{color:#D9774B}.blue .insight-value{color:#5D93A7}
+.ai-refresh-btn{border:0;background:#FFF3EC;color:#C96F46;font-size:12px;font-weight:650;padding:6px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.ai-refresh-btn:disabled{opacity:.55;cursor:default}
+.ai-insight-list{list-style:none;margin:15px 0 4px;padding:0;display:flex;flex-direction:column;gap:11px}
+.ai-insight-item{font-size:14px;line-height:1.65;color:#5c6066;padding-left:17px;position:relative}
+.ai-insight-item:before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:#E98B5C}
+.ai-updated{font-size:11px;color:#a7a29a;margin-top:10px}
 .overview-lower{display:grid;grid-template-columns:minmax(0,.84fr) minmax(0,1.16fr);gap:28px}
 .card{background:#fff;border:1px solid #eeeae4;border-radius:22px;box-shadow:var(--shadow)}
 .structure{padding:22px 25px}
@@ -84,14 +85,14 @@ button{cursor:pointer}
 .legend{display:flex;gap:14px;align-items:center;font-size:12px;color:#777}
 .chart-legend{margin-left:auto;margin-top:0;font-weight:500}
 .legend-item{display:flex;gap:6px;align-items:center}.legend-line{width:18px;height:3px;border-radius:2px}
-.below-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(360px,.88fr);gap:28px;margin-top:28px}
+.below-grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(380px,1.05fr);gap:28px;margin-top:28px}
 .below-grid .rank-card{margin-top:0}
-.focus-card{padding:22px 25px;min-height:150px}
-.focus-text{font-size:14px;line-height:1.75;color:#62666b;margin:13px 0 12px}
-.focus-items{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.focus-item{border-radius:13px;background:#FAF7F1;padding:10px 11px}
-.focus-item .label{font-size:11px;color:#85888c}
-.focus-item .value{font-size:14px;font-weight:700;margin-top:4px}
+.focus-card{padding:22px 25px;min-height:170px}
+.focus-items{display:flex;flex-direction:column;gap:10px;margin-top:15px}
+.focus-item{border-radius:14px;background:#FAF7F1;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.focus-item .label{font-size:12px;color:#85888c;margin-bottom:4px}
+.focus-item .meta{font-size:12px;color:#8a8e92}
+.focus-item .value{font-size:15px;font-weight:700;color:#3c3f43;white-space:nowrap}
 
 .rank-card{margin-top:28px;padding:22px 25px}
 .store-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
@@ -171,13 +172,9 @@ button{cursor:pointer}
           <div class="hero-note">每一笔花销<br>都是生活的注脚</div><div class="hero-smile">☺</div>
         </div>
         <div class="ai-card">
-          <div class="card-title"><div class="ai-title"><span class="ai-spark">✦</span>AI 年度总结</div><small>查看详情 ›</small></div>
-          <div id="aiText" class="ai-text">正在根据你的年度花销整理总结……</div>
-          <div class="ai-insights">
-            <div class="insight orange"><div class="insight-label">旅行支出</div><div class="insight-value" id="travelInsight">—</div></div>
-            <div class="insight blue"><div class="insight-label">日用品支出</div><div class="insight-value" id="dailyInsight">—</div></div>
-            <div class="insight yellow"><div class="insight-label">建议</div><div class="insight-value" id="adviceInsight">—</div></div>
-          </div>
+          <div class="card-title"><div class="ai-title"><span class="ai-spark">✦</span>AI 年度总结</div><button id="aiRefreshBtn" class="ai-refresh-btn" onclick="refreshAiSummary()">重新分析</button></div>
+          <ul id="aiInsightList" class="ai-insight-list"><li class="ai-insight-item">正在根据你的年度花销整理总结……</li></ul>
+          <div id="aiUpdatedAt" class="ai-updated"></div>
         </div>
       </div>
 
@@ -201,8 +198,7 @@ button{cursor:pointer}
           <div id="storeList" class="store-list"></div>
         </div>
         <div class="card focus-card">
-          <div class="card-title"><div class="ai-title"><span class="ai-spark">✦</span>今年值得关注的消费</div><small>AI 分析</small></div>
-          <div id="focusText" class="focus-text">正在分析今年的消费结构……</div>
+          <div class="card-title"><span>今年值得关注的消费</span></div>
           <div id="focusItems" class="focus-items"></div>
         </div>
       </div>
@@ -268,6 +264,8 @@ let selectedMonth=0;
 let editingRow=null;
 let entryMode="manual";
 let dataReady=false;
+let aiSummaryCache=null;
+let aiRefreshBusy=false;
 
 const $=id=>document.getElementById(id);
 const yen=n=>"¥"+Number(n||0).toLocaleString("ja-JP",{maximumFractionDigits:2});
@@ -399,12 +397,14 @@ function normalizeExpenses(raw){
 async function init(){
   try{
     // 设置只在页面初次打开时读取一次；花销明细单独读取，避免 all 接口不同返回结构导致记录丢失。
-    const [settingsRaw, expensesRaw] = await Promise.all([
+    const [settingsRaw, expensesRaw, aiSummaryRaw] = await Promise.all([
       getAPI("settings"),
-      getAPI("expenses")
+      getAPI("expenses"),
+      getAPI("aiSummary")
     ]);
     settings=normalizeSettings(settingsRaw);
     expenses=normalizeExpenses(expensesRaw);
+    aiSummaryCache=(aiSummaryRaw&&aiSummaryRaw.aiSummary)||null;
 
     dataReady=true;
     const years=[new Date().getFullYear(),...expenses.map(yearOf)].filter(Boolean).sort((a,b)=>b-a);
@@ -483,19 +483,51 @@ function renderOverview(){
   const pct=prevTotal?((total-prevTotal)/prevTotal*100):null;
   $("heroChange").textContent=pct===null?"—":(pct<0?"↓ ":"↑ ")+Math.abs(pct).toFixed(1)+"%";
   $("heroChange").style.color=pct!==null&&pct<0?"#35A878":"#D9774B";
-  renderAI(cur,prev,total,prevTotal);renderStructure(cur,total);renderTrend(y);renderStores(cur);renderFocus(cur,prev,total);
+  renderAI();renderStructure(cur,total);renderTrend(y);renderStores(cur);renderFocus(cur);
 }
-function renderAI(cur,prev,total,prevTotal){
-  const sum=(large)=>cur.filter(e=>largeOf(e)===large).reduce((s,e)=>s+amountOf(e),0);
-  const travel=sum("趣味・娯楽"), daily=sum("日用品");
-  const prevTravel=prev.filter(e=>largeOf(e)==="趣味・娯楽").reduce((s,e)=>s+amountOf(e),0);
-  const prevDaily=prev.filter(e=>largeOf(e)==="日用品").reduce((s,e)=>s+amountOf(e),0);
-  const change=(a,b)=>b?((a-b)/b*100):null;
-  const tc=change(travel,prevTravel),dc=change(daily,prevDaily);
-  $("aiText").textContent=total?"今年整体支出为"+yen(total)+"。"+(tc!==null?"趣味・娯乐相关支出"+(tc>=0?"有所增加":"有所下降")+"，":"")+"日用品支出"+(dc!==null?(dc>=0?"有所增加。":"较去年有所下降。"):"情况平稳。")+" 建议继续关注占比较高的项目，保持对固定支出的定期检查。":"目前还没有可用于年度分析的支出记录。";
-  $("travelInsight").textContent=tc===null?"—":(tc>=0?"+":"")+tc.toFixed(0)+"%";
-  $("dailyInsight").textContent=dc===null?"—":(dc>=0?"+":"")+dc.toFixed(0)+"%";
-  $("adviceInsight").textContent=total?"关注高频支出":"先记录起来";
+function currentYearMonthStr(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")}
+function formatUpdatedAt(iso){
+  const d=dateValue(iso);if(!d)return "";
+  return (d.getMonth()+1)+"月"+d.getDate()+"日 "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");
+}
+function renderAiInsights(cache,loadingText){
+  const list=$("aiInsightList");
+  if(!cache||!Array.isArray(cache.insights)||!cache.insights.length){
+    list.innerHTML=`<li class="ai-insight-item">${escapeHtml(loadingText||"暂无可用的年度总结，点击右上角「重新分析」试试。")}</li>`;
+    $("aiUpdatedAt").textContent="";
+    return;
+  }
+  list.innerHTML=cache.insights.map(s=>`<li class="ai-insight-item">${escapeHtml(String(s))}</li>`).join("");
+  $("aiUpdatedAt").textContent=cache.generatedAt?("更新于 "+formatUpdatedAt(cache.generatedAt)):"";
+}
+function renderAI(){
+  if(aiSummaryCache&&aiSummaryCache.yearMonth===currentYearMonthStr()){
+    renderAiInsights(aiSummaryCache);
+    return;
+  }
+  renderAiInsights(aiSummaryCache,"正在根据你的年度花销整理总结……");
+  refreshAiSummary();
+}
+async function refreshAiSummary(){
+  if(aiRefreshBusy)return;
+  aiRefreshBusy=true;
+  const btn=$("aiRefreshBtn");if(btn)btn.disabled=true;
+  try{
+    const res=await postAPI({action:"aiSummaryRefresh"});
+    if(res?.success===false)throw new Error(res.error||res.message||"AI 分析失败");
+    aiSummaryCache=res.aiSummary;
+    renderAiInsights(aiSummaryCache);
+    if(res.throttled)showStatus("刚更新过，请5分钟后再试",3000);
+  }catch(err){
+    console.error("AI summary refresh failed:",err);
+    if(!aiSummaryCache||!aiSummaryCache.insights?.length){
+      renderAiInsights(null,"AI 分析暂时失败，可稍后点击「重新分析」重试。");
+    }
+    showStatus("AI 分析失败："+err.message,4000);
+  }finally{
+    aiRefreshBusy=false;
+    if(btn)btn.disabled=false;
+  }
 }
 function renderStructure(cur,total){
   const map=new Map();cur.forEach(e=>{const k=largeOf(e)||"其他";map.set(k,(map.get(k)||0)+amountOf(e))});
@@ -533,22 +565,44 @@ function renderTrend(y){
   }));
   wrap.onclick=ev=>{if(!ev.target.classList.contains("trend-point"))$("chartTooltip").style.display="none"};
 }
-function renderFocus(cur,prev,total){
-  const rows=[...new Set(cur.map(largeOf).filter(Boolean))].map(k=>({
-    name:k,
-    amount:cur.filter(e=>largeOf(e)===k).reduce((s,e)=>s+amountOf(e),0),
-    count:cur.filter(e=>largeOf(e)===k).length
-  })).sort((a,b)=>b.amount-a.amount).slice(0,3);
-
-  if(!rows.length){
-    $("focusText").textContent="今年暂时还没有足够的消费记录可供分析。";
-    $("focusItems").innerHTML="";
+function renderFocus(cur){
+  if(!cur.length){
+    $("focusItems").innerHTML='<div class="empty">今年暂时还没有足够的消费记录可供分析。</div>';
     return;
   }
-  const top=rows[0];
-  const share=total?top.amount/total*100:0;
-  $("focusText").textContent=`今年消费中「${top.name}」占比最高，共 ${yen(top.amount)}，约占总支出的 ${share.toFixed(1)}%。可以重点关注这一类支出的变化。`;
-  $("focusItems").innerHTML=rows.map(x=>`<div class="focus-item"><div class="label">${escapeHtml(x.name)}</div><div class="value">${yen(x.amount)}</div></div>`).join("");
+
+  // 1) 最大单笔支出
+  const maxExpense=[...cur].sort((a,b)=>amountOf(b)-amountOf(a))[0];
+  const maxDate=dateValue(maxExpense["日付"]??maxExpense.date);
+  const maxDateStr=maxDate?(maxDate.getMonth()+1)+"/"+maxDate.getDate():"";
+
+  // 2) 消费最多的店铺（按总金额）
+  const storeMap=new Map();
+  cur.forEach(e=>{const s=storeOf(e)||"未填写店铺";const x=storeMap.get(s)||{amount:0,count:0};x.amount+=amountOf(e);x.count++;storeMap.set(s,x)});
+  const topStore=[...storeMap.entries()].sort((a,b)=>b[1].amount-a[1].amount)[0];
+
+  // 3) 异常大额消费：跟同一大项目今年的平均单笔金额比，找出最突出的一笔（至少3笔样本才有参考意义）
+  const catStats=new Map();
+  cur.forEach(e=>{const k=largeOf(e)||"其他";const x=catStats.get(k)||{sum:0,count:0};x.sum+=amountOf(e);x.count++;catStats.set(k,x)});
+  let anomaly=null,bestRatio=0;
+  cur.forEach(e=>{
+    const k=largeOf(e)||"其他",stat=catStats.get(k);
+    if(!stat||stat.count<3)return;
+    const avg=stat.sum/stat.count;
+    if(avg<=0)return;
+    const ratio=amountOf(e)/avg;
+    if(ratio>=2.5&&ratio>bestRatio){bestRatio=ratio;anomaly={e,ratio,cat:k}}
+  });
+
+  const items=[
+    {label:"最大单笔支出",value:yen(amountOf(maxExpense)),meta:(contentOf(maxExpense)||storeOf(maxExpense)||"—")+(maxDateStr?" · "+maxDateStr:"")},
+    topStore?{label:"消费最多的店铺",value:yen(topStore[1].amount),meta:topStore[0]+" · 共"+topStore[1].count+"次"}:null,
+    anomaly
+      ?{label:"异常大额消费",value:yen(amountOf(anomaly.e)),meta:(contentOf(anomaly.e)||storeOf(anomaly.e)||"—")+" · 是"+anomaly.cat+"平均的"+anomaly.ratio.toFixed(1)+"倍"}
+      :{label:"异常大额消费",value:"—",meta:"暂未发现明显异常的大额消费"}
+  ].filter(Boolean);
+
+  $("focusItems").innerHTML=items.map(it=>`<div class="focus-item"><div><div class="label">${escapeHtml(it.label)}</div><div class="meta">${escapeHtml(it.meta)}</div></div><div class="value">${it.value}</div></div>`).join("");
 }
 
 function renderStores(cur){
