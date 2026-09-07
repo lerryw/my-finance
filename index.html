@@ -149,10 +149,7 @@ button{cursor:pointer}
   </aside>
 
   <main class="main">
-    <div class="topbar">
-      <div class="search"><span>⌕</span><input id="globalSearch" placeholder="搜索店铺、内容、分类..." /></div>
-      <button class="bell">♧</button><button class="avatar">👤</button>
-    </div>
+    <div class="topbar"></div>
 
     <section id="overviewPage" class="page">
       <div class="overview-head">
@@ -457,7 +454,6 @@ $("overviewYear").addEventListener("change",e=>{selectedOverviewYear=+e.target.v
 $("detailYear").addEventListener("change",e=>{selectedDetailYear=+e.target.value;selectedMonth=0;renderDetails()});
 $("detailLargeFilter").addEventListener("change",renderDetails);
 $("detailSearch").addEventListener("input",renderDetails);
-$("globalSearch").addEventListener("input",()=>{if($("detailsPage").style.display!=="none"){$("detailSearch").value=$("globalSearch").value;renderDetails()}});
 
 function switchPage(page){
   const overview=page==="overview";
